@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 """
-AOS 渲染引擎 —— Markdown 论文 → 排好版的 A4 HTML。
+AOS 渲染引擎 —— Markdown 论文草稿 → HTML 报告 或 LaTeX 论文。
 
 用法：
-    python scripts/render.py <input.md>                    # 输出 HTML 到 stdout
-    python scripts/render.py <input.md> -o paper.html      # 输出到文件
-    python scripts/render.py <input.md> --open             # 输出并在浏览器打开
+    python scripts/render.py <input.md>                    # HTML 到 stdout
+    python scripts/render.py <input.md> --html -o report.html     # HTML 报告
+    python scripts/render.py <input.md> --latex -o paper.tex      # LaTeX 论文
+    python scripts/render.py <input.md> --html --open      # 浏览器预览
 
-依赖：
-    pip install markdown  (可选，没装则用内置简易转换器)
+HTML 用途：展示/汇报/快速预览
+LaTeX 用途：期刊/会议投稿
+依赖：pip install markdown (可选)
 """
 
 import sys
@@ -193,16 +195,112 @@ def build_html(meta: dict, body_html: str) -> str:
     return html
 
 
+LATEX_TEMPLATE = ROOT / "templates" / "paper-latex.tex"
+
+
+def build_latex(meta: dict, body_latex: str) -> str:
+    """将元数据和正文注入 LaTeX 模板。"""
+    template = LATEX_TEMPLATE.read_text(encoding="utf-8") if LATEX_TEMPLATE.exists() else ""
+    if not template:
+        return body_latex
+
+    title = meta.get("title", "未命名")
+    authors = meta.get("authors", "")
+    abstract = meta.get("abstract", "")
+    keywords = meta.get("keywords", "")
+    refs = meta.get("references", [])
+
+    tex = template.replace("{{title}}", title)
+    tex = tex.replace("{{authors}}", authors)
+    tex = tex.replace("{{abstract}}", abstract)
+    tex = tex.replace("{{keywords}}", keywords)
+    tex = tex.replace("{{body}}", body_latex)
+
+    if refs:
+        refs_tex = "\n".join(r"\bibitem{" + f"ref{i}" + "} " + r for i, r in enumerate(refs))
+        tex = tex.replace(r"\bibliography{references}",
+                          r"\begin{thebibliography}{99}\n" + refs_tex + r"\n\end{thebibliography}")
+    else:
+        tex = re.sub(r'\{\{#references\}\}.*?\{\{/references\}\}', "", tex, flags=re.DOTALL)
+
+    return tex
+
+
+def md_to_latex(md: str) -> str:
+    """Markdown → LaTeX 简易转换。"""
+    lines = md.split("\n")
+    out = []
+    in_itemize = in_enumerate = False
+
+    for line in lines:
+        if not line.strip():
+            if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
+            if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
+            out.append("")
+            continue
+
+        # 标题
+        m = re.match(r"^(#{1,6})\s+(.+)$", line)
+        if m:
+            if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
+            if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
+            level = len(m.group(1))
+            cmds = ["", r"\section{", r"\subsection{", r"\subsubsection{", r"\paragraph{", r"\subparagraph{"]
+            if level <= 5:
+                out.append(cmds[level] + m.group(2) + "}")
+            else:
+                out.append(r"\textbf{" + m.group(2) + "}")
+            continue
+
+        # 无序列表
+        m = re.match(r"^[-*+]\s+(.+)$", line)
+        if m:
+            if not in_itemize: out.append(r"\begin{itemize}"); in_itemize = True
+            out.append(r"\item " + _latex_inline(m.group(1)))
+            continue
+
+        # 有序列表
+        m = re.match(r"^\d+\.\s+(.+)$", line)
+        if m:
+            if not in_enumerate: out.append(r"\begin{enumerate}"); in_enumerate = True
+            out.append(r"\item " + _latex_inline(m.group(1)))
+            continue
+
+        # 普通段落
+        if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
+        if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
+        out.append(_latex_inline(line) + r"\\")
+
+    if in_itemize: out.append(r"\end{itemize}")
+    if in_enumerate: out.append(r"\end{enumerate}")
+    return "\n".join(out)
+
+
+def _latex_inline(text: str) -> str:
+    """行内 LaTeX 转义。"""
+    text = text.replace("\\", "\\textbackslash ")
+    for ch in "&%$#_{}~^":
+        text = text.replace(ch, "\\" + ch)
+    # Markdown 粗体/斜体 → LaTeX
+    text = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', text)
+    text = re.sub(r'\*(.+?)\*', r'\\textit{\1}', text)
+    text = re.sub(r'`([^`]+)`', r'\\texttt{\1}', text)
+    return text
+
+
 def main():
     args = sys.argv[1:]
     if not args:
-        print("用法: python scripts/render.py <input.md> [-o output.html] [--open]")
-        print("示例: python scripts/render.py outputs/papers/my-paper.md -o paper.html")
+        print("用法: python scripts/render.py <input.md> [--html|--latex] [-o output] [--open]")
+        print("  --html  输出 A4 HTML 报告（展示/汇报用）")
+        print("  --latex 输出 LaTeX 论文（投稿用）")
+        print("  默认: --html")
         sys.exit(1)
 
     input_path = None
     output_path = None
     open_browser = False
+    mode = "html"
 
     i = 0
     while i < len(args):
@@ -210,6 +308,10 @@ def main():
             output_path = args[i + 1]; i += 1
         elif args[i] == "--open":
             open_browser = True
+        elif args[i] == "--html":
+            mode = "html"
+        elif args[i] == "--latex":
+            mode = "latex"
         elif not args[i].startswith("-") and input_path is None:
             input_path = args[i]
         i += 1
@@ -225,16 +327,21 @@ def main():
 
     text = src.read_text(encoding="utf-8")
     meta, body_md = parse_front_matter(text)
-    body_html = md_to_html(body_md)
-    html = build_html(meta, body_html)
+
+    if mode == "latex":
+        body_converted = md_to_latex(body_md)
+        result = build_latex(meta, body_converted)
+    else:
+        body_html = md_to_html(body_md)
+        result = build_html(meta, body_html)
 
     if output_path:
-        Path(output_path).write_text(html, encoding="utf-8")
-        print(f"✅ 已输出: {output_path}")
+        Path(output_path).write_text(result, encoding="utf-8")
+        print(f"✅ 已输出 ({mode}): {output_path}")
     else:
-        print(html)
+        print(result)
 
-    if open_browser and output_path:
+    if open_browser and output_path and mode == "html":
         abs_path = Path(output_path).resolve()
         subprocess.run(["xdg-open", str(abs_path)], check=False)
 
