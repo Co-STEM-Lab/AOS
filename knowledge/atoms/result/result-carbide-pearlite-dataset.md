@@ -26,7 +26,7 @@ created: "2026-06-23"
 | AI 分割结果 | 20 | PNG | 模型预测的分割掩膜 |
 | 可视化 vis2 | 20 | PNG | AI 分割结果的可视化叠加 |
 | 可视化 vis_with_ap | 7 | PNG | benchmark 子集的可视化（含 AP 指标） |
-| canvas-image | 1 | PNG | 整体分割效果概览图 |
+| canvas-image | 1 | PNG | uni-aims 模型零样本推理结果（微调前基线） |
 
 ## 样品信息
 
