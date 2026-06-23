@@ -147,7 +147,20 @@ academic-operating-system/
 ├── projects/                      # 🔄 项目管线
 │   ├── active/                       # 进行中
 │   │   ├── proj-carbide-pearlite-seg/
-│   │   │   └── index.md
+│   │   │   ├── data/
+│   │   │   │   ├── fig-5-1000x.jpg
+│   │   │   │   ├── fig-6-1000x.jpg
+│   │   │   │   ├── fig-7-1000x.jpg
+│   │   │   │   ├── fig-8-1000x.jpg
+│   │   │   │   ├── fig-ai-seg-5-1000x.png
+│   │   │   │   ├── fig-ai-seg-7-1000x.png
+│   │   │   │   ├── fig-benchmark-5-1000x.png
+│   │   │   │   ├── fig-canvas-overview.png
+│   │   │   │   ├── fig-label-7-1000x.png
+│   │   │   │   └── fig-vis-ap-5-1000x.png
+│   │   │   ├── index.md
+│   │   │   ├── report-carbide-pearlite.html
+│   │   │   └── report-carbide-pearlite.md
 │   │   └── proj-ferrite-grain/
 │   │       ├── data/
 │   │       │   ├── fig-1-banded-structure.jpg
