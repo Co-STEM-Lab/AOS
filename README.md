@@ -152,11 +152,17 @@ academic-operating-system/
 │   │   │   │   ├── fig-6-1000x.jpg
 │   │   │   │   ├── fig-7-1000x.jpg
 │   │   │   │   ├── fig-8-1000x.jpg
+│   │   │   │   ├── fig-ai-seg-5-1000x.jpg
 │   │   │   │   ├── fig-ai-seg-5-1000x.png
+│   │   │   │   ├── fig-ai-seg-7-1000x.jpg
 │   │   │   │   ├── fig-ai-seg-7-1000x.png
+│   │   │   │   ├── fig-benchmark-5-1000x.jpg
 │   │   │   │   ├── fig-benchmark-5-1000x.png
+│   │   │   │   ├── fig-canvas-overview.jpg
 │   │   │   │   ├── fig-canvas-overview.png
+│   │   │   │   ├── fig-label-7-1000x.jpg
 │   │   │   │   ├── fig-label-7-1000x.png
+│   │   │   │   ├── fig-vis-ap-5-1000x.jpg
 │   │   │   │   └── fig-vis-ap-5-1000x.png
 │   │   │   ├── index.md
 │   │   │   ├── report-carbide-pearlite.html
