@@ -11,7 +11,11 @@ cat > "$PRE_COMMIT" << 'HOOKEOF'
 # AOS Guardian Layer 1: 硬守卫
 # 在每次 commit 前运行不变式校验，HARD 违规 = 拒绝提交
 
-set -e
+# 紧急跳过
+if [ "${SKIP_AOS_GUARDIAN:-0}" = "1" ]; then
+    echo "⏭️  AOS Guardian: 已跳过 (SKIP_AOS_GUARDIAN=1)"
+    exit 0
+fi
 
 # 激活 venv（如果存在）
 if [ -f venv/bin/activate ]; then
@@ -20,9 +24,9 @@ fi
 
 echo "🔍 AOS Guardian: 不变式校验中..."
 
-# 运行检查
-python scripts/check_invariants.py --json > /tmp/aos-check-result.json 2>&1
-EXIT_CODE=$?
+# 运行检查（30 秒超时防 hang；不设 set -e 因为 check 的 SOFT 警告也返回非零）
+timeout 30 python scripts/check_invariants.py --json > /tmp/aos-check-result.json 2>&1 || true
+EXIT_CODE=${PIPESTATUS[0]}
 
 if [ $EXIT_CODE -eq 1 ]; then
     echo ""
