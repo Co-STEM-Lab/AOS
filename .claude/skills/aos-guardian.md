@@ -49,26 +49,20 @@ description: >-
 
 ### 标准巡检（用户说"检查 AOS"）
 
+**一条命令完成全部：**
+
+```bash
+python scripts/scan.py --log
 ```
-Step 1: 运行 check_invariants.py --json
-        ↓
-    有 HARD? → 立刻报告并列出修复步骤（最优先）
-        ↓ 无
-Step 2: 运行 check_status.py
-        ↓
-Step 3: 解析新鲜度数据
-        - 技能: 哪些超过 180 天未 review?
-        - 项目: 哪些 active 超过 90 天无日志?
-        - 原子: 哪些 draft 超过 60 天?
-        ↓
-Step 4: 生成维护报告（人类可读）
-        - 标题: "AOS 维护报告 — YYYY-MM-DD"
-        - 分区: 紧急 / 建议 / 良好
-        ↓
-Step 5: 将报告追加到 knowledge/maintenance-log.md
-        ↓
-Step 6: 询问用户是否处理建议项
-```
+
+- 自动运行不变式校验 + 健康面板 + 新鲜度检测
+- 自动追加巡检记录到 `knowledge/maintenance-log.md`
+- 人类可读面板直接输出
+
+**AI 只需做：**
+1. 运行 `python scripts/scan.py --log`
+2. 解读输出：HARD 违规 → 立刻报告修复步骤；SOFT 警告 → 一句话建议；全通过 → 报告健康度
+3. 询问用户是否处理建议项
 
 ### 修复流程（用户确认后）
 
@@ -76,9 +70,8 @@ Step 6: 询问用户是否处理建议项
 Step 1: 用户说"处理 X"
 Step 2: 列出具体修改内容（diff 形式）
 Step 3: 用户确认 → 执行修改
-Step 4: 重新运行 check_invariants.py 验证修复
+Step 4: 重新运行 python scripts/scan.py --log 验证
 Step 5: git diff 给用户看最终变更
-Step 6: 更新 maintenance-log.md 记录修复
 ```
 
 ## 新鲜度判断函数

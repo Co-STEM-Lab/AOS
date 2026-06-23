@@ -60,8 +60,6 @@ python scripts/check_status.py              # 状态面板
 ## 对话中的标准动作
 
 当用户说"检查 AOS" / "扫描" / scan 或类似指令时：
-1. 运行 `python scripts/scan.py`（或 `--json` 获取结构化数据）
-2. 将结果结构化呈现（不复制粘贴原始输出）
-3. 对每个违规/警告，给出 1 句话修复建议
-4. 如果有 HARD 违规，优先处理
-5. 将检查结果追加到 `knowledge/maintenance-log.md`
+1. 运行 `python scripts/scan.py --log`（一条命令完成扫描 + 写日志）
+2. 解读输出：HARD 违规优先报告、SOFT 警告一句话建议、全通过报告健康度
+3. 询问用户是否处理建议项

@@ -5,6 +5,7 @@ AOS 统一扫描入口 —— 编排不变式校验 + 健康面板。
 用法：
     python scripts/scan.py              # 人类可读统一面板
     python scripts/scan.py --json       # 机器可读 JSON
+    python scripts/scan.py --log        # 扫描并追加维护日志
 
 依赖：check_invariants.py + check_status.py
 """
@@ -13,9 +14,10 @@ import sys
 import json
 import subprocess
 from pathlib import Path
-from datetime import date
+from datetime import date, datetime
 
 ROOT = Path(__file__).resolve().parent.parent
+LOG_PATH = ROOT / "knowledge" / "maintenance-log.md"
 
 
 def run(script: str, args: list[str]) -> dict:
@@ -30,8 +32,50 @@ def run(script: str, args: list[str]) -> dict:
         return {"error": (result.stdout.strip() or result.stderr.strip())[:200]}
 
 
+def write_log(invariants: dict, health: dict):
+    """追加巡检记录到 maintenance-log.md。"""
+    if not LOG_PATH.exists():
+        return
+
+    now = datetime.now().strftime("%Y-%m-%d %H:%M")
+    today = date.today().isoformat()
+    ihard = invariants.get("summary", {}).get("hard", 0)
+    isoft = invariants.get("summary", {}).get("soft", 0)
+
+    content = LOG_PATH.read_text(encoding="utf-8")
+
+    # 避免同日重复写入
+    if f"| {today}" in content and "scan --log" in content:
+        return
+
+    # 找到巡检记录表格末尾，插入新行
+    marker = "|------|---------|---------|---------|------|"
+    if marker in content:
+        line = f"| {now} | scan --log | {ihard} | {isoft} | {'✅ 无需处置' if ihard == 0 and isoft == 0 else '待处理'} |"
+        content = content.replace(
+            marker,
+            marker + "\n" + line
+        )
+
+    # 如果有违规，追加修复记录区域
+    if ihard > 0 or isoft > 0:
+        fix_section = f"\n### {now} 扫描发现\n"
+        for v in invariants.get("hard_violations", []):
+            fix_section += f"- [HARD] {v['file']}: {v['message'][:100]}\n"
+        for v in invariants.get("soft_violations", []):
+            fix_section += f"- [SOFT] {v['file']}: {v['message'][:100]}\n"
+
+        # 追加到修复记录区域之前
+        fix_marker = "## 巡检协议"
+        if fix_marker in content:
+            content = content.replace(fix_marker, fix_section + "\n" + fix_marker)
+
+    LOG_PATH.write_text(content, encoding="utf-8")
+
+
 def main():
     json_mode = "--json" in sys.argv
+    log_mode = "--log" in sys.argv
 
     invariants = run("check_invariants.py", ["--json"])
     health = run("check_status.py", ["--json"])
@@ -80,6 +124,11 @@ def main():
             print(f"  📦 原子: {atoms.get('total', '?')} | draft: {atoms.get('draft', '?')} | final: {atoms.get('final', '?')}")
         if projs:
             print(f"  📁 项目: {projs.get('total', '?')}")
+        print()
+
+    if log_mode:
+        write_log(invariants, health)
+        print("  📝 已追加到 knowledge/maintenance-log.md")
         print()
 
     iv_pass = invariants.get("summary", {}).get("pass", False)
