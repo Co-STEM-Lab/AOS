@@ -3,7 +3,9 @@
 聚合管线：按项目提取关联原子，注入论文模板生成初稿。
 
 用法：
-    python scripts/aggregate.py <project-id>                  # 纯文本聚合
+    python scripts/aggregate.py <project-id>                  # 纯文本聚合（Markdown）
+    python scripts/aggregate.py <project-id> --html            # 直接输出 A4 HTML
+    python scripts/aggregate.py <project-id> --html -o paper.html  # 输出到文件
     python scripts/aggregate.py <project-id> --execute         # 执行计算原子并嵌入输出
     python scripts/aggregate.py <project-id> --execute --input data/custom.csv  # 指定输入数据
 
@@ -12,10 +14,12 @@
     - knowledge/atoms/ 下的原子文件（含 YAML front-matter）
     - projects/ 下的项目卡片（含 YAML front-matter）
     - --execute 模式下需要计算原子声明的 script_deps 已安装
+    - --html 模式下可选 pip install markdown 获得更好渲染
 """
 
 import sys
 import os
+import io
 import subprocess
 import json
 import shlex
@@ -28,6 +32,8 @@ ROOT = Path(__file__).resolve().parent.parent
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
 SCRIPTS_DIR = ATOMS_DIR / "scripts"
 PROJECTS_DIR = ROOT / "projects"
+CSS_PATH = ROOT / "templates" / "output.css"
+HTML_TEMPLATE = ROOT / "templates" / "paper-html.html"
 
 
 def parse_front_matter(filepath: str) -> dict | None:
@@ -193,6 +199,8 @@ def main():
     execute = False
     input_override = None
     project_id = None
+    html_mode = False
+    output_path = None
 
     # 参数解析
     args = sys.argv[1:]
@@ -200,18 +208,24 @@ def main():
     while i < len(args):
         if args[i] == "--execute":
             execute = True
+        elif args[i] == "--html":
+            html_mode = True
+        elif args[i] == "-o" and i + 1 < len(args):
+            output_path = args[i + 1]
+            i += 1
         elif args[i] == "--input" and i + 1 < len(args):
             input_override = args[i + 1]
             i += 1
-        elif not args[i].startswith("--") and project_id is None:
+        elif not args[i].startswith("-") and project_id is None:
             project_id = args[i]
         i += 1
 
     if not project_id:
-        print("用法: python scripts/aggregate.py <project-id> [--execute] [--input data.csv]")
+        print("用法: python scripts/aggregate.py <project-id> [--html] [--execute] [-o output.html]")
         print("示例: python scripts/aggregate.py proj-dynamic-X")
-        print("      python scripts/aggregate.py proj-dynamic-X --execute")
-        print("      python scripts/aggregate.py proj-dynamic-X --execute --input data/custom.csv")
+        print("      python scripts/aggregate.py proj-dynamic-X --html")
+        print("      python scripts/aggregate.py proj-dynamic-X --html -o paper.html")
+        print("      python scripts/aggregate.py proj-dynamic-X --execute --html")
         sys.exit(1)
 
     if execute:
@@ -242,56 +256,73 @@ def main():
     grouped = group_atoms_by_tag(atoms)
     compute_count = sum(1 for a in atoms if a["front_matter"].get("type") == "compute")
 
-    # 3. 输出聚合结果
-    print(f"# {project_title}")
-    print(f"\n> 自动聚合生成于 {datetime.now().strftime('%Y-%m-%d %H:%M')}")
-    print(f"> 项目 ID: {project_id}")
-    print(f"> 关联原子数: {len(atoms)}")
+    # 3. 构建 MD 输出（存到列表，最后决定输出格式）
+    out: list[str] = []
+    a = out.append  # shorthand
+
+    a(f"# {project_title}")
+    a(f"\n> 自动聚合生成于 {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+    a(f"> 项目 ID: {project_id}")
+    a(f"> 关联原子数: {len(atoms)}")
     if execute and compute_count > 0:
-        print(f"> 计算原子: {compute_count}（已执行 ✅）")
+        a(f"> 计算原子: {compute_count}（已执行 ✅）")
     elif compute_count > 0:
-        print(f"> 计算原子: {compute_count}（未执行，加 --execute 运行）")
-    print()
+        a(f"> 计算原子: {compute_count}（未执行，加 --execute 运行）")
+    a("")
 
-    # Introduction 段：缺口原子
+    # Introduction 段
     if grouped["#引言缺口"]:
-        print("## Introduction（缺口 → 动机）\n")
+        a("## Introduction（缺口 → 动机）\n")
         for atom in grouped["#引言缺口"]:
-            print(render_atom(atom, execute, input_override))
-            print()
+            a(render_atom(atom, execute, input_override))
+            a("")
     else:
-        print("## Introduction\n\n<!-- 无缺口原子，请先创建 type=gap 的原子 -->\n")
+        a("## Introduction\n\n<!-- 无缺口原子，请先创建 type=gap 的原子 -->\n")
 
-    # Method 段：方法原子（含 compute 类型）
+    # Method 段
     if grouped["#方法组件"]:
-        print("## Method（方法组件）\n")
+        a("## Method（方法组件）\n")
         for atom in grouped["#方法组件"]:
-            print(render_atom(atom, execute, input_override))
-            print()
+            a(render_atom(atom, execute, input_override))
+            a("")
 
-    # Results & Discussion 段：结果原子 + 洞察原子
+    # Results & Discussion 段
     if grouped["#结果讨论"]:
-        print("## Results & Discussion\n")
+        a("## Results & Discussion\n")
         for atom in grouped["#结果讨论"]:
-            print(render_atom(atom, execute, input_override))
-            print()
+            a(render_atom(atom, execute, input_override))
+            a("")
 
     # 其他原子
     if grouped["other"]:
-        print("## 其他原子\n")
+        a("## 其他原子\n")
         for atom in grouped["other"]:
-            print(render_atom(atom, execute, input_override))
-            print()
+            a(render_atom(atom, execute, input_override))
+            a("")
 
     # 汇总
-    print("---")
-    print(f"## 原子索引")
+    a("---")
+    a("## 原子索引")
     for group_name, group_atoms in grouped.items():
         if group_atoms:
-            print(f"\n### {group_name}")
-            for a in group_atoms:
-                compute_mark = " ⚡" if a["front_matter"].get("type") == "compute" else ""
-                print(f"- [{a['front_matter']['id']}]{compute_mark} {a['front_matter']['title']}")
+            a(f"\n### {group_name}")
+            for atom in group_atoms:
+                compute_mark = " ⚡" if atom["front_matter"].get("type") == "compute" else ""
+                a(f"- [{atom['front_matter']['id']}]{compute_mark} {atom['front_matter']['title']}")
+
+    md_text = "\n".join(out)
+
+    # 4. 输出
+    if html_mode:
+        body_html = md_to_html(md_text)
+        html = wrap_html(project_title, body_html)
+        if output_path:
+            Path(output_path).write_text(html, encoding="utf-8")
+            print(f"✅ 已输出 A4 HTML: {output_path}")
+        else:
+            print(html)
+    else:
+        print(md_text)
 
 
 def check_script_deps(project_id: str) -> tuple[bool, list[str]]:
@@ -307,6 +338,112 @@ def check_script_deps(project_id: str) -> tuple[bool, list[str]]:
             except ImportError:
                 missing.add(dep)
     return len(missing) == 0, sorted(missing)
+
+
+# ─── HTML 输出 ──────────────────────────────────────────────
+
+def _escape_html(text: str) -> str:
+    return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+
+
+def _inline_md(text: str) -> str:
+    text = _escape_html(text)
+    text = re.sub(r'\*\*\*(.+?)\*\*\*', r'<strong><em>\1</em></strong>', text)
+    text = re.sub(r'\*\*(.+?)\*\*', r'<strong>\1</strong>', text)
+    text = re.sub(r'\*(.+?)\*', r'<em>\1</em>', text)
+    text = re.sub(r'`([^`]+)`', r'<code>\1</code>', text)
+    text = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)', r'<img alt="\1" src="\2">', text)
+    text = re.sub(r'\[([^\]]+)\]\(([^)]+)\)', r'<a href="\2">\1</a>', text)
+    return text
+
+
+def md_to_html(md: str) -> str:
+    """Markdown→HTML。优先 markdown 库，fallback 简易转换。"""
+    try:
+        import markdown as mdlib
+        return mdlib.markdown(md, extensions=["tables", "fenced_code"])
+    except ImportError:
+        pass
+
+    lines = md.split("\n")
+    out = []
+    in_list = in_ol = in_code = False
+    code_buf = []
+
+    for line in lines:
+        if line.strip().startswith("```"):
+            if in_code:
+                out.append(f'<pre><code>{_escape_html(chr(10).join(code_buf))}</code></pre>')
+                code_buf = []; in_code = False
+            else:
+                in_code = True
+            continue
+        if in_code:
+            code_buf.append(line); continue
+
+        if not line.strip():
+            if in_list: out.append("</ul>"); in_list = False
+            if in_ol: out.append("</ol>"); in_ol = False
+            continue
+
+        m = re.match(r"^(#{1,6})\s+(.+)$", line)
+        if m:
+            if in_list: out.append("</ul>"); in_list = False
+            if in_ol: out.append("</ol>"); in_ol = False
+            out.append(f"<h{len(m.group(1))}>{m.group(2)}</h{len(m.group(1))}>")
+            continue
+
+        m = re.match(r"^[-*+]\s+(.+)$", line)
+        if m:
+            if not in_list: out.append("<ul>"); in_list = True
+            out.append(f"<li>{_inline_md(m.group(1))}</li>"); continue
+
+        m = re.match(r"^\d+\.\s+(.+)$", line)
+        if m:
+            if not in_ol: out.append("<ol>"); in_ol = True
+            out.append(f"<li>{_inline_md(m.group(1))}</li>"); continue
+
+        m = re.match(r"^>\s?(.*)$", line)
+        if m:
+            if in_list: out.append("</ul>"); in_list = False
+            if in_ol: out.append("</ol>"); in_ol = False
+            out.append(f"<blockquote><p>{_inline_md(m.group(1))}</p></blockquote>"); continue
+
+        if in_list: out.append("</ul>"); in_list = False
+        if in_ol: out.append("</ol>"); in_ol = False
+        out.append(f"<p>{_inline_md(line)}</p>")
+
+    if in_list: out.append("</ul>")
+    if in_ol: out.append("</ol>")
+    return "\n".join(out)
+
+
+def wrap_html(title: str, body_html: str) -> str:
+    """将正文 HTML 注入 A4 模板，CSS 内联。"""
+    css = ""
+    if CSS_PATH.exists():
+        css = CSS_PATH.read_text(encoding="utf-8")
+
+    return f"""<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>{_escape_html(title)}</title>
+<style>
+{css}
+</style>
+</head>
+<body>
+<div class="page">
+<h1>{_escape_html(title)}</h1>
+<div class="authors"></div>
+<div class="affiliation"></div>
+<div class="abstract"><p><strong>摘要：</strong></p></div>
+<div class="keywords"><strong>关键词：</strong></div>
+{body_html}
+</div>
+</body>
+</html>"""
 
 
 if __name__ == "__main__":
