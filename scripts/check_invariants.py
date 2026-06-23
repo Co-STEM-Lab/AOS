@@ -595,6 +595,73 @@ def check_documentation_consistency(vocab: dict) -> list[dict]:
     return violations
 
 
+def check_evidence_anchoring(vocab: dict) -> list[dict]:
+    """不变式⑨ 断言必有源 — result/insight 原子必须有 source，推测内容必须标记。"""
+    violations = []
+    atom_types_require_source = {"result", "insight"}
+    speculation_tag = vocab.get("speculation_tag", "#推测")
+
+    for f in sorted(ATOMS_DIR.rglob("*.md")):
+        if f.parent.name in ("example", "scripts"):
+            continue
+        fm = parse_front_matter(str(f))
+        if not fm:
+            continue
+        atom_id = fm.get("id", f.stem)
+        atom_type = fm.get("type", "")
+        source = fm.get("source", "").strip()
+        tags = fm.get("tags", [])
+        body = parse_body(str(f))
+        rel = str(f.relative_to(ROOT))
+
+        # ── 规则 A：result / insight 类型必须有 source ──
+        if atom_type in atom_types_require_source and not source:
+            violations.append({
+                "level": "SOFT",
+                "invariant": "断言必有源",
+                "file": rel,
+                "field": "source",
+                "value": "(空)",
+                "message": f"{atom_type} 原子 '{atom_id}' 的 source 为空——断言无据可查",
+                "fix": "填入数据出处 / 文献 key / 实验编号。若来源尚不确定，填入 '待确认' 并将 atom status 设为 draft",
+            })
+
+        # ── 规则 B：正文中有推测性内容但未标记 ──
+        # 通用检测：任何对文件名中缩写的解释（如"BC（带状组织？）"、
+        # "BC 可能是带状组织"），若未标记 ⚠️ 或 #推测 tag → 违规
+        speculation_markers_present = ("⚠️" in body) or (speculation_tag in tags)
+        if not speculation_markers_present:
+            # 检测模式：大写缩写后跟中文括号解释
+            # 例：BC（带状组织？）、BC(banded structure)
+            pattern_cn = r'([A-Z]{2,})[（]([^）]{1,30})[）]'
+            pattern_en = r'([A-Z]{2,})\s*\(([^)()]{1,30})\)'
+            known_abbrs = {"ISBN", "URL", "DOI", "API", "GPU", "CPU", "RGB", "PDF",
+                           "CSV", "JSON", "HTML", "CSS", "HTTP", "HTTPS", "XML",
+                           "TIFF", "TIF", "PNG", "SVG", "JPG", "JPEG", "BMP",
+                           "ISO", "ASTM", "GB", "NIST", "IEEE", "ACM",
+                           "RGB", "BGR", "HSV", "LAB", "CMYK",
+                           "DICOM", "NIfTI", "HDF5", "YAML", "TOML",
+                           "DOI", "URI", "URN", "CID", "PMID",
+                           "ID", "OK", "NLP", "ML", "DL", "RL", "AI"}
+            for pat in (pattern_cn, pattern_en):
+                for m in re.finditer(pat, body):
+                    abbr = m.group(1)
+                    if abbr.upper() in known_abbrs:
+                        continue
+                    snippet = m.group(0)[:80]
+                    violations.append({
+                        "level": "SOFT",
+                        "invariant": "断言必有源",
+                        "file": rel,
+                        "field": f"{abbr} 缩写解释",
+                        "value": snippet,
+                        "message": f"'{snippet}' — 缩写 '{abbr}' 的含义断言无 ⚠️ 标记且无 #推测 tag",
+                        "fix": "若此解释来自 source 则有据；若来自推测则加 ⚠️ 前缀或 #推测 tag",
+                    })
+
+    return violations
+
+
 # ─── 文档同步生成器 ────────────────────────────────────────────
 
 # 目录 → 注释映射（README 树用的中文说明）
@@ -1045,6 +1112,7 @@ def main():
     # 收集所有违规
     all_violations = []
     all_violations.extend(check_atom_front_matter(vocab))
+    all_violations.extend(check_evidence_anchoring(vocab))
     all_violations.extend(check_matrix_project_coupling(vocab))
     all_violations.extend(check_skill_evidence(vocab))
     all_violations.extend(check_script_self_containment(vocab))

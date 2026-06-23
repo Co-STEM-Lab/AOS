@@ -373,12 +373,13 @@ python scripts/aggregate.py proj-dynamic-X --execute > outputs/papers/proj-dynam
 5. **人不可替代** — 脚本只做聚合，不做决策。原子创建、技能评估、项目启动的决策权永远在人。
 6. **脚本自包含** — 任何计算原子的脚本，提取文件 + 满足 `script_deps` + 给定 `script_input` → 应能独立运行并复现结果。禁止隐式依赖（硬编码绝对路径、未声明的系统库）。
 7. **文档同步** — README.md 和 CLAUDE.md 中的目录结构、脚本列表、技能列表、不变式数量必须与实际项目一致。文档腐化 = 新成员无法上手。
+8. **断言必有源** — 任何对事实的解释（缩写含义、文件命名规律解码、领域术语解释）必须可追溯到 source 字段指向的文档。无法证实的内容必须用 ⚠️ 标记为推测。"BC = 带状组织"这样的无源断言是系统级错误。
 
 ---
 
 ## 系统守护：AOS Guardian
 
-AOS 内置三层自主免疫系统，对应 Loop Engineering 的 Outer Loop 编排层，守护上述 7 条不变式不被侵蚀。
+AOS 内置三层自主免疫系统，对应 Loop Engineering 的 Outer Loop 编排层，守护上述 8 条不变式不被侵蚀。
 
 ### 架构
 

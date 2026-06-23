@@ -7,7 +7,7 @@ type: gap                # 必填。gap | method | result | insight | compute
 tags: []                 # 必填。至少 2 个：一个"结构标签" + 一个"领域标签"
 project: ""              # 必填。关联项目 id，无项目填 "uncategorized"
 status: draft            # 必填。draft | final
-source: ""               # 选填。文献 key / 实验编号 / 灵感来源
+source: ""               # result/insight 必填。文献 key / 实验编号 / 数据来源文档
 created: ""              # 自动或手动填写日期 YYYY-MM-DD
 
 # --- 以下仅 type=compute 时填写 ---
@@ -22,10 +22,12 @@ script_args: ""           # 额外命令行参数，如 "--group-col treatment -
 # 核心断言
 
 <!-- 一句可独立引用的话。如果是 compute 类型：描述脚本做什么、输出什么。 -->
+<!-- ⚠️ 对缩写/命名规律/领域术语的解释若无书面来源，必须用 ⚠️ 标注 + #推测 tag -->
 
 ## 证据
 
 <!-- 支撑证据：数据、引文链接、图表路径。 -->
+<!-- 每一项事实性断言必须有 source 字段支撑。无 source = 不可引用。 -->
 <!-- compute 类型：运行 `python scripts/aggregate.py <proj> --execute` 后自动填入。 -->
 
 ## 适用场景
