@@ -47,22 +47,21 @@
 ## 检查命令
 
 ```bash
-# 人类可读
-python scripts/check_invariants.py
+# 统一扫描
+python scripts/scan.py              # 不变式 + 健康面板
+python scripts/scan.py --json       # 机器可读
 
-# 机器可读（CI / pre-commit）
-python scripts/check_invariants.py --json
-
-# 状态面板
-python scripts/check_status.py
+# 单项检查
+python scripts/check_invariants.py          # 不变式
+python scripts/check_invariants.py --json   # 机器可读
+python scripts/check_status.py              # 状态面板
 ```
 
 ## 对话中的标准动作
 
-当用户说"检查一下 AOS"或类似指令时：
-1. 运行 `python scripts/check_invariants.py`
-2. 运行 `python scripts/check_status.py`
-3. 将结果结构化呈现（不复制粘贴原始输出）
-4. 对每个 SOFT 警告，给出 1 句话修复建议
-5. 如果有 HARD 违规，优先处理
-6. 将检查结果追加到 `knowledge/maintenance-log.md`
+当用户说"检查 AOS" / "扫描" / scan 或类似指令时：
+1. 运行 `python scripts/scan.py`（或 `--json` 获取结构化数据）
+2. 将结果结构化呈现（不复制粘贴原始输出）
+3. 对每个违规/警告，给出 1 句话修复建议
+4. 如果有 HARD 违规，优先处理
+5. 将检查结果追加到 `knowledge/maintenance-log.md`

@@ -22,9 +22,12 @@
 ## 核心脚本
 
 ```bash
+python scripts/scan.py                      # 🚀 统一扫描入口（不变式 + 健康面板）
+python scripts/scan.py --json               # 机器可读模式
+
 python scripts/check_invariants.py          # 不变式硬校验（pre-commit 自动运行）
-python scripts/check_invariants.py --json   # 机器可读模式
-python scripts/check_status.py              # 系统健康面板（每周运行）
+python scripts/check_invariants.py --json --fix  # 自动修复可修的违规
+python scripts/check_status.py              # 系统健康面板 + 新鲜度
 python scripts/aggregate.py <proj-id>       # 聚合原子生成初稿
 python scripts/aggregate.py <proj-id> --execute  # 执行计算原子
 bash scripts/install-hooks.sh               # 安装 pre-commit hook
