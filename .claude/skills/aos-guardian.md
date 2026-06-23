@@ -1,10 +1,12 @@
 ---
 name: aos-guardian
-description: AOS 系统守护——自主巡检不变式、检测漂移、生成修复建议、写维护日志。对应 Loop Engineering 的 Outer Loop 编排层。
-trigger:
-  - 用户说 "检查 AOS" / "check AOS" / "守护" / "guardian"
-  - 用户说 "系统健康" / "维护" / "maintenance"
-  - 每个大改动的 Step 5 涌现检查阶段
+description: >-
+  AOS 系统守护——自主巡检不变式、检测漂移、生成修复建议、写维护日志。
+  对应 Loop Engineering 的 Outer Loop 编排层。
+  Use this skill whenever the user says any of: "检查 AOS", "check AOS",
+  "扫描", "scan", "守护", "guardian", "系统健康", "health check",
+  "维护", "maintenance",  or whenever the user asks about the health or
+  status of the AOS project.
 ---
 
 # AOS Guardian Skill

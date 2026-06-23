@@ -1,13 +1,14 @@
 ---
 name: aos-operations
-description: AOS 操作引导——建原子/建项目/出初稿/改词汇表/更技能时的自动检查与提示。覆盖 AOS 全部 5 类高频操作。
-trigger:
-  - 用户在 knowledge/atoms/ 下创建或修改 .md 文件
-  - 用户在 projects/ 下创建或修改目录/index.md
-  - 用户编辑 knowledge/controlled-vocabulary.yml
-  - 用户运行 scripts/aggregate.py
-  - 用户编辑 competencies/skill-tree.md
-  - 用户说 "建原子" / "建项目" / "出初稿" / "改词汇表"
+description: >-
+  AOS 操作引导——在创建或修改原子、项目、词汇表、技能评级，或生成初稿时，
+  自动执行预检、引导和后检。覆盖 AOS 全部 5 类高频操作。
+  Use this skill whenever the user is about to or has just: created/edited
+  files under knowledge/atoms/, created/edited a project under projects/,
+  modified knowledge/controlled-vocabulary.yml, run scripts/aggregate.py,
+  edited competencies/skill-tree.md, or any general modification to the
+  AOS repository structure. Also when the user says any of: "建原子",
+  "建项目", "立项", "出初稿", "生成初稿", "改词汇表", "更新技能", "评技能".
 ---
 
 # AOS Operations Skill
