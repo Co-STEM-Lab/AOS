@@ -60,7 +60,7 @@ data/                           # 示例/测试数据
 5. **人不可替代** — 脚本聚合，人决策
 6. **脚本自包含** — compute 脚本无隐式依赖
 7. **文档同步** — README / CLAUDE.md 与实际项目结构一致
-8. **断言必有源** — result/insight 原子 source 不可为空；对文件名缩写的解释若来自推测必须用 ⚠️ 标注或加 #推测 tag
+8. **断言必有源** — (a) result/insight 原子 source 不可为空；缩写解释若无源必须 ⚠️ 标记。(b) insight 结论必须在「关联」节引用支撑它的 method/result/compute 原子——不可凭空降生
 
 AI 权限：
 - ✅ 可自动修：空白 project → "uncategorized"、空白 created → 当天日期、YAML 格式错误、从 import 推断缺失的 script_deps、标记死链

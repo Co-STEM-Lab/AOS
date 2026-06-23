@@ -601,6 +601,15 @@ def check_evidence_anchoring(vocab: dict) -> list[dict]:
     atom_types_require_source = {"result", "insight"}
     speculation_tag = vocab.get("speculation_tag", "#推测")
 
+    # 预收集全部有效原子 id（供规则 C 交叉验证）
+    all_atom_ids = set()
+    for af in ATOMS_DIR.rglob("*.md"):
+        if af.parent.name in ("example", "scripts"):
+            continue
+        afm = parse_front_matter(str(af))
+        if afm:
+            all_atom_ids.add(afm.get("id", ""))
+
     for f in sorted(ATOMS_DIR.rglob("*.md")):
         if f.parent.name in ("example", "scripts"):
             continue
@@ -614,7 +623,7 @@ def check_evidence_anchoring(vocab: dict) -> list[dict]:
         body = parse_body(str(f))
         rel = str(f.relative_to(ROOT))
 
-        # ── 规则 A：result / insight 类型必须有 source ──
+        # ── 规则 A：result / insight 类型必须有 non-empty source ──
         if atom_type in atom_types_require_source and not source:
             violations.append({
                 "level": "SOFT",
@@ -657,6 +666,34 @@ def check_evidence_anchoring(vocab: dict) -> list[dict]:
                         "value": snippet,
                         "message": f"'{snippet}' — 缩写 '{abbr}' 的含义断言无 ⚠️ 标记且无 #推测 tag",
                         "fix": "若此解释来自 source 则有据；若来自推测则加 ⚠️ 前缀或 #推测 tag",
+                    })
+
+        # ── 规则 C：insight 原子的结论必须有推导链 ──
+        if atom_type == "insight":
+            # 提取关联节中对其他原子的引用，格式如 `method-xxx`、`result-xxx`
+            cross_refs = set(re.findall(r'(?:method|result|compute|gap)-\S+', body))
+            if not cross_refs:
+                violations.append({
+                    "level": "SOFT",
+                    "invariant": "断言必有源",
+                    "file": rel,
+                    "field": "关联",
+                    "value": "(无引用)",
+                    "message": f"insight 原子 '{atom_id}' 的「关联」节无任何对 method/result/compute 原子的引用——结论缺乏推导链",
+                    "fix": "在「关联」节列出支撑此 insight 的 method/result/compute 原子 id，使结论可追溯",
+                })
+            else:
+                # 验证引用的原子 id 确实存在
+                bogus = cross_refs - all_atom_ids
+                if bogus:
+                    violations.append({
+                        "level": "SOFT",
+                        "invariant": "断言必有源",
+                        "file": rel,
+                        "field": "关联",
+                        "value": ", ".join(sorted(bogus)),
+                        "message": f"insight '{atom_id}' 引用了不存在的原子: {', '.join(sorted(bogus))}",
+                        "fix": "修正引用的原子 id 或先创建被引用的原子",
                     })
 
     return violations
