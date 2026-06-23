@@ -22,37 +22,49 @@
 
 ```
 academic-operating-system/
-├── README.md                    # 本文件
-├── matrix.md                    # 🎯 研究领域 × 核心问题矩阵
+├── CLAUDE.md                     # 🤖 AI 入口（每次对话自动加载）
+├── README.md                     # 本文件
+├── matrix.md                     # 🎯 研究领域 × 核心问题矩阵
 │
-├── knowledge/                   # 🧠 知识库
-│   ├── atoms/                   #   产出原子（最小可重组知识单元）
-│   │   └── scripts/             #     计算原子配套的可复用脚本
-│   ├── literature/              #   文献笔记
-│   └── datasets/                #   数据集描述
+├── .claude/                      # AI 配置
+│   ├── rules/                    #   硬约束
+│   └── skills/                   #   协作技能（guardian, operations, qian）
 │
-├── competencies/                      # 💪 能力库
-│   └── skill-tree.md            #   技能树（自评 + 证据 + 成长路径）
+├── knowledge/                    # 🧠 知识库
+│   ├── atoms/                    #   产出原子（最小可重组知识单元）
+│   │   └── scripts/              #     计算原子配套的可复用脚本
+│   ├── literature/               #   文献笔记
+│   ├── datasets/                 #   数据集描述
+│   ├── controlled-vocabulary.yml #   受控标签词汇表
+│   └── maintenance-log.md        #   系统维护日志
 │
-├── projects/                    # 🔄 项目管线
-│   ├── active/                  #   进行中
-│   ├── completed/               #   已完成
-│   └── ideas/                   #   想法池
+├── competencies/                 # 💪 人的学术能力库
+│   └── skill-tree.md             #   技能树（自评 + 证据 + 成长路径）
 │
-├── outputs/                     # 📄 聚合产物
+├── projects/                     # 🔄 项目管线
+│   ├── active/                   #   进行中
+│   ├── completed/                #   已完成
+│   └── ideas/                    #   想法池
+│
+├── outputs/                      # 📄 聚合产物
 │   ├── papers/
 │   ├── proposals/
 │   └── talks/
 │
-├── templates/                   # 📋 标准化模板
+├── templates/                    # 📋 标准化模板
 │   ├── atom-template.md
 │   ├── project-template.md
 │   ├── skill-template.md
 │   └── paper-template.md
 │
-└── scripts/                     # 🔧 辅助工具
-    ├── aggregate.py             #   聚合原子 → 生成论文初稿
-    └── check_status.py          #   系统健康度一键检查
+├── scripts/                      # 🔧 辅助工具
+│   ├── scan.py                   #   统一扫描入口
+│   ├── check_invariants.py       #   不变式校验引擎
+│   ├── check_status.py           #   系统健康度 + 新鲜度
+│   ├── aggregate.py              #   聚合原子生成初稿
+│   └── install-hooks.sh          #   安装 pre-commit hook
+│
+└── data/                         # 📊 示例/测试数据
 ```
 
 ---
@@ -234,12 +246,13 @@ python scripts/aggregate.py proj-dynamic-X --execute > outputs/papers/proj-dynam
 4. **标签一致** — 原子标签使用受控词汇（`#引言缺口`、`#方法组件`、`#结果讨论`），不得自由创建以避免漂移。
 5. **人不可替代** — 脚本只做聚合，不做决策。原子创建、技能评估、项目启动的决策权永远在人。
 6. **脚本自包含** — 任何计算原子的脚本，提取文件 + 满足 `script_deps` + 给定 `script_input` → 应能独立运行并复现结果。禁止隐式依赖（硬编码绝对路径、未声明的系统库）。
+7. **文档同步** — README.md 和 CLAUDE.md 中的目录结构、脚本列表、技能列表、不变式数量必须与实际项目一致。文档腐化 = 新成员无法上手。
 
 ---
 
 ## 系统守护：AOS Guardian
 
-AOS 内置三层自主免疫系统，对应 Loop Engineering 的 Outer Loop 编排层，守护上述 6 条不变式不被侵蚀。
+AOS 内置三层自主免疫系统，对应 Loop Engineering 的 Outer Loop 编排层，守护上述 7 条不变式不被侵蚀。
 
 ### 架构
 
@@ -289,7 +302,7 @@ python scripts/check_status.py --freshness   # 仅漂移检测
 
 ### Guardian 不变式
 
-7. **权限分级** — AI 只提议不擅改（Guardian Rules 显式声明）。自动修复仅限格式修正；内容修改必须人确认。紧急跳过 `SKIP_AOS_GUARDIAN=1 git commit`。
+8. **权限分级** — AI 只提议不擅改（Guardian Rules 显式声明）。自动修复仅限格式修正；内容修改必须人确认。紧急跳过 `SKIP_AOS_GUARDIAN=1 git commit`。
 
 ---
 

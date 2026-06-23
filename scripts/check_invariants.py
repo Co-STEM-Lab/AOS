@@ -32,6 +32,8 @@ PROJECTS_DIR = ROOT / "projects"
 VOCAB_PATH = ROOT / "knowledge" / "controlled-vocabulary.yml"
 MATRIX_PATH = ROOT / "matrix.md"
 SKILL_TREE_PATH = ROOT / "competencies" / "skill-tree.md"
+README_PATH = ROOT / "README.md"
+CLAUDE_PATH = ROOT / "CLAUDE.md"
 
 
 # ─── 工具函数 ───────────────────────────────────────────────
@@ -438,6 +440,145 @@ def check_atom_independence(vocab: dict) -> list[dict]:
     return violations
 
 
+def check_documentation_consistency(vocab: dict) -> list[dict]:
+    """不变式⑦ 文档同步 — README/CLAUDE.md 与实际项目结构一致。"""
+    violations = []
+
+    # ── 实际文件系统 ──
+    actual_dirs = set()
+    actual_scripts = set()
+    actual_skills = set()
+    for d in ROOT.rglob("*"):
+        if d.is_dir() and d.name not in ("venv", "__pycache__", ".git", "node_modules"):
+            parts = d.relative_to(ROOT).parts
+            # 允许 .claude 目录，排除其他隐藏目录
+            if parts[0].startswith(".") and parts[0] != ".claude":
+                continue
+            actual_dirs.add(str(d.relative_to(ROOT)))
+    for f in (ROOT / "scripts").glob("*.py"):
+        actual_scripts.add(f.name)
+    # 只取顶层 skill 文件（排除 qian-skill/references/ 等子目录参考文件）
+    skills_root = ROOT / ".claude" / "skills"
+    if skills_root.is_dir():
+        for f in skills_root.glob("*.md"):
+            actual_skills.add(f.name)
+        # 也收录 skill 子目录的 SKILL.md（如 qian-skill/SKILL.md）
+        for skill_dir in skills_root.iterdir():
+            if skill_dir.is_dir() and (skill_dir / "SKILL.md").exists():
+                actual_skills.add(f"{skill_dir.name}/SKILL.md")
+
+    # ── README.md 中的目录树 vs 实际 ──
+    if README_PATH.exists():
+        readme = README_PATH.read_text(encoding="utf-8")
+        # 提取 README 中声明的目录
+        readme_dirs = set(re.findall(r'├──\s+(\S+/)\s+#', readme))
+        readme_dirs.update(re.findall(r'└──\s+(\S+/)\s+#', readme))
+
+        # README 声称存在但实际不存在
+        for d in sorted(readme_dirs):
+            d_clean = d.rstrip("/")
+            if d_clean and d_clean not in actual_dirs and d_clean not in ("knowledge/", "outputs/", "projects/", "templates/", "competencies/", ".claude/", "data/"):
+                pass  # 父级目录可能包含子目录
+            # 检查特定目录
+        for check_dir in ["knowledge/atoms/scripts", "knowledge/atoms", "competencies", ".claude/skills", ".claude/rules"]:
+            if check_dir not in actual_dirs:
+                violations.append({
+                    "level": "HARD",
+                    "invariant": "文档同步",
+                    "file": "README.md",
+                    "field": "目录结构",
+                    "value": check_dir,
+                    "message": f"README 声明了目录 '{check_dir}' 但实际不存在",
+                    "fix": f"创建目录或从 README 中移除引用",
+                })
+
+        # 实际存在但 README 未声明的重要目录/文件（用简单子串匹配，避免树形 regex 误报）
+        for check_name in ["knowledge/atoms/scripts", "knowledge/controlled-vocabulary.yml",
+                          "knowledge/maintenance-log.md", "CLAUDE.md", "data"]:
+            if (ROOT / check_name).exists():
+                # 取最后一级路径组件匹配
+                basename = Path(check_name).name
+                if basename not in readme and check_name not in readme:
+                    violations.append({
+                        "level": "SOFT",
+                        "invariant": "文档同步",
+                        "file": "README.md",
+                        "field": "目录结构",
+                        "value": check_name,
+                        "message": f"'{check_name}' 实际存在但 README 未提及",
+                        "fix": "在 README 目录树中添加此项",
+                    })
+
+    # ── CLAUDE.md 脚本列表 vs 实际 ──
+    if CLAUDE_PATH.exists():
+        claude = CLAUDE_PATH.read_text(encoding="utf-8")
+        claude_scripts = set(re.findall(r'scripts/(\S+\.py)', claude))
+        for s in sorted(actual_scripts):
+            if s not in claude_scripts:
+                violations.append({
+                    "level": "SOFT",
+                    "invariant": "文档同步",
+                    "file": "CLAUDE.md",
+                    "field": "脚本列表",
+                    "value": s,
+                    "message": f"脚本 scripts/{s} 实际存在但 CLAUDE.md 未列出",
+                    "fix": f"在 CLAUDE.md 核心脚本节添加 scripts/{s}",
+                })
+        for s in sorted(claude_scripts):
+            if s not in actual_scripts:
+                violations.append({
+                    "level": "HARD",
+                    "invariant": "文档同步",
+                    "file": "CLAUDE.md",
+                    "field": "脚本列表",
+                    "value": s,
+                    "message": f"CLAUDE.md 引用了不存在的脚本 scripts/{s}",
+                    "fix": f"移除或修正 CLAUDE.md 中的引用",
+                })
+
+    # ── CLAUDE.md 技能列表 vs 实际 ──
+    if CLAUDE_PATH.exists():
+        claude_text = CLAUDE_PATH.read_text(encoding="utf-8")
+        # 从表格中提取所有文件路径引用（第二列或任意位置）
+        claude_skill_files = set(re.findall(r'\.claude/skills/\S+\.md', claude_text))
+        claude_skill_names = set(re.findall(r'`(\S+)`\s*\|', claude_text))
+        for s in sorted(actual_skills):
+            # 匹配文件名或逻辑名
+            file_ref = f".claude/skills/{s}" if not s.startswith("qian-skill") else f".claude/skills/{s}"
+            if s not in claude_skill_names and not any(s in ref or ref.endswith(s) for ref in claude_skill_files):
+                violations.append({
+                    "level": "SOFT",
+                    "invariant": "文档同步",
+                    "file": "CLAUDE.md",
+                    "field": "Skills 列表",
+                    "value": s,
+                    "message": f"Skill '{s}' 实际存在但 CLAUDE.md 未列出",
+                    "fix": "在 CLAUDE.md Skills 表格中添加此项",
+                })
+
+    # ── README 与 Rules 的不变式关键词一致性 ──
+    if README_PATH.exists():
+        rules_path = ROOT / ".claude" / "rules" / "aos-guardian.md"
+        if rules_path.exists():
+            readme_text = README_PATH.read_text(encoding="utf-8")
+            rules_text = rules_path.read_text(encoding="utf-8")
+            # 检查 Rules 中的每条不变式关键词是否在 README 中出现
+            rule_invariants = re.findall(r'\*\*([^*]+)\*\*', rules_text)
+            for inv in rule_invariants:
+                if len(inv) > 4 and inv not in readme_text:
+                    violations.append({
+                        "level": "SOFT",
+                        "invariant": "文档同步",
+                        "file": "README.md",
+                        "field": "不变式",
+                        "value": inv,
+                        "message": f"Rules 中的不变式 '{inv}' 未在 README 中找到",
+                        "fix": "在 README 不变式列表中添加此项",
+                    })
+
+    return violations
+
+
 # ─── 自动修复 ──────────────────────────────────────────────────
 
 def _read_file(path: Path) -> str:
@@ -553,6 +694,7 @@ def main():
     all_violations.extend(check_skill_evidence(vocab))
     all_violations.extend(check_script_self_containment(vocab))
     all_violations.extend(check_atom_independence(vocab))
+    all_violations.extend(check_documentation_consistency(vocab))
 
     hard = [v for v in all_violations if v["level"] == "HARD"]
     soft = [v for v in all_violations if v["level"] == "SOFT"]
@@ -567,6 +709,7 @@ def main():
             all_violations.extend(check_skill_evidence(vocab))
             all_violations.extend(check_script_self_containment(vocab))
             all_violations.extend(check_atom_independence(vocab))
+            all_violations.extend(check_documentation_consistency(vocab))
             hard = [v for v in all_violations if v["level"] == "HARD"]
             soft = [v for v in all_violations if v["level"] == "SOFT"]
 

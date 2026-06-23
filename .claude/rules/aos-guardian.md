@@ -43,6 +43,7 @@
 4. **标签一致** — 结构标签在 `knowledge/controlled-vocabulary.yml` 中
 5. **人不可替代** — 你只提议，人决定
 6. **脚本自包含** — compute 原子的脚本无硬编码路径，依赖已声明
+7. **文档同步** — README.md / CLAUDE.md 与实际项目结构一致。新增脚本/目录/skill 后必须更新文档
 
 ## 检查命令
 
