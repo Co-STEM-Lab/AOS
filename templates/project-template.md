@@ -5,7 +5,7 @@ domain: ""               # 必填。必须对应 matrix.md 中的领域名
 problem: ""              # 必填。必须对应 matrix.md 中的问题名
 status: idea             # 必填。idea | active | writing | submitted | published
 priority: low            # low | medium | high
-skills_required: []      # 来自 skills/skill-tree.md 的技能名列表
+skills_required: []      # 来自 competencies/skill-tree.md 的技能名列表
 target_venue: ""         # 选填。目标期刊/会议名
 deadline: ""             # 选填。YYYY-MM-DD
 created: ""              # YYYY-MM-DD

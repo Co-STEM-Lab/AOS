@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
 PROJECTS_DIR = ROOT / "projects"
 VOCAB_PATH = ROOT / "knowledge" / "controlled-vocabulary.yml"
-SKILL_TREE_PATH = ROOT / "skills" / "skill-tree.md"
+SKILL_TREE_PATH = ROOT / "competencies" / "skill-tree.md"
 MATRIX_PATH = ROOT / "matrix.md"
 
 

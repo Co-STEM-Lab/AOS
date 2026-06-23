@@ -12,7 +12,7 @@
 
 ### 你必须确认后才能做的事
 - 修改任何 `knowledge/atoms/` 下的原子文件
-- 修改 `skills/skill-tree.md` 中的评级或证据
+- 修改 `competencies/skill-tree.md` 中的评级或证据
 - 修改 `matrix.md` 的矩阵内容
 - 修改 `projects/` 下的项目卡片
 - 创建新原子 / 新项目

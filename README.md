@@ -31,7 +31,7 @@ academic-operating-system/
 │   ├── literature/              #   文献笔记
 │   └── datasets/                #   数据集描述
 │
-├── skills/                      # 💪 能力库
+├── competencies/                      # 💪 能力库
 │   └── skill-tree.md            #   技能树（自评 + 证据 + 成长路径）
 │
 ├── projects/                    # 🔄 项目管线
@@ -164,7 +164,7 @@ python scripts/aggregate.py proj-dynamic-X --execute --input data/experiment_v2.
 
 ## 核心概念：技能树
 
-`skills/skill-tree.md` 是你的学术能力清单。**每条技能必须有证据。**
+`competencies/skill-tree.md` 是你的学术能力清单。**每条技能必须有证据。**
 
 | 技能 | 评级 | 证据 |
 |------|------|------|

@@ -31,7 +31,7 @@ SCRIPTS_DIR = ATOMS_DIR / "scripts"
 PROJECTS_DIR = ROOT / "projects"
 VOCAB_PATH = ROOT / "knowledge" / "controlled-vocabulary.yml"
 MATRIX_PATH = ROOT / "matrix.md"
-SKILL_TREE_PATH = ROOT / "skills" / "skill-tree.md"
+SKILL_TREE_PATH = ROOT / "competencies" / "skill-tree.md"
 
 
 # ─── 工具函数 ───────────────────────────────────────────────
@@ -317,7 +317,7 @@ def check_skill_evidence(vocab: dict) -> list[dict]:
     violations = []
     if not SKILL_TREE_PATH.exists():
         return [{"level": "SOFT", "invariant": "证据前置",
-                 "file": "skills/skill-tree.md", "message": "skill-tree.md 不存在"}]
+                 "file": "competencies/skill-tree.md", "message": "skill-tree.md 不存在"}]
 
     content = SKILL_TREE_PATH.read_text(encoding="utf-8")
     # 匹配表格行：| 技能名 | L2 或以上 | 证据内容 |
@@ -346,7 +346,7 @@ def check_skill_evidence(vocab: dict) -> list[dict]:
             violations.append({
                 "level": "SOFT",
                 "invariant": "证据前置",
-                "file": "skills/skill-tree.md",
+                "file": "competencies/skill-tree.md",
                 "field": skill_name,
                 "value": level,
                 "message": f"技能 '{skill_name}' 评级为 {level} 但缺少证据",

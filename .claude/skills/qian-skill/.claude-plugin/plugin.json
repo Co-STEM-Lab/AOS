@@ -1,0 +1,15 @@
+{
+  "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
+  "name": "qian-skill",
+  "version": "1.0.0",
+  "description": "钱学森系统科学方法论：用于复杂软件工程的 AI 协同脚手架",
+  "author": {
+    "name": "hyper-instrument",
+    "url": "https://github.com/hyper-instrument"
+  },
+  "repository": "https://github.com/hyper-instrument/qian-skill",
+  "license": "MIT",
+  "skills": [
+    "./"
+  ]
+}
