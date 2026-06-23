@@ -195,12 +195,14 @@ def build_html(meta: dict, body_html: str) -> str:
     return html
 
 
-LATEX_TEMPLATE = ROOT / "templates" / "paper-latex.tex"
+LATEX_TEMPLATE_ZH = ROOT / "templates" / "paper-latex.tex"
+LATEX_TEMPLATE_EN = ROOT / "templates" / "paper-latex-en.tex"
 
 
-def build_latex(meta: dict, body_latex: str) -> str:
+def build_latex(meta: dict, body_latex: str, lang: str = "zh") -> str:
     """将元数据和正文注入 LaTeX 模板。"""
-    template = LATEX_TEMPLATE.read_text(encoding="utf-8") if LATEX_TEMPLATE.exists() else ""
+    tpl_path = LATEX_TEMPLATE_EN if lang == "en" else LATEX_TEMPLATE_ZH
+    template = tpl_path.read_text(encoding="utf-8") if tpl_path.exists() else ""
     if not template:
         return body_latex
 
@@ -291,9 +293,11 @@ def _latex_inline(text: str) -> str:
 def main():
     args = sys.argv[1:]
     if not args:
-        print("用法: python scripts/render.py <input.md> [--html|--latex] [-o output] [--open]")
-        print("  --html  输出 A4 HTML 报告（展示/汇报用）")
-        print("  --latex 输出 LaTeX 论文（投稿用）")
+        print("用法: python scripts/render.py <input.md> [--html|--latex] [--lang zh|en] [-o output] [--open]")
+        print("  --html   输出 A4 HTML 报告（展示/汇报用）")
+        print("  --latex  输出 LaTeX 论文（投稿用）")
+        print("  --lang zh  中文 LaTeX 模板 (ctexart)")
+        print("  --lang en  英文 LaTeX 模板 (article)")
         print("  默认: --html")
         sys.exit(1)
 
@@ -301,6 +305,7 @@ def main():
     output_path = None
     open_browser = False
     mode = "html"
+    lang = "zh"
 
     i = 0
     while i < len(args):
@@ -312,6 +317,8 @@ def main():
             mode = "html"
         elif args[i] == "--latex":
             mode = "latex"
+        elif args[i] == "--lang" and i + 1 < len(args):
+            lang = args[i + 1]; i += 1
         elif not args[i].startswith("-") and input_path is None:
             input_path = args[i]
         i += 1
@@ -330,7 +337,7 @@ def main():
 
     if mode == "latex":
         body_converted = md_to_latex(body_md)
-        result = build_latex(meta, body_converted)
+        result = build_latex(meta, body_converted, lang)
     else:
         body_html = md_to_html(body_md)
         result = build_html(meta, body_html)
