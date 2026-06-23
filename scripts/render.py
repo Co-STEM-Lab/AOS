@@ -229,11 +229,66 @@ def build_latex(meta: dict, body_latex: str, style: str = "elsevier-sc") -> str:
 
 def md_to_latex(md: str) -> str:
     """Markdown → LaTeX 简易转换。"""
+    # 预处理：$$ 公式块 → \begin{equation}
+    eq_count = [0]
+    def _replace_eq(m):
+        eq_count[0] += 1
+        inner = m.group(1).strip()
+        return f"\\begin{{equation}}\n{inner}\n\\end{{equation}}"
+
+    md = re.sub(r'\$\$\s*\n(.*?)\n\s*\$\$', _replace_eq, md, flags=re.DOTALL)
+
+    # 预处理：![caption](path) → figure 占位
+    md = re.sub(r'!\[([^\]]*)\]\(([^)]+)\)',
+                r'\\begin{figure}[htbp]\n  \\centering\n  \\includegraphics[width=\\linewidth]{\2}\n  \\caption{\1}\n\\end{figure}',
+                md)
+
     lines = md.split("\n")
     out = []
-    in_itemize = in_enumerate = False
+    in_itemize = in_enumerate = in_verbatim = in_equation = in_figure = False
 
     for line in lines:
+        # 原样保留块
+        if line.strip().startswith("```"):
+            if in_verbatim:
+                out.append(r"\end{verbatim}")
+                in_verbatim = False
+            else:
+                out.append(r"\begin{verbatim}")
+                in_verbatim = True
+            continue
+        if in_verbatim:
+            out.append(line)
+            continue
+
+        # 数学环境：原样通过
+        if line.strip().startswith(r"\begin{equation}"):
+            if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
+            if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
+            out.append(line)
+            in_equation = True
+            continue
+        if in_equation:
+            if line.strip().startswith(r"\end{equation}"):
+                out.append(line)
+                in_equation = False
+            else:
+                out.append(line)  # raw pass-through
+            continue
+
+        # figure 块：已由预处理器完整生成，直接通过
+        if line.strip().startswith(r"\begin{figure}"):
+            if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
+            if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
+            in_figure = True
+            out.append(line)
+            continue
+        if in_figure:
+            out.append(line)
+            if line.strip().startswith(r"\end{figure}"):
+                in_figure = False
+            continue
+
         if not line.strip():
             if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
             if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
@@ -274,19 +329,27 @@ def md_to_latex(md: str) -> str:
 
     if in_itemize: out.append(r"\end{itemize}")
     if in_enumerate: out.append(r"\end{enumerate}")
+    if in_verbatim: out.append(r"\end{verbatim}")
     return "\n".join(out)
 
 
 def _latex_inline(text: str) -> str:
-    """行内 LaTeX 转义。"""
-    text = text.replace("\\", "\\textbackslash ")
-    for ch in "&%$#_{}~^":
-        text = text.replace(ch, "\\" + ch)
-    # Markdown 粗体/斜体 → LaTeX
-    text = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', text)
-    text = re.sub(r'\*(.+?)\*', r'\\textit{\1}', text)
-    text = re.sub(r'`([^`]+)`', r'\\texttt{\1}', text)
-    return text
+    """行内 LaTeX 转义。$...$ 内原样保留。"""
+    # 分割 $...$ 内容，分别处理
+    parts = re.split(r'(\$[^$]+\$)', text)
+    result = []
+    for part in parts:
+        if part.startswith("$") and part.endswith("$"):
+            result.append(part)  # 数学模式原样保留
+        else:
+            part = part.replace("\\", "\\textbackslash ")
+            for ch in "&%#_{}~^":
+                part = part.replace(ch, "\\" + ch)
+            part = re.sub(r'\*\*(.+?)\*\*', r'\\textbf{\1}', part)
+            part = re.sub(r'\*(.+?)\*', r'\\textit{\1}', part)
+            part = re.sub(r'`([^`]+)`', r'\\texttt{\1}', part)
+            result.append(part)
+    return "".join(result)
 
 
 def main():

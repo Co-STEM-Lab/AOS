@@ -60,6 +60,73 @@ description: >-
 
 ---
 
+## Markdown 源格式规范
+
+HTML 和 LaTeX 都从 Markdown 转换而来。**源格式不统一，两边输出都乱。**
+
+### 整体结构
+
+```markdown
+---
+# YAML front-matter：元数据
+title: "论文标题"
+authors: "..."
+abstract: "..."
+keywords: "..."
+---
+
+# 一级标题（对应 LaTeX \section）
+
+正文段落。每个段落之间空一行。
+
+## 二级标题（对应 LaTeX \subsection）
+
+### 三级标题（对应 LaTeX \subsubsection）
+```
+
+### 元素映射表
+
+| 元素 | Markdown 写法 | HTML 输出 | LaTeX 输出 |
+|------|-------------|----------|-----------|
+| 一级标题 | `# 标题` | `<h1>` | `\section{标题}` |
+| 二级标题 | `## 标题` | `<h2>` | `\subsection{标题}` |
+| 三级标题 | `### 标题` | `<h3>` | `\subsubsection{标题}` |
+| 四级标题 | `#### 标题` | `<h4>` | `\paragraph{标题}` |
+| 粗体 | `**文字**` | `<strong>` | `\textbf{文字}` |
+| 斜体 | `*文字*` | `<em>` | `\textit{文字}` |
+| 代码 | `` `code` `` | `<code>` | `\texttt{code}` |
+| 无序列表 | `- 项目` | `<ul><li>` | `\begin{itemize}\item` |
+| 有序列表 | `1. 项目` | `<ol><li>` | `\begin{enumerate}\item` |
+| 引用 | `> 文字` | `<blockquote>` | *手动 `\begin{quote}`* |
+| 行内公式 | `$E=mc^2$` | MathJax | 原样保留 |
+| 独立公式 | `$$\n...\n$$` | MathJax | `\begin{equation}...\end{equation}` |
+| 图片 | `![图题](path)` | `<figure><img><figcaption>` | `\begin{figure}\includegraphics...` |
+| 表格 | `\| A \| B \|` | `<table>` | *手动 `\begin{table}`* |
+| 链接 | `[文字](url)` | `<a href>` | `\href{url}{文字}` |
+| 代码块 | ` ```lang ` | `<pre><code>` | `\begin{verbatim}` |
+
+### 格式规则
+
+- **段落间空一行**。不空行 = 同一段落（即使换行）。
+- **标题后空一行**再写正文。
+- **公式单独成段**，前后各空一行。
+- **图片路径用相对路径**：`../data/figures/fig1.png`
+- **表格用简单 Markdown 表格**（`render.py` 自动转三线表）。
+- **LaTeX 专属命令**（`\citep`、`\ref`）写在 Markdown 中，HTML 转换时自动忽略。
+
+### 不支持的 Markdown 语法
+
+以下语法在 `aos-output` 中**不转换或转换不完整**，避免使用：
+
+| 语法 | 替代方案 |
+|------|---------|
+| HTML 标签 `<div>` | 用 Markdown 原生语法 |
+| 脚注 `[^1]` | 改为正文括号注 |
+| 任务列表 `- [ ]` | 改为无序列表 |
+| Emoji `:smile:` | 直接写文字描述 |
+
+---
+
 ## 一、图片规范
 
 ### 1.1 嵌入方式
