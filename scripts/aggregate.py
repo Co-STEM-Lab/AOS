@@ -3,17 +3,22 @@
 聚合管线：按项目提取关联原子，注入论文模板生成初稿。
 
 用法：
-    python scripts/aggregate.py <project-id> [--template templates/paper-template.md]
+    python scripts/aggregate.py <project-id>                  # 纯文本聚合
+    python scripts/aggregate.py <project-id> --execute         # 执行计算原子并嵌入输出
+    python scripts/aggregate.py <project-id> --execute --input data/custom.csv  # 指定输入数据
 
 依赖：
     - PyYAML (pip install pyyaml)
     - knowledge/atoms/ 下的原子文件（含 YAML front-matter）
     - projects/ 下的项目卡片（含 YAML front-matter）
+    - --execute 模式下需要计算原子声明的 script_deps 已安装
 """
 
 import sys
 import os
-import glob
+import subprocess
+import json
+import shlex
 import re
 import yaml
 from pathlib import Path
@@ -21,6 +26,7 @@ from datetime import datetime
 
 ROOT = Path(__file__).resolve().parent.parent
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
+SCRIPTS_DIR = ATOMS_DIR / "scripts"
 PROJECTS_DIR = ROOT / "projects"
 
 
@@ -94,13 +100,127 @@ def find_project_card(project_id: str) -> Path | None:
     return None
 
 
+def execute_compute_atom(atom: dict, input_override: str = None) -> str:
+    """执行计算原子的脚本并返回格式化输出。"""
+    fm = atom["front_matter"]
+    script_name = fm.get("script", "")
+    if not script_name:
+        return "\n<!-- ⚠️ 计算原子缺少 script 字段 -->\n"
+
+    script_path = SCRIPTS_DIR / script_name
+    if not script_path.exists():
+        return f"\n<!-- ⚠️ 脚本未找到: {script_path} -->\n"
+
+    # 构建命令
+    cmd = [sys.executable, str(script_path)]
+    data_input = input_override or fm.get("script_input", "")
+    if data_input:
+        # 如果是相对路径，转为绝对路径
+        data_path = ROOT / data_input
+        if data_path.exists():
+            data_input = str(data_path)
+        cmd.extend(["--input", data_input])
+
+    # 附加原子声明的额外参数
+    extra_args = fm.get("script_args", "")
+    if extra_args:
+        cmd.extend(shlex.split(extra_args))
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30, cwd=str(ROOT))
+        output = result.stdout.strip()
+        stderr = result.stderr.strip()
+
+        if result.returncode != 0:
+            return f"\n<!-- ❌ 脚本执行失败 (exit {result.returncode}) -->\n```\n{stderr or output}\n```\n"
+
+        # 尝试格式化 JSON 输出
+        try:
+            parsed = json.loads(output)
+            if "error" in parsed:
+                return f"\n<!-- ❌ 脚本返回错误 -->\n```json\n{json.dumps(parsed, indent=2, ensure_ascii=False)}\n```\n"
+
+            # 生成可读的 Markdown 表格
+            lines = ["\n**📊 脚本输出：**\n"]
+
+            # 基本信息
+            if "test" in parsed:
+                lines.append(f"检验方法: {parsed['test']}  ")
+
+            # 分组统计
+            for key in ["group_a", "group_b"]:
+                if key in parsed:
+                    g = parsed[key]
+                    label = g.get("label", key)
+                    lines.append(f"{label}: n={g.get('n','?')}, mean={g.get('mean','?')}, std={g.get('std','?')}  ")
+
+            # 检验结果
+            for k, v in parsed.items():
+                if k in ("group_a", "group_b", "test", "input_file"):
+                    continue
+                if isinstance(v, bool):
+                    lines.append(f"{k}: {'✅ 是' if v else '❌ 否'}  ")
+                elif isinstance(v, float) and v < 0.001 and k == "p_value":
+                    lines.append(f"{k}: {v} (< 0.001, 显著)  ")
+                else:
+                    lines.append(f"{k}: {v}  ")
+
+            lines.append(f"\n<details>\n<summary>原始 JSON</summary>\n\n```json\n{json.dumps(parsed, indent=2, ensure_ascii=False)}\n```\n</details>\n")
+            return "".join(lines)
+
+        except json.JSONDecodeError:
+            # 非 JSON 输出，原样呈现
+            return f"\n**📊 脚本输出：**\n\n```\n{output}\n```\n"
+
+    except subprocess.TimeoutExpired:
+        return "\n<!-- ⚠️ 脚本执行超时 (30s) -->\n"
+    except Exception as e:
+        return f"\n<!-- ⚠️ 脚本执行异常: {e} -->\n"
+
+
+def render_atom(atom: dict, execute: bool = False, input_override: str = None) -> str:
+    """渲染单个原子为 Markdown 段。"""
+    fm = atom["front_matter"]
+    lines = [f"### {fm['title']}", "", atom["body"]]
+
+    if execute and fm.get("type") == "compute":
+        lines.append(execute_compute_atom(atom, input_override))
+
+    return "\n".join(lines)
+
+
 def main():
-    if len(sys.argv) < 2:
-        print("用法: python scripts/aggregate.py <project-id>")
+    execute = False
+    input_override = None
+    project_id = None
+
+    # 参数解析
+    args = sys.argv[1:]
+    i = 0
+    while i < len(args):
+        if args[i] == "--execute":
+            execute = True
+        elif args[i] == "--input" and i + 1 < len(args):
+            input_override = args[i + 1]
+            i += 1
+        elif not args[i].startswith("--") and project_id is None:
+            project_id = args[i]
+        i += 1
+
+    if not project_id:
+        print("用法: python scripts/aggregate.py <project-id> [--execute] [--input data.csv]")
         print("示例: python scripts/aggregate.py proj-dynamic-X")
+        print("      python scripts/aggregate.py proj-dynamic-X --execute")
+        print("      python scripts/aggregate.py proj-dynamic-X --execute --input data/custom.csv")
         sys.exit(1)
 
-    project_id = sys.argv[1]
+    if execute:
+        # 检查依赖
+        deps_ok, missing = check_script_deps(project_id)
+        if not deps_ok:
+            print(f"⚠️  缺少依赖: {', '.join(missing)}", file=sys.stderr)
+            print(f"   安装: pip install {' '.join(missing)}", file=sys.stderr)
+            print(f"   或跳过执行: python scripts/aggregate.py {project_id}", file=sys.stderr)
 
     # 1. 查找项目卡片
     card_path = find_project_card(project_id)
@@ -120,46 +240,47 @@ def main():
         sys.exit(0)
 
     grouped = group_atoms_by_tag(atoms)
+    compute_count = sum(1 for a in atoms if a["front_matter"].get("type") == "compute")
 
     # 3. 输出聚合结果
     print(f"# {project_title}")
     print(f"\n> 自动聚合生成于 {datetime.now().strftime('%Y-%m-%d %H:%M')}")
     print(f"> 项目 ID: {project_id}")
     print(f"> 关联原子数: {len(atoms)}")
+    if execute and compute_count > 0:
+        print(f"> 计算原子: {compute_count}（已执行 ✅）")
+    elif compute_count > 0:
+        print(f"> 计算原子: {compute_count}（未执行，加 --execute 运行）")
     print()
 
     # Introduction 段：缺口原子
     if grouped["#引言缺口"]:
         print("## Introduction（缺口 → 动机）\n")
         for atom in grouped["#引言缺口"]:
-            print(f"### {atom['front_matter']['title']}")
-            print(atom["body"])
+            print(render_atom(atom, execute, input_override))
             print()
     else:
         print("## Introduction\n\n<!-- 无缺口原子，请先创建 type=gap 的原子 -->\n")
 
-    # Method 段：方法原子
+    # Method 段：方法原子（含 compute 类型）
     if grouped["#方法组件"]:
         print("## Method（方法组件）\n")
         for atom in grouped["#方法组件"]:
-            print(f"### {atom['front_matter']['title']}")
-            print(atom["body"])
+            print(render_atom(atom, execute, input_override))
             print()
 
     # Results & Discussion 段：结果原子 + 洞察原子
     if grouped["#结果讨论"]:
         print("## Results & Discussion\n")
         for atom in grouped["#结果讨论"]:
-            print(f"### {atom['front_matter']['title']}")
-            print(atom["body"])
+            print(render_atom(atom, execute, input_override))
             print()
 
     # 其他原子
     if grouped["other"]:
         print("## 其他原子\n")
         for atom in grouped["other"]:
-            print(f"### {atom['front_matter']['title']}")
-            print(atom["body"])
+            print(render_atom(atom, execute, input_override))
             print()
 
     # 汇总
@@ -169,7 +290,23 @@ def main():
         if group_atoms:
             print(f"\n### {group_name}")
             for a in group_atoms:
-                print(f"- [{a['front_matter']['id']}] {a['front_matter']['title']}")
+                compute_mark = " ⚡" if a["front_matter"].get("type") == "compute" else ""
+                print(f"- [{a['front_matter']['id']}]{compute_mark} {a['front_matter']['title']}")
+
+
+def check_script_deps(project_id: str) -> tuple[bool, list[str]]:
+    """检查项目所有计算原子的依赖是否已安装。"""
+    missing = set()
+    for atom_file in ATOMS_DIR.glob("*.md"):
+        fm = parse_front_matter(str(atom_file))
+        if not fm or fm.get("project") != project_id or fm.get("type") != "compute":
+            continue
+        for dep in fm.get("script_deps", []):
+            try:
+                __import__(dep.replace("-", "_"))
+            except ImportError:
+                missing.add(dep)
+    return len(missing) == 0, sorted(missing)
 
 
 if __name__ == "__main__":

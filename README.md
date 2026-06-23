@@ -27,6 +27,7 @@ academic-operating-system/
 │
 ├── knowledge/                   # 🧠 知识库
 │   ├── atoms/                   #   产出原子（最小可重组知识单元）
+│   │   └── scripts/             #     计算原子配套的可复用脚本
 │   ├── literature/              #   文献笔记
 │   └── datasets/                #   数据集描述
 │
@@ -82,7 +83,7 @@ status: final                       # draft | final
 写引言"研究缺口"段落时直接引用。
 ```
 
-### 四种原子类型
+### 五种原子类型
 
 | 类型 | 用途 | 标签 | 典型来源 |
 |------|------|------|----------|
@@ -90,6 +91,41 @@ status: final                       # draft | final
 | `method` | 方法组件 | `#方法组件` | 论文复现、技术迁移 |
 | `result` | 实验结果 | `#结果讨论` | 实验记录、基线对比 |
 | `insight` | 洞察/解释 | `#结果讨论` | 事后分析、reviewer 反馈 |
+| `compute` | ⚡ 可执行计算 | 任意结构标签 | 统计检验、数据预处理、可视化管线 |
+
+### 计算原子：知识即代码
+
+有些知识的本质是**过程性的**——预处理管线、统计检验、基线复现、可视化。它们的"原子形式"天然包含可执行脚本。
+
+计算原子 = 标准原子 + 可复现脚本。
+
+```
+knowledge/atoms/
+├── compute-0001.md                # 计算原子（描述脚本做什么）
+├── compute-0002.md                # 另一个计算原子
+└── scripts/                       # 所有可复用脚本集中存放
+    ├── compute-0001.py            # 文件 = 原子 id 的去前缀部分
+    └── compute-0002.py
+```
+
+**脚本约定**：
+- 自包含：给定输入 → 独立运行 → 复现结果（不依赖隐式路径、全局状态）
+- 命令行接口：`--input` 接收数据文件，stdout 输出结构化结果（JSON 推荐）
+- 依赖声明：在原子 front-matter 的 `script_deps` 中标明（如 `["numpy", "scipy"]`）
+- 纯文本优先：简单计算（≤30 行）可内嵌在原子正文；复杂计算独立脚本
+
+**使用方式**：
+
+```bash
+# 纯文本聚合（不执行脚本，仅展示原子内容）
+python scripts/aggregate.py proj-dynamic-X
+
+# 执行模式：运行所有计算原子脚本，结果嵌入初稿
+python scripts/aggregate.py proj-dynamic-X --execute
+
+# 指定不同输入数据
+python scripts/aggregate.py proj-dynamic-X --execute --input data/experiment_v2.csv
+```
 
 ### 原子为何有效？
 
@@ -173,11 +209,14 @@ status: final                       # draft | final
 ### 第 4 步：聚合渲染（写作时）
 
 ```bash
-# 按项目提取原子，生成论文初稿
+# 纯文本聚合：按项目提取原子，生成论文初稿
 python scripts/aggregate.py proj-dynamic-X > outputs/papers/proj-dynamic-X-draft.md
+
+# 执行模式：同时运行所有计算原子脚本，结果嵌在初稿中
+python scripts/aggregate.py proj-dynamic-X --execute > outputs/papers/proj-dynamic-X-draft.md
 ```
 
-脚本做的事：按 `#引言缺口` / `#方法组件` / `#结果讨论` 分组输出原子内容，得到可编辑的初稿。**你只做排列和润色，不做从零写作。**
+脚本做的事：按 `#引言缺口` / `#方法组件` / `#结果讨论` 分组输出原子内容；`--execute` 模式下，计算原子的脚本被实际执行，输出（p 值、效应量、预处理统计等）自动嵌入对应段落。**你只做排列和润色，不做从零写作。**
 
 ### 第 5 步：发表后回存（每篇论文完成后）
 
@@ -194,6 +233,7 @@ python scripts/aggregate.py proj-dynamic-X > outputs/papers/proj-dynamic-X-draft
 3. **矩阵封闭** — 每个项目必须映射到矩阵中的一个且仅一个格子。
 4. **标签一致** — 原子标签使用受控词汇（`#引言缺口`、`#方法组件`、`#结果讨论`），不得自由创建以避免漂移。
 5. **人不可替代** — 脚本只做聚合，不做决策。原子创建、技能评估、项目启动的决策权永远在人。
+6. **脚本自包含** — 任何计算原子的脚本，提取文件 + 满足 `script_deps` + 给定 `script_input` → 应能独立运行并复现结果。禁止隐式依赖（硬编码绝对路径、未声明的系统库）。
 
 ---
 
