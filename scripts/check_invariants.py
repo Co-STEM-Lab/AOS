@@ -663,11 +663,11 @@ def build_readme_tree() -> str:
     ]
     # .claude/ 单独处理
     if (ROOT / ".claude").is_dir():
-        top.append(".claude/".rjust(4) + "├── .claude/" + " " * 22 + "# AI 配置")
+        top.append("├── .claude/" + " " * 22 + "# AI 配置")
         if (ROOT / ".claude" / "rules").is_dir():
-            top.append(".claude/rules/".rjust(4) + "│   ├── rules/" + " " * 27 + "# 硬约束")
+            top.append("│   ├── rules/" + " " * 27 + "# 硬约束")
         if (ROOT / ".claude" / "skills").is_dir():
-            top.append(".claude/skills/".rjust(4) + "│   └── skills/" + " " * 26 + "# 协作技能")
+            top.append("│   └── skills/" + " " * 26 + "# 协作技能")
         top.append("│")
 
     # 其余顶级目录

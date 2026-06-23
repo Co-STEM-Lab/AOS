@@ -32,6 +32,66 @@ bash scripts/install-hooks.sh
 
 ---
 
+## 操控指南
+
+**人不维护文档。** 系统自动同步 README 树、CLAUDE.md 列表、矩阵引用。人只做三件事：
+
+| 你做的事 | 系统做的事 |
+|---------|-----------|
+| 写原子（`knowledge/atoms/xxx.md`） | `--fix` 自动校验格式、补全字段 |
+| 写项目卡片（`projects/xxx/index.md`） | `--fix` 自动更新 matrix.md 矩阵 |
+| `git diff` 审核变更 | `pre-commit` 自动拦截非法提交 |
+
+### 日常操作
+
+```bash
+# 改完任何文件后
+python scripts/check_invariants.py --fix   # 一键修复 + 同步全部文档
+python scripts/scan.py                     # 确认全绿
+git add -A && git commit -m "..."          # pre-commit 自动把关
+```
+
+### 新建原子
+
+```bash
+cp templates/atom-template.md knowledge/atoms/gap-0002.md
+# 填写 front-matter + 核心断言
+python scripts/check_invariants.py --fix   # 自动补全 created/status/id 前缀
+```
+
+### 新建项目
+
+```bash
+mkdir -p projects/active/proj-xxx
+cp templates/project-template.md projects/active/proj-xxx/index.md
+# 填写 domain + problem（必填！矩阵自动填充依赖这两个字段）
+python scripts/check_invariants.py --fix   # matrix.md 自动更新
+```
+
+### 生成产出
+
+```bash
+python scripts/aggregate.py proj-xxx --html -o report.html  # HTML 报告
+python scripts/aggregate.py proj-xxx > draft.md              # Markdown 草稿
+python scripts/render.py draft.md --latex -o paper.tex        # LaTeX 论文
+```
+
+---
+
+## AI 协作技能
+
+对 Claude Code 说以下任意指令，AI 自动加载对应技能：
+
+| 技能 | 触发方式 | 做什么 |
+|------|---------|--------|
+| `qian-skill` | 任何多模块/重构/性能排查 | 钱学森系统方法论：诊断 → 总体设计 → 涌现检查 |
+| `aos-guardian` | "检查 AOS" / "扫描" | 不变式巡检 + 新鲜度漂移 + 修复提案 |
+| `aos-operations` | 任何 AOS 文件修改 | 操作引导：建原子/建项目时自动检查格式和关联 |
+| `aos-output` | "渲染" / "排版" / "导出" | 学术输出规范：图片/公式/表格/引用格式 |
+| `run-aos` | "run AOS" / "test AOS" | 全量烟雾测试：12 项检查验证全仓可用 |
+
+---
+
 ## 为什么需要 AOS？
 
 三个最常见的学术工作断裂：
@@ -52,9 +112,9 @@ academic-operating-system/
 ├── README.md                      # 本文件
 ├── matrix.md                     # 🎯 研究领域 × 核心问题矩阵
 │
-.claude/├── .claude/                      # AI 配置
-.claude/rules/│   ├── rules/                           # 硬约束
-.claude/skills/│   └── skills/                          # 协作技能
+├── .claude/                      # AI 配置
+│   ├── rules/                           # 硬约束
+│   └── skills/                          # 协作技能
 │
 ├── knowledge/                     # 🧠 知识库
 │   ├── atoms/                        # 产出原子（最小可重组知识单元）
@@ -82,9 +142,14 @@ academic-operating-system/
 │   └── talks/                        # 演讲 slides
 │
 ├── templates/                     # 📋 标准化模板
+│   ├── elsevier/
+│   │   ├── cas-common.sty
+│   │   ├── cas-dc.cls
+│   │   ├── cas-model2-names.bst
+│   │   └── cas-sc.cls
 │   ├── atom-template.md              # 原子模板
 │   ├── output.css
-│   ├── paper-html.html
+│   ├── paper-elsevier-sc.tex
 │   ├── paper-template.md             # 论文草稿模板
 │   ├── project-template.md           # 项目卡片模板
 │   └── skill-template.md             # 技能项模板
