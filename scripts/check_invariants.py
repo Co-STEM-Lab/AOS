@@ -440,25 +440,91 @@ def check_atom_independence(vocab: dict) -> list[dict]:
 
 # ─── 自动修复 ──────────────────────────────────────────────────
 
+def _read_file(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
+
+def _write_file(path: Path, content: str):
+    path.write_text(content, encoding="utf-8")
+
 def auto_fix(violations: list[dict]) -> int:
-    """尝试自动修复 SOFT 违规。返回修复数量。"""
+    """自动修复可安全处理的违规。返回修复数量。"""
     fixed = 0
+
     for v in violations:
-        if v["level"] != "SOFT":
+        fpath = ROOT / v["file"] if "file" in v else None
+        if not fpath or not fpath.exists():
             continue
-        # 当前仅支持几种可自动修复的模式
-        if v.get("field") == "project" and v.get("value") == "":
-            fpath = ROOT / v["file"]
-            content = fpath.read_text(encoding="utf-8")
+
+        content = _read_file(fpath)
+        new_content = content
+
+        # ① 空白 project → "uncategorized"
+        if v.get("field") == "project" and v.get("value", "") == "":
             new_content = re.sub(
                 r'(project:\s*)""',
                 r'\1"uncategorized"',
-                content,
+                new_content,
                 count=1
             )
-            if new_content != content:
-                fpath.write_text(new_content, encoding="utf-8")
-                fixed += 1
+
+        # ② 空白 created → 当天日期
+        elif v.get("field") == "created" and v.get("value", "") == "":
+            new_content = re.sub(
+                r'(created:\s*)""',
+                f'\\1"{today_str()}"',
+                new_content,
+                count=1
+            )
+
+        # ③ id 前缀与 type 不一致 → 修正 id 前缀匹配 type
+        elif v.get("field") == "id" and "前缀" in v.get("message", ""):
+            # 从 fix 建议中提取"id 前缀改为 XXX"的正确前缀
+            fix_msg = v.get("fix", "")
+            prefix_match = re.search(r"id 前缀改为\s+(\w+)", fix_msg)
+            if not prefix_match:
+                # fallback: 从 atom 的 type 查 id_prefix_map
+                prefix_match = re.search(r"type 改为\s+(\w+)", fix_msg)
+            if prefix_match:
+                correct_prefix = prefix_match.group(1)
+            else:
+                # 最终 fallback: 直接读 atom 文件取 type，查表
+                correct_prefix = None
+                for atom_f in ATOMS_DIR.glob("*.md"):
+                    if str(atom_f.relative_to(ROOT)) == v["file"]:
+                        fm = parse_front_matter(str(atom_f))
+                        if fm:
+                            atom_type = fm.get("type", "")
+                            correct_prefix = load_vocab()["id_prefix_map"].get(atom_type)
+                        break
+                if not correct_prefix:
+                    continue
+            new_content = re.sub(
+                r'(id:\s*")\w+(-\d{4}")',
+                f'\\1{correct_prefix}\\2',
+                new_content,
+                count=1
+            )
+
+        # ④ 空白 script_deps 但脚本有外部 import → 自动推断
+        elif v.get("field") == "script" and "script_deps" in v.get("message", ""):
+            # 这需要读取脚本内容——在 violation 的 message 中已有 undeclared 列表
+            # 更简单：直接找对应的 compute atom，读脚本 import
+            dep_match = re.search(r"未声明:\s*(.+)", v.get("message", ""))
+            if dep_match:
+                deps_str = dep_match.group(1)
+                deps = [d.strip() for d in deps_str.split(",")]
+                # 在 front-matter 中添加 script_deps
+                new_content = re.sub(
+                    r'(script_deps:\s*)\[\]',
+                    f'\\1{deps}',
+                    new_content,
+                    count=1
+                )
+
+        if new_content != content:
+            _write_file(fpath, new_content)
+            fixed += 1
+
     return fixed
 
 
@@ -491,11 +557,11 @@ def main():
     hard = [v for v in all_violations if v["level"] == "HARD"]
     soft = [v for v in all_violations if v["level"] == "SOFT"]
 
-    # 自动修复
-    if fix_mode and soft:
-        fixed = auto_fix(soft)
+    # 自动修复（处理全部违规，不区分 HARD/SOFT）
+    if fix_mode and all_violations:
+        fixed = auto_fix(all_violations)
         if fixed > 0:
-            # 重新检查（简化：只重跑 atom front-matter 检查）
+            # 重新检查
             all_violations = check_atom_front_matter(vocab)
             all_violations.extend(check_matrix_project_coupling(vocab))
             all_violations.extend(check_skill_evidence(vocab))

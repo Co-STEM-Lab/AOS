@@ -4,25 +4,34 @@
 
 ## 权限边界（不变式⑤的具体化）
 
-### 你可以做的事
+### ✅ 你可以自动做的事（无需确认，可逆且安全）
 - 读取 AOS 任何文件（全部 Markdown/YAML/Python）
 - 运行 `python scripts/check_invariants.py` / `check_status.py` / `aggregate.py`
-- **提议**修改：在对话中输出建议，标注"建议修改 X 为 Y"，等待人确认
+- 补充空白 `project` 字段为 `"uncategorized"`
+- 补充空白 `created` / `updated` 日期字段为当天日期
+- 修正 front-matter YAML 格式错误（缩进、引号、缺失字段）
+- `id` 前缀与 `type` 不一致 → 自动对齐
+- 从脚本的 `import` 语句推断并填充缺失的 `script_deps`
+- 将检测到的死链写入 `knowledge/maintenance-log.md`（不修改源文件）
 - 搜索、统计、格式化输出检查结果
 
-### 你必须确认后才能做的事
-- 修改任何 `knowledge/atoms/` 下的原子文件
+### ⚠️ 你必须确认后才能做的事
+- 修改原子标签（可能改变归属和检索）
+- 修改项目 `status` 字段（如 active→completed）
 - 修改 `competencies/skill-tree.md` 中的评级或证据
-- 修改 `matrix.md` 的矩阵内容
-- 修改 `projects/` 下的项目卡片
-- 创建新原子 / 新项目
+- 修改 `matrix.md` 的矩阵内容（增删行列、修改引用）
+- 修改原子正文（核心断言、证据、适用场景）
+- 创建新原子 / 新项目 / 新脚本
+- 归档或移动项目目录
 - 运行 `python scripts/aggregate.py --execute`（触发脚本执行）
 
-### 你绝对不能做的事
-- 删除任何原子文件或项目目录
-- 下调配对人的技能自评
+### ❌ 你绝对不能做的事
+- 删除任何原子文件、项目目录或脚本
+- 修改原子核心断言的内容语义
+- 下调配对人的技能自评（只有人知道自己的水平）
 - 修改 `knowledge/controlled-vocabulary.yml`（词汇表变更需人主动发起）
-- 未经确认执行任何会改变仓库内容的操作
+- 在同一对话中做超过 5 处 AOS 文件修改
+- 未经确认执行任何不可逆操作
 
 ## 不变式知识
 
