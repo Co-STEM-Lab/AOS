@@ -6,10 +6,10 @@
 
 ## 矩阵总表
 
-| 研究领域 \ 核心问题 | 可解释性 | 小样本泛化 | 晶粒度评级 | 碳化物+片层珠光体分割 | F+P 组织分割 |
-|---------------------|-----------|------------|------------|----------------------|-------------|
-| 医学影像 | — | — | — | — | — |
-| 金相分析 | — | — | [proj-ferrite-grain](projects/active/proj-ferrite-grain/) 🔬 | [proj-carbide-pearlite-seg](projects/active/proj-carbide-pearlite-seg/) 🔬 | [proj-ferrite-pearlite-seg](projects/active/proj-ferrite-pearlite-seg/) 🔬 |
+| 研究领域 \ 核心问题 | 可解释性 | 小样本泛化 | 晶粒度评级 | 碳化物+片层珠光体分割 | F+P 组织分割 | 网状碳化物+片层间距测量 |
+|---------------------|-----------|------------|------------|----------------------|-------------|------------------------|
+| 医学影像 | — | — | — | — | — | — |
+| 金相分析 | — | — | [proj-ferrite-grain](projects/active/proj-ferrite-grain/) 🔬 | [proj-carbide-pearlite-seg](projects/active/proj-carbide-pearlite-seg/) 🔬 | [proj-ferrite-pearlite-seg](projects/active/proj-ferrite-pearlite-seg/) 🔬 | [proj-network-carbide-spacing](projects/active/proj-network-carbide-spacing/) 🔬 |
 
 ---
 
