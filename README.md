@@ -122,16 +122,20 @@ academic-operating-system/
 │   ├── atoms/                        # 产出原子（最小可重组知识单元）
 │   │   ├── compute/
 │   │   │   ├── compute-grain-size-calculator.md
+│   │   │   ├── compute-seg-evaluation.md
 │   │   │   └── compute-welch-ttest.md
 │   │   ├── gap/
 │   │   ├── insight/
 │   │   ├── method/
-│   │   │   └── method-gb-t6394-intercept.md
+│   │   │   ├── method-gb-t6394-intercept.md
+│   │   │   └── method-semantic-seg-annotation.md
 │   │   ├── result/
+│   │   │   ├── result-carbide-pearlite-dataset.md
 │   │   │   └── result-ferrite-grain-dataset.md
 │   │   └── scripts/                      # 计算原子配套的可复用脚本
 │   │       ├── compute-0001.py
-│   │       └── compute-0002.py
+│   │       ├── compute-0002.py
+│   │       └── compute-seg-evaluation.py
 │   ├── datasets/                     # 数据集描述
 │   ├── literature/                   # 文献笔记
 │   ├── controlled-vocabulary.yml     # 受控标签词汇表
@@ -142,6 +146,8 @@ academic-operating-system/
 │
 ├── projects/                      # 🔄 项目管线
 │   ├── active/                       # 进行中
+│   │   ├── proj-carbide-pearlite-seg/
+│   │   │   └── index.md
 │   │   └── proj-ferrite-grain/
 │   │       ├── data/
 │   │       │   ├── fig-1-banded-structure.jpg

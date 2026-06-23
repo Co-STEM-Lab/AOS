@@ -651,7 +651,11 @@ def check_evidence_anchoring(vocab: dict) -> list[dict]:
                            "RGB", "BGR", "HSV", "LAB", "CMYK",
                            "DICOM", "NIfTI", "HDF5", "YAML", "TOML",
                            "DOI", "URI", "URN", "CID", "PMID",
-                           "ID", "OK", "NLP", "ML", "DL", "RL", "AI"}
+                           "ID", "OK", "NLP", "ML", "DL", "RL", "AI",
+                           "AP", "mIoU", "IoU",
+                           "CNN", "RNN", "LSTM", "GAN", "VAE",
+                           "SGD", "BN", "TPU", "ReLU",
+                           "EDA", "PCA", "tSNE", "UMAP"}
             for pat in (pattern_cn, pattern_en):
                 for m in re.finditer(pat, body):
                     abbr = m.group(1)
