@@ -29,7 +29,7 @@ created: "2026-06-23"
 | AIGC 生成结果 | 500 | PNG | 25 张基础图 ×20 帧，AI 生成 |
 | FP_batch2 | 15 | PNG | 第二批结果 |
 | 可视化不反转 | 29 | JPG | 同原始图像但不反转显示 |
-| canvas-image | 1 | PNG | 数据集概览拼图 |
+| canvas-image | 1 | PNG | ⚠️ 内容待确认（含底部疑似标注文字区域） |
 
 ## 样品信息
 
@@ -78,7 +78,7 @@ F+P组织-AI组/
 ├── 组织-AI组/                    # 原始图像（29 JPG + canvas-image.png）
 │   ├── 1-center-2_m001 (1).jpg
 │   ├── ...
-│   └── canvas-image.png          # 数据集概览
+│   └── canvas-image.png          # ⚠️ 内容待确认
 ├── 预标注/                       # AI 预标注（29 PNG）
 ├── FH_vis_训练和推理结果/         # 训练/推理可视化（25 PNG）
 ├── FP_aigc/                      # AIGC 生成结果（500 PNG, 25×20）
