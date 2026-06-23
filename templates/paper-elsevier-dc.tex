@@ -1,0 +1,76 @@
+% AOS → Elsevier CAS Double Column 论文模板
+% 编译: xelatex paper && xelatex paper
+\documentclass[a4paper,fleqn]{cas-dc}
+
+\usepackage[authoryear,longnamesfirst]{natbib}
+
+% ── 标题信息 ──
+\shorttitle{ {{shorttitle}} }
+\shortauthors{ {{shortauthors}} }
+
+\title [mode = title]{ {{title}} }
+
+% ── 作者 ──
+\author[1]{ {{author1}} }[orcid={ {{orcid1}} }]
+\cormark[1]
+\ead{ {{email1}} }
+\credit{ {{credit1}} }
+\affiliation[1]{organization={ {{org1}} },
+            addressline={ {{addr1}} },
+            city={ {{city1}} },
+            postcode={ {{postcode1}} },
+            state={ {{state1}} },
+            country={ {{country1}} }}
+
+\author[2]{ {{author2}} }
+\ead{ {{email2}} }
+\credit{ {{credit2}} }
+\affiliation[2]{organization={ {{org2}} },
+            addressline={ {{addr2}} },
+            city={ {{city2}} },
+            postcode={ {{postcode2}} },
+            state={ {{state2}} },
+            country={ {{country2}} }}
+
+{{#author3}}
+\author[3]{ {{author3}} }
+\ead{ {{email3}} }
+\credit{ {{credit3}} }
+\affiliation[3]{organization={ {{org3}} },
+            addressline={ {{addr3}} },
+            city={ {{city3}} },
+            postcode={ {{postcode3}} },
+            state={ {{state3}} },
+            country={ {{country3}} }}
+{{/author3}}
+
+\cortext[1]{Corresponding author}
+
+\begin{abstract}
+{{abstract}}
+\end{abstract}
+
+{{#highlights}}
+\begin{highlights}
+{{highlights}}
+\end{highlights}
+{{/highlights}}
+
+\begin{keywords}
+{{keywords}}
+\end{keywords}
+
+\maketitle
+
+{{body}}
+
+\printcredits
+
+\bibliographystyle{cas-model2-names}
+\bibliography{ {{bibfile}} }
+
+{{#bios}}
+{{bios}}
+{{/bios}}
+
+\end{document}

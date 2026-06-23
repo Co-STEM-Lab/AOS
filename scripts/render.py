@@ -195,13 +195,17 @@ def build_html(meta: dict, body_html: str) -> str:
     return html
 
 
-LATEX_TEMPLATE_ZH = ROOT / "templates" / "paper-latex.tex"
-LATEX_TEMPLATE_EN = ROOT / "templates" / "paper-latex-en.tex"
+LATEX_TEMPLATES = {
+    "basic-zh":       ROOT / "templates" / "paper-latex.tex",          # ctexart 中文
+    "basic-en":       ROOT / "templates" / "paper-latex-en.tex",       # article 英文
+    "elsevier-sc":    ROOT / "templates" / "paper-elsevier-sc.tex",    # Elsevier 单栏
+    "elsevier-dc":    ROOT / "templates" / "paper-elsevier-dc.tex",    # Elsevier 双栏
+}
 
 
-def build_latex(meta: dict, body_latex: str, lang: str = "zh") -> str:
+def build_latex(meta: dict, body_latex: str, style: str = "basic-zh") -> str:
     """将元数据和正文注入 LaTeX 模板。"""
-    tpl_path = LATEX_TEMPLATE_EN if lang == "en" else LATEX_TEMPLATE_ZH
+    tpl_path = LATEX_TEMPLATES.get(style, LATEX_TEMPLATES["basic-zh"])
     template = tpl_path.read_text(encoding="utf-8") if tpl_path.exists() else ""
     if not template:
         return body_latex
@@ -293,11 +297,12 @@ def _latex_inline(text: str) -> str:
 def main():
     args = sys.argv[1:]
     if not args:
-        print("用法: python scripts/render.py <input.md> [--html|--latex] [--lang zh|en] [-o output] [--open]")
-        print("  --html   输出 A4 HTML 报告（展示/汇报用）")
-        print("  --latex  输出 LaTeX 论文（投稿用）")
-        print("  --lang zh  中文 LaTeX 模板 (ctexart)")
-        print("  --lang en  英文 LaTeX 模板 (article)")
+        print("用法: python scripts/render.py <input.md> [--html|--latex] [--style NAME] [-o output] [--open]")
+        print("  --style basic-zh     中文通用模板 (ctexart, 默认)")
+        print("  --style basic-en     英文通用模板 (article)")
+        print("  --style elsevier-sc  Elsevier CAS 单栏")
+        print("  --style elsevier-dc  Elsevier CAS 双栏")
+        print("  --lang zh/en         同 --style basic-zh/basic-en (兼容旧版)")
         print("  默认: --html")
         sys.exit(1)
 
@@ -305,7 +310,7 @@ def main():
     output_path = None
     open_browser = False
     mode = "html"
-    lang = "zh"
+    style = "basic-zh"
 
     i = 0
     while i < len(args):
@@ -317,8 +322,11 @@ def main():
             mode = "html"
         elif args[i] == "--latex":
             mode = "latex"
+        elif args[i] == "--style" and i + 1 < len(args):
+            style = args[i + 1]; i += 1
         elif args[i] == "--lang" and i + 1 < len(args):
             lang = args[i + 1]; i += 1
+            style = f"basic-{lang}"  # backward compat
         elif not args[i].startswith("-") and input_path is None:
             input_path = args[i]
         i += 1
@@ -337,7 +345,7 @@ def main():
 
     if mode == "latex":
         body_converted = md_to_latex(body_md)
-        result = build_latex(meta, body_converted, lang)
+        result = build_latex(meta, body_converted, style)
     else:
         body_html = md_to_html(body_md)
         result = build_html(meta, body_html)
