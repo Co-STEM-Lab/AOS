@@ -161,9 +161,23 @@ def md_to_html(text: str) -> str:
     """Markdown→HTML：优先用 markdown 库，fallback 到简易转换器。"""
     try:
         import markdown
-        return markdown.markdown(text, extensions=["tables", "fenced_code", "codehilite"])
+        html = markdown.markdown(text, extensions=["tables", "fenced_code", "codehilite"])
     except ImportError:
-        return md_to_html_simple(text)
+        html = md_to_html_simple(text)
+
+    # 后处理：将 <p><img...></p> 提升为 <figure><img...><figcaption>alt</figcaption></figure>
+    # 确保图片在 A4 排版内宽度自适应
+    def _wrap_img(m):
+        tag = m.group(1)
+        alt = ""
+        alt_m = re.search(r'alt="([^"]*)"', tag)
+        if alt_m:
+            alt = alt_m.group(1)
+        cap = f'<figcaption>{alt}</figcaption>' if alt else ''
+        return f'<figure>{tag}{cap}</figure>'
+
+    html = re.sub(r'<p[^>]*>(<img[^>]+>)</p>', _wrap_img, html)
+    return html
 
 
 def build_html(meta: dict, body_html: str) -> str:

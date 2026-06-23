@@ -54,7 +54,9 @@ git add -A && git commit -m "..."          # pre-commit 自动把关
 ### 新建原子
 
 ```bash
-cp templates/atom-template.md knowledge/atoms/gap-0002.md
+cp templates/atom-template.md knowledge/atoms/{type}/{type}-meaningful-name.md
+# 示例：cp templates/atom-template.md knowledge/atoms/gap/gap-dynamic-x.md
+# 文件名 = id，放在对应的 type 子目录下（gap/method/result/insight/compute）
 # 填写 front-matter + 核心断言
 python scripts/check_invariants.py --fix   # 自动补全 created/status/id 前缀
 ```
@@ -118,11 +120,18 @@ academic-operating-system/
 │
 ├── knowledge/                     # 🧠 知识库
 │   ├── atoms/                        # 产出原子（最小可重组知识单元）
-│   │   ├── scripts/                      # 计算原子配套的可复用脚本
-│   │   │   └── compute-0001.py
-│   │   ├── compute-0001.md
-│   │   ├── example-compute-0001.md
-│   │   └── example-gap-0001.md
+│   │   ├── compute/
+│   │   │   ├── compute-grain-size-calculator.md
+│   │   │   └── compute-welch-ttest.md
+│   │   ├── gap/
+│   │   ├── insight/
+│   │   ├── method/
+│   │   │   └── method-gb-t6394-intercept.md
+│   │   ├── result/
+│   │   │   └── result-ferrite-grain-dataset.md
+│   │   └── scripts/                      # 计算原子配套的可复用脚本
+│   │       ├── compute-0001.py
+│   │       └── compute-0002.py
 │   ├── datasets/                     # 数据集描述
 │   ├── literature/                   # 文献笔记
 │   ├── controlled-vocabulary.yml     # 受控标签词汇表
@@ -133,6 +142,21 @@ academic-operating-system/
 │
 ├── projects/                      # 🔄 项目管线
 │   ├── active/                       # 进行中
+│   │   └── proj-ferrite-grain/
+│   │       ├── data/
+│   │       │   ├── fig-1-banded-structure.jpg
+│   │       │   ├── fig-1-center-1000x.jpg
+│   │       │   ├── fig-1-edge-1000x.jpg
+│   │       │   ├── fig-2-banded-structure.jpg
+│   │       │   ├── fig-4-2-200x.jpg
+│   │       │   ├── fig-4-2-500x.jpg
+│   │       │   ├── fig-5-1-200x.jpg
+│   │       │   ├── fig-5-1-500x.jpg
+│   │       │   ├── fig-971-quarter-1000x.jpg
+│   │       │   └── fig-ref-1.jpg
+│   │       ├── index.md
+│   │       ├── report-ferrite-grain-dataset.md
+│   │       └── report-ferrite-grain.html
 │   ├── completed/                    # 已完成
 │   └── ideas/                        # 想法池
 │
@@ -150,6 +174,7 @@ academic-operating-system/
 │   ├── atom-template.md              # 原子模板
 │   ├── output.css
 │   ├── paper-elsevier-sc.tex
+│   ├── paper-html.html
 │   ├── paper-template.md             # 论文草稿模板
 │   ├── project-template.md           # 项目卡片模板
 │   └── skill-template.md             # 技能项模板
@@ -177,12 +202,12 @@ academic-operating-system/
 
 ```yaml
 ---
-id: "gap-0001"
-title: "动态场景下X方法缺乏验证"   # ≤15 字
-type: gap                           # gap | method | result | insight
-tags: ["#引言缺口", "#医学影像"]     # 结构标签 + 领域标签
-project: "proj-dynamic-X"           # 归属项目
-status: final                       # draft | final
+id: "gap-dynamic-x"                     # 格式 {type}-{有意义的英文slug}
+title: "动态场景下X方法缺乏验证"        # ≤15 字
+type: gap                               # gap | method | result | insight | compute
+tags: ["#引言缺口", "#医学影像"]         # 结构标签 + 领域标签
+project: "proj-dynamic-X"               # 归属项目
+status: final                           # draft | final
 ---
 # 核心断言
 现有研究仅在静态数据集上验证了X方法，尚未在动态流数据上测试。
@@ -213,10 +238,11 @@ status: final                       # draft | final
 
 ```
 knowledge/atoms/
-├── compute-0001.md                # 计算原子（描述脚本做什么）
-├── compute-0002.md                # 另一个计算原子
-└── scripts/                       # 所有可复用脚本集中存放
-    ├── compute-0001.py            # 文件 = 原子 id 的去前缀部分
+├── compute/
+│   ├── compute-welch-ttest.md         # 计算原子（描述脚本做什么）
+│   └── compute-grain-size-calculator.md
+└── scripts/                           # 所有可复用脚本集中存放
+    ├── compute-0001.py                # 脚本文件名仍用编号，与原子 id 解耦
     └── compute-0002.py
 ```
 

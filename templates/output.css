@@ -108,12 +108,18 @@ td {
 }
 
 /* ── 图表 ── */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 8pt auto;
+}
 figure {
   margin: 12pt 0;
   text-align: center;
   page-break-inside: avoid;
 }
-figure img { max-width: 100%; }
+figure img { margin: 0 auto; }
 figcaption {
   font-size: 9pt;
   color: #555;

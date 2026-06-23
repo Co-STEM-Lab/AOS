@@ -87,8 +87,9 @@ def check_atom_front_matter(vocab: dict) -> list[dict]:
     allowed_tags = vocab["structure_tags"]
     id_map = {v: k for k, v in vocab["id_prefix_map"].items()}
 
-    for f in sorted(ATOMS_DIR.glob("*.md")):
-        if f.name.startswith("example-"):
+    for f in sorted(ATOMS_DIR.rglob("*.md")):
+        # 跳过 example/ 目录和 scripts/ 目录
+        if f.parent.name in ("example", "scripts"):
             continue
 
         fm = parse_front_matter(str(f))
@@ -109,7 +110,7 @@ def check_atom_front_matter(vocab: dict) -> list[dict]:
         status = fm.get("status", "draft")
 
         # 检查 id 格式
-        if not re.match(r"^(gap|method|result|insight|compute)-\d{4}$", atom_id):
+        if not re.match(r"^(gap|method|result|insight|compute)-[\w-]+$", atom_id):
             expected_prefix = id_map.get(atom_type, "type")
             violations.append({
                 "level": "HARD",
@@ -117,8 +118,8 @@ def check_atom_front_matter(vocab: dict) -> list[dict]:
                 "file": str(f.relative_to(ROOT)),
                 "field": "id",
                 "value": atom_id,
-                "message": f"id 格式错误，应为 {expected_prefix}-NNNN (4 位数字)",
-                "fix": f"将 id 改为 {expected_prefix}-XXXX",
+                "message": f"id 格式错误，应为 {expected_prefix}-{有意义的命名} (如 result-ferrite-grain-dataset)",
+                "fix": f"将 id 改为有意义的 {expected_prefix}-slug 格式",
             })
 
         # 检查 id 前缀与 type 一致
@@ -418,8 +419,8 @@ def check_script_self_containment(vocab: dict) -> list[dict]:
 def check_atom_independence(vocab: dict) -> list[dict]:
     """不变式① 原子独立可引用 — 检查原子是否包含对特定项目的硬依赖。"""
     violations = []
-    for f in sorted(ATOMS_DIR.glob("*.md")):
-        if f.name.startswith("example-"):
+    for f in sorted(ATOMS_DIR.rglob("*.md")):
+        if f.parent.name in ("example", "scripts"):
             continue
         body = parse_body(str(f))
         rel = str(f.relative_to(ROOT))
@@ -508,6 +509,21 @@ def check_documentation_consistency(vocab: dict) -> list[dict]:
                         "message": f"'{check_name}' 实际存在但 README 未提及",
                         "fix": "在 README 目录树中添加此项",
                     })
+
+        # ── README 目录树内容 vs 实际文件系统（检测树变旧但目录仍在的情况）──
+        tree_match = re.search(r'```\n(academic-operating-system/\n.*?)```', readme, re.DOTALL)
+        if tree_match:
+            current_tree = tree_match.group(1).strip()
+            expected_tree = build_readme_tree().strip()
+            if current_tree != expected_tree:
+                violations.append({
+                    "level": "SOFT",
+                    "invariant": "文档同步",
+                    "file": "README.md",
+                    "field": "目录树内容",
+                    "message": "README 目录树与实际文件系统不一致",
+                    "fix": "运行 --fix 自动重建目录树",
+                })
 
     # ── CLAUDE.md 脚本列表 vs 实际 ──
     if CLAUDE_PATH.exists():
@@ -628,7 +644,7 @@ def build_tree_entries(root: Path, prefix: str = "") -> list[str]:
     items = sorted(
         [p for p in root.iterdir()
          if p.name not in ("venv", "__pycache__", ".git", ".gitignore",
-                           ".claude", "__init__.py") and not p.name.endswith(".pyc")],
+                           ".claude", "example", "__init__.py") and not p.name.endswith(".pyc")],
         key=lambda x: (x.is_file(), x.name.lower())
     )
 
@@ -940,7 +956,7 @@ def auto_fix(violations: list[dict]) -> int:
             else:
                 # 最终 fallback: 直接读 atom 文件取 type，查表
                 correct_prefix = None
-                for atom_f in ATOMS_DIR.glob("*.md"):
+                for atom_f in ATOMS_DIR.rglob("*.md"):
                     if str(atom_f.relative_to(ROOT)) == v["file"]:
                         fm = parse_front_matter(str(atom_f))
                         if fm:
@@ -950,7 +966,7 @@ def auto_fix(violations: list[dict]) -> int:
                 if not correct_prefix:
                     continue
             new_content = re.sub(
-                r'(id:\s*")\w+(-\d{4}")',
+                r'(id:\s*")\w+(-[\w-]+")',
                 f'\\1{correct_prefix}\\2',
                 new_content,
                 count=1

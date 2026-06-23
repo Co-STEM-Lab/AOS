@@ -1,5 +1,7 @@
 ---
-id: "type-NNNN"          # 必填。格式 {type}-{序号}，如 gap-0001, method-0003
+id: "type-meaningful-slug"    # 必填。格式 {type}-{有意义的英文短横线命名}
+                               # 如 result-ferrite-grain-dataset, method-intercept-gb-t6394
+                               # 文件名必须与 id 一致：{id}.md，放在 knowledge/atoms/{type}/ 下
 title: ""                # 必填。≤15 字，用于列表展示
 type: gap                # 必填。gap | method | result | insight | compute
 tags: []                 # 必填。至少 2 个：一个"结构标签" + 一个"领域标签"

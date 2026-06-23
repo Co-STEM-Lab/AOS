@@ -28,6 +28,7 @@ MATRIX_PATH = ROOT / "matrix.md"
 
 
 def parse_front_matter(filepath: str) -> dict | None:
+    """解析 YAML front-matter，返回字典。"""
     with open(filepath, "r", encoding="utf-8") as f:
         content = f.read()
     match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
@@ -39,11 +40,21 @@ def parse_front_matter(filepath: str) -> dict | None:
         return None
 
 
+def parse_body(filepath: str) -> str:
+    """提取 YAML front-matter 之后的正文。"""
+    with open(filepath, "r", encoding="utf-8") as f:
+        content = f.read()
+    match = re.match(r"^---\s*\n.*?\n---\s*\n(.*)", content, re.DOTALL)
+    if not match:
+        return content
+    return match.group(1)
+
+
 def count_atoms() -> dict:
     """统计原子库存。"""
     inventory = {"total": 0, "draft": 0, "final": 0, "by_type": defaultdict(int), "uncategorized": 0}
-    for f in ATOMS_DIR.glob("*.md"):
-        if f.name.startswith("example-"):
+    for f in ATOMS_DIR.rglob("*.md"):
+        if f.parent.name in ("example", "scripts"):
             continue
         fm = parse_front_matter(str(f))
         if not fm:
@@ -195,8 +206,8 @@ def check_atom_staleness() -> list[dict]:
     thresholds = load_freshness_thresholds()
     max_days = thresholds["atom_draft_stale_days"]
 
-    for f in sorted(ATOMS_DIR.glob("*.md")):
-        if f.name.startswith("example-"):
+    for f in sorted(ATOMS_DIR.rglob("*.md")):
+        if f.parent.name in ("example", "scripts"):
             continue
         fm = parse_front_matter(str(f))
         if not fm:
