@@ -617,6 +617,7 @@ DIR_COMMENTS = {
     "scripts/check_status.py": "系统健康度 + 新鲜度",
     "scripts/aggregate.py": "聚合原子生成初稿",
     "scripts/install-hooks.sh": "安装 pre-commit hook",
+    "scripts/smoke.py": "全量烟雾测试（= run-aos driver）",
     "data/": "📊 示例/测试数据",
 }
 

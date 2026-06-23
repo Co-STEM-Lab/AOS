@@ -28,6 +28,7 @@ python scripts/check_invariants.py  # 不变式校验引擎
 python scripts/check_status.py  # 系统健康度 + 新鲜度
 python scripts/install-hooks.sh  # 安装 pre-commit hook
 python scripts/scan.py  # 统一扫描入口
+python scripts/smoke.py  # 全量烟雾测试（= run-aos driver）
 ```
 
 ## 目录约定

@@ -6,6 +6,32 @@
 
 ---
 
+## 管理命令
+
+```bash
+source venv/bin/activate
+
+# 扫描系统健康（统一入口）
+python scripts/scan.py
+python scripts/scan.py --log        # 扫描 + 写维护日志
+
+# 自动修复（文档同步 + 格式修正）
+python scripts/check_invariants.py --fix
+
+# 全量烟雾测试（验证所有脚本可用）
+python scripts/smoke.py             # 10 项全检
+python scripts/smoke.py --quick     # 8 项快检
+
+# 聚合原子生成论文初稿
+python scripts/aggregate.py <项目id>
+python scripts/aggregate.py <项目id> --execute   # 执行计算原子
+
+# 安装 pre-commit 硬守卫
+bash scripts/install-hooks.sh
+```
+
+---
+
 ## 为什么需要 AOS？
 
 三个最常见的学术工作断裂：
@@ -66,7 +92,8 @@ academic-operating-system/
 │   ├── check_invariants.py           # 不变式校验引擎
 │   ├── check_status.py               # 系统健康度 + 新鲜度
 │   ├── install-hooks.sh              # 安装 pre-commit hook
-│   └── scan.py                       # 统一扫描入口
+│   ├── scan.py                       # 统一扫描入口
+│   └── smoke.py                      # 全量烟雾测试（= run-aos driver）
 │
 └── data/                          # 📊 示例/测试数据
     └── experiment_results.csv
