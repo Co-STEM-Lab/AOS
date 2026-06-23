@@ -1,0 +1,72 @@
+# AOS 受控词汇表 —— 机器可读，所有 invariant 检查的基准
+# 新增词汇必须在此登记，否则 pre-commit 拒绝
+
+version: "1.0"
+
+# 原子结构标签（必须以此开头）
+structure_tags:
+  - "#引言缺口"
+  - "#方法组件"
+  - "#结果讨论"
+
+# 原子类型枚举
+atom_types:
+  - gap
+  - method
+  - result
+  - insight
+  - compute
+
+# 原子状态
+atom_statuses:
+  - draft
+  - final
+
+# 项目状态
+project_statuses:
+  - idea
+  - active
+  - writing
+  - submitted
+  - published
+
+# 项目优先级
+project_priorities:
+  - low
+  - medium
+  - high
+
+# 项目桶（目录名）
+project_buckets:
+  - active
+  - completed
+  - ideas
+
+# 技能评级
+skill_levels:
+  - L1
+  - L2
+  - L3
+  - L4
+
+# 技能大类
+skill_categories:
+  - "问题发现与定义"
+  - "实验设计与执行"
+  - "写作与表达"
+  - "技术实现"
+  - "学术社交与传播"
+
+# 原子 ID 前缀与类型的映射
+id_prefix_map:
+  gap: gap
+  method: method
+  result: result
+  insight: insight
+  compute: compute
+
+# 新鲜度阈值（用于软漂移检测，非硬违反）
+freshness:
+  skill_stale_days: 180          # 技能评级超过此天数未 review → 软警告
+  project_stale_days: 90         # active 项目超过此天数无日志 → 软警告
+  atom_draft_stale_days: 60      # draft 原子超过此天数 → 软警告

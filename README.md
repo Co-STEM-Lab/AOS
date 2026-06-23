@@ -237,9 +237,65 @@ python scripts/aggregate.py proj-dynamic-X --execute > outputs/papers/proj-dynam
 
 ---
 
+## 系统守护：AOS Guardian
+
+AOS 内置三层自主免疫系统，对应 Loop Engineering 的 Outer Loop 编排层，守护上述 6 条不变式不被侵蚀。
+
+### 架构
+
+```
+Layer 1: 硬守卫（pre-commit hook）
+  git commit → check_invariants.py → HARD 违规 = 拒绝提交
+
+Layer 2: 软巡检（手动 / 定时触发）
+  check_status.py → 新鲜度漂移检测 → 生成警告清单
+
+Layer 3: 交互式 Loop（AI 对话触发）
+  对 CodeBuddy 说 "检查 AOS" → AI 读取状态 → 提案 → 人拍板 → 执行 → 记录
+```
+
+### 安装
+
+```bash
+# 安装 pre-commit hook（一次性）
+bash scripts/install-hooks.sh
+
+# 之后每次 git commit 自动运行不变式检查
+```
+
+### 使用
+
+```bash
+# 不变式硬校验（commit 前 / CI）
+python scripts/check_invariants.py           # 人类可读
+python scripts/check_invariants.py --json    # 机器可读
+python scripts/check_invariants.py --fix     # 尝试自动修复
+
+# 系统健康面板（每周运行）
+python scripts/check_status.py               # 完整面板
+python scripts/check_status.py --freshness   # 仅漂移检测
+
+# AI 辅助深度巡检（在 CodeBuddy 中）
+"检查 AOS"
+```
+
+### 受控词汇表
+
+`knowledge/controlled-vocabulary.yml` 是机器可读的唯一真相源。所有原子标签、类型枚举、技能等级都必须在此登记。新增标签需要先在词汇表注册，否则 pre-commit 拒绝。
+
+### 维护日志
+
+`knowledge/maintenance-log.md` 记录每次巡检和修复操作，形成不可篡改的审计轨迹。AI 巡检会自动追加记录。
+
+### Guardian 不变式
+
+7. **权限分级** — AI 只提议不擅改（Guardian Rules 显式声明）。自动修复仅限格式修正；内容修改必须人确认。紧急跳过 `SKIP_AOS_GUARDIAN=1 git commit`。
+
+---
+
 ## 系统健康度指标
 
-定期运行 `python scripts/check_status.py`：
+运行 `python scripts/check_status.py` 或 `python scripts/check_invariants.py`：
 
 | 指标 | 健康阈值 | 警戒线 |
 |------|----------|--------|
