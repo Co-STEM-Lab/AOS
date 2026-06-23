@@ -35,12 +35,12 @@ description: >-
 - `status` 字段为空 → 填入 "draft"
 - `id` 前缀与 `type` 不一致 → 自动修正
 
-需提醒：
-- 至少 1 个结构标签（`#引言缺口` / `#方法组件` / `#结果讨论`）+ 1 个领域标签
-    - result / insight 类型原子的 `source` 字段不可为空（不变式⑨：断言必有源）
-    - 对文件名缩写（如 BC）的解释若无书面来源，必须用 ⚠️ 标记为推测
-- compute 类型原子必须指定 `script` 文件名
-
+	需提醒：
+	- 至少 1 个结构标签（`#引言缺口` / `#方法组件` / `#结果讨论`）+ 1 个领域标签
+	- result / insight 类型原子的 `source` 字段不可为空（不变式⑨：断言必有源）
+	- 对文件名缩写（如 BC）的解释若无书面来源，必须用 ⚠️ 标记为推测
+	- insight 类型原子的「关联」节必须引用支撑它的 method / result / compute 原子（不变式⑨：结论推导链）
+	- compute 类型原子必须指定 `script` 文件名
 ### 后检（修改后）
 ```bash
 python scripts/check_invariants.py --json
