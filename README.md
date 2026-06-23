@@ -131,7 +131,8 @@ academic-operating-system/
 │   │   │   └── method-semantic-seg-annotation.md
 │   │   ├── result/
 │   │   │   ├── result-carbide-pearlite-dataset.md
-│   │   │   └── result-ferrite-grain-dataset.md
+│   │   │   ├── result-ferrite-grain-dataset.md
+│   │   │   └── result-ferrite-pearlite-dataset.md
 │   │   └── scripts/                      # 计算原子配套的可复用脚本
 │   │       ├── compute-0001.py
 │   │       ├── compute-0002.py
@@ -167,21 +168,25 @@ academic-operating-system/
 │   │   │   ├── index.md
 │   │   │   ├── report-carbide-pearlite.html
 │   │   │   └── report-carbide-pearlite.md
-│   │   └── proj-ferrite-grain/
-│   │       ├── data/
-│   │       │   ├── fig-1-banded-structure.jpg
-│   │       │   ├── fig-1-center-1000x.jpg
-│   │       │   ├── fig-1-edge-1000x.jpg
-│   │       │   ├── fig-2-banded-structure.jpg
-│   │       │   ├── fig-4-2-200x.jpg
-│   │       │   ├── fig-4-2-500x.jpg
-│   │       │   ├── fig-5-1-200x.jpg
-│   │       │   ├── fig-5-1-500x.jpg
-│   │       │   ├── fig-971-quarter-1000x.jpg
-│   │       │   └── fig-ref-1.jpg
+│   │   ├── proj-ferrite-grain/
+│   │   │   ├── data/
+│   │   │   │   ├── fig-1-banded-structure.jpg
+│   │   │   │   ├── fig-1-center-1000x.jpg
+│   │   │   │   ├── fig-1-edge-1000x.jpg
+│   │   │   │   ├── fig-2-banded-structure.jpg
+│   │   │   │   ├── fig-4-2-200x.jpg
+│   │   │   │   ├── fig-4-2-500x.jpg
+│   │   │   │   ├── fig-5-1-200x.jpg
+│   │   │   │   ├── fig-5-1-500x.jpg
+│   │   │   │   ├── fig-971-quarter-1000x.jpg
+│   │   │   │   └── fig-ref-1.jpg
+│   │   │   ├── index.md
+│   │   │   ├── report-ferrite-grain-dataset.md
+│   │   │   └── report-ferrite-grain.html
+│   │   └── proj-ferrite-pearlite-seg/
 │   │       ├── index.md
-│   │       ├── report-ferrite-grain-dataset.md
-│   │       └── report-ferrite-grain.html
+│   │       ├── report-ferrite-pearlite.html
+│   │       └── report-ferrite-pearlite.md
 │   ├── completed/                    # 已完成
 │   └── ideas/                        # 想法池
 │
