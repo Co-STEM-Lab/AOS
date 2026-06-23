@@ -22,8 +22,8 @@
 - [系统] AOS Guardian 框架初始化完成
   - `scripts/check_invariants.py` — 不变式校验引擎
   - `scripts/install-hooks.sh` — pre-commit 硬守卫
-  - `.codebuddy/rules/aos-guardian.md` — AI 权限边界
-  - `.codebuddy/skills/aos-guardian.md` — 巡检 Workflow
+  - `.claude/rules/aos-guardian.md` — AI 权限边界
+  - `.claude/skills/aos-guardian.md` — 巡检 Workflow
   - `knowledge/controlled-vocabulary.yml` — 受控词汇表
 
 ---

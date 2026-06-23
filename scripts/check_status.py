@@ -338,7 +338,7 @@ def main():
     print("建议:")
     print("  • 每周: python scripts/check_status.py")
     print("  • 提交前: python scripts/check_invariants.py")
-    print("  • AI 巡检: 对 CodeBuddy 说 '检查 AOS'")
+    print("  • AI 巡检: 对 Claude Code 说 '检查 AOS'")
 
 
 if __name__ == "__main__":

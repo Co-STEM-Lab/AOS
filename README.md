@@ -251,7 +251,7 @@ Layer 2: 软巡检（手动 / 定时触发）
   check_status.py → 新鲜度漂移检测 → 生成警告清单
 
 Layer 3: 交互式 Loop（AI 对话触发）
-  对 CodeBuddy 说 "检查 AOS" → AI 读取状态 → 提案 → 人拍板 → 执行 → 记录
+  对 Claude Code 说 "检查 AOS" → AI 读取状态 → 提案 → 人拍板 → 执行 → 记录
 ```
 
 ### 安装
@@ -275,7 +275,7 @@ python scripts/check_invariants.py --fix     # 尝试自动修复
 python scripts/check_status.py               # 完整面板
 python scripts/check_status.py --freshness   # 仅漂移检测
 
-# AI 辅助深度巡检（在 CodeBuddy 中）
+# AI 辅助深度巡检（在 Claude Code 中）
 "检查 AOS"
 ```
 
