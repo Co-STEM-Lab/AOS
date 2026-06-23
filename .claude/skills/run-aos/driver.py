@@ -129,6 +129,21 @@ def test_aggregate_help():
     report("aggregate.py --help", ok)
 
 
+def test_render_help():
+    """render.py — help output."""
+    r = run(["scripts/render.py"])
+    ok = r.returncode != 0 and "用法" in r.stdout
+    report("render.py --help", ok)
+
+
+def test_smoke_self():
+    """smoke.py — wrapper script exists and is executable."""
+    ok = (ROOT / "scripts" / "smoke.py").exists() and \
+         (ROOT / "scripts" / "smoke.py").stat().st_mode & 0o111
+    report("smoke.py (exists + executable)", ok,
+           "file missing or not executable" if not ok else "")
+
+
 def test_env_isolation():
     """Verify scripts run from clean env (no hardcoded paths)."""
     g = subprocess.run(
@@ -176,6 +191,8 @@ def main():
     test_invariants_json()
     test_status()
     test_aggregate_help()
+    test_render_help()
+    test_smoke_self()
 
     if not quick:
         test_env_isolation()

@@ -11,8 +11,7 @@ description: >-
 AOS is a CLI knowledge-management system: Python scripts that validate and
 orchestrate a Markdown/YAML knowledge base. There is no server, no GUI.
 
-**Driver:** `.claude/skills/run-aos/driver.py` — runs every script entry
-point with representative arguments, checks exit codes and output.
+**Driver:** `.claude/skills/run-aos/driver.py` (shortcut: `scripts/smoke.py`)
 
 All paths below are relative to the repo root.
 
@@ -29,29 +28,36 @@ The driver auto-creates venv if missing.
 ## Run (agent path)
 
 ```bash
+# Direct
 source venv/bin/activate
 python .claude/skills/run-aos/driver.py
+
+# Shortcut (same thing)
+python scripts/smoke.py
 ```
 
-Runs 10 checks:
+12 checks:
 
 | # | Check | What it verifies |
 |---|-------|-----------------|
-| 1 | `scan.py` | Main entry point runs, output contains "AOS" |
-| 2 | `scan.py --json` | Machine-readable JSON output parses correctly |
-| 3 | `scan.py --log` | Logs to `knowledge/maintenance-log.md` |
-| 4 | `check_invariants.py` | Hard guard runs, output contains "不变式" |
-| 5 | `check_invariants.py --json` | Structured JSON with `summary` and `violations` |
-| 6 | `check_status.py` | Health panel runs, output contains "健康" |
-| 7 | `aggregate.py` | Prints usage on no-args (exit ≠ 0 is expected) |
-| 8 | no hardcoded paths | Scripts contain no `/home/` paths (excl. detection regex) |
-| 9 | pre-commit hook | `.git/hooks/pre-commit` exists |
-| 10 | venv + PyYAML | Environment is ready |
+| 1 | `scan.py` | Main entry point runs |
+| 2 | `scan.py --json` | JSON output parses correctly |
+| 3 | `scan.py --log` | Logs to `maintenance-log.md` |
+| 4 | `check_invariants.py` | Hard guard runs |
+| 5 | `check_invariants.py --json` | Structured JSON output |
+| 6 | `check_status.py` | Health panel runs |
+| 7 | `aggregate.py` | Usage on no-args |
+| 8 | `render.py` | Usage on no-args |
+| 9 | `smoke.py` | Shortcut exists + executable |
+| 10 | no hardcoded paths | Scripts contain no `/home/` (excl. detection regex) |
+| 11 | pre-commit hook | `.git/hooks/pre-commit` exists |
+| 12 | venv + PyYAML | Environment ready |
 
-Quick mode (skips env isolation and hook check):
+Quick mode (9 checks):
 
 ```bash
 python .claude/skills/run-aos/driver.py --quick
+python scripts/smoke.py --quick
 ```
 
 ## Run (human path)
@@ -97,9 +103,13 @@ bash scripts/install-hooks.sh
 - **qian-skill references live under `.claude/skills/qian-skill/references/`.**
   They are documentation, not executable skills. The skill's main file is
   `SKILL.md`.
+- **`render.py` requires `markdown` package for best results.** Without it,
+  falls back to built-in simple converter.
+- **`smoke.py` is a thin wrapper** around `.claude/skills/run-aos/driver.py`.
+  Running the driver directly also works.
 - **The invariant checker's "no hardcoded paths" rule uses regex patterns
   containing `/home/` to detect violations.** These are detection rules, not
-  violations themselves. The driver excludes them.
+  violations themselves.
 
 ## Troubleshooting
 
