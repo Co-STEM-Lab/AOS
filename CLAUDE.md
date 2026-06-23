@@ -15,23 +15,19 @@
 
 | Skill | 文件 | 用途 | 触发词 |
 |-------|------|------|--------|
-| `qian-skill` | `.claude/skills/qian-skill/SKILL.md` | 钱学森系统科学方法论——复杂工程诊断 + 总体设计 + 涌现检查 | 多模块/跨服务/重构/性能排查时自动启用 |
 | `aos-guardian` | `.claude/skills/aos-guardian.md` | 系统守护——不变式巡检 + 新鲜度漂移 + 修复提案 | "检查 AOS" / "守护" / "维护" |
 | `aos-operations` | `.claude/skills/aos-operations.md` | 操作引导——建原子/建项目/改词汇表/出初稿时自动检查 | 任何 AOS 文件修改操作时自动启用 |
+| `qian-skill` | `.claude/skills/qian-skill/SKILL.md` | 钱学森系统科学方法论——复杂工程诊断 + 总体设计 + 涌现检查 | 多模块/跨服务/重构/性能排查时自动启用 |
 | `run-aos` | `.claude/skills/run-aos/SKILL.md` | 构建、运行、烟雾测试 AOS 全部 CLI 入口 | "run AOS" / "test AOS" / "verify AOS" |
 
 ## 核心脚本
 
 ```bash
-python scripts/scan.py                      # 🚀 统一扫描入口（不变式 + 健康面板）
-python scripts/scan.py --json               # 机器可读模式
-
-python scripts/check_invariants.py          # 不变式硬校验（pre-commit 自动运行）
-python scripts/check_invariants.py --json --fix  # 自动修复可修的违规
-python scripts/check_status.py              # 系统健康面板 + 新鲜度
-python scripts/aggregate.py <proj-id>       # 聚合原子生成初稿
-python scripts/aggregate.py <proj-id> --execute  # 执行计算原子
-bash scripts/install-hooks.sh               # 安装 pre-commit hook
+python scripts/aggregate.py  # 聚合原子生成初稿
+python scripts/check_invariants.py  # 不变式校验引擎
+python scripts/check_status.py  # 系统健康度 + 新鲜度
+python scripts/install-hooks.sh  # 安装 pre-commit hook
+python scripts/scan.py  # 统一扫描入口
 ```
 
 ## 目录约定

@@ -579,6 +579,196 @@ def check_documentation_consistency(vocab: dict) -> list[dict]:
     return violations
 
 
+# ─── 文档同步生成器 ────────────────────────────────────────────
+
+# 目录 → 注释映射（README 树用的中文说明）
+DIR_COMMENTS = {
+    "CLAUDE.md": "🤖 AI 入口（每次对话自动加载）",
+    "README.md": "本文件",
+    "matrix.md": "🎯 研究领域 × 核心问题矩阵",
+    ".claude/": "AI 配置",
+    ".claude/rules/": "硬约束",
+    ".claude/skills/": "协作技能",
+    "knowledge/": "🧠 知识库",
+    "knowledge/atoms/": "产出原子（最小可重组知识单元）",
+    "knowledge/atoms/scripts/": "计算原子配套的可复用脚本",
+    "knowledge/literature/": "文献笔记",
+    "knowledge/datasets/": "数据集描述",
+    "knowledge/controlled-vocabulary.yml": "受控标签词汇表",
+    "knowledge/maintenance-log.md": "系统维护日志",
+    "competencies/": "💪 人的学术能力库",
+    "competencies/skill-tree.md": "技能树（自评 + 证据 + 成长路径）",
+    "projects/": "🔄 项目管线",
+    "projects/active/": "进行中",
+    "projects/completed/": "已完成",
+    "projects/ideas/": "想法池",
+    "outputs/": "📄 聚合产物",
+    "outputs/papers/": "论文草稿",
+    "outputs/proposals/": "基金本子",
+    "outputs/talks/": "演讲 slides",
+    "templates/": "📋 标准化模板",
+    "templates/atom-template.md": "原子模板",
+    "templates/project-template.md": "项目卡片模板",
+    "templates/skill-template.md": "技能项模板",
+    "templates/paper-template.md": "论文草稿模板",
+    "scripts/": "🔧 辅助工具",
+    "scripts/scan.py": "统一扫描入口",
+    "scripts/check_invariants.py": "不变式校验引擎",
+    "scripts/check_status.py": "系统健康度 + 新鲜度",
+    "scripts/aggregate.py": "聚合原子生成初稿",
+    "scripts/install-hooks.sh": "安装 pre-commit hook",
+    "data/": "📊 示例/测试数据",
+}
+
+
+def build_tree_entries(root: Path, prefix: str = "") -> list[str]:
+    """递归扫描目录，生成 README 树条目。"""
+    entries = []
+    items = sorted(
+        [p for p in root.iterdir()
+         if p.name not in ("venv", "__pycache__", ".git", ".gitignore",
+                           ".claude", "__init__.py") and not p.name.endswith(".pyc")],
+        key=lambda x: (x.is_file(), x.name.lower())
+    )
+
+    for i, item in enumerate(items):
+        is_last = (i == len(items) - 1)
+        connector = "└── " if is_last else "├── "
+        indent_next = "    " if is_last else "│   "
+
+        rel = str(item.relative_to(ROOT))
+        name = item.name + ("/" if item.is_dir() else "")
+        key = rel + ("/" if item.is_dir() else "")
+
+        comment = DIR_COMMENTS.get(rel, DIR_COMMENTS.get(key, ""))
+        line = f"{prefix}{connector}{name}"
+        if comment:
+            line += f"{' ' * max(1, 30 - len(name))}# {comment}"
+        entries.append(line)
+
+        if item.is_dir():
+            entries.extend(build_tree_entries(item, prefix + indent_next))
+
+    return entries
+
+
+def build_readme_tree() -> str:
+    """从实际文件系统生成完整的 README 目录树。"""
+    top = [
+        f"├── CLAUDE.md{' ' * 21}# 🤖 AI 入口（每次对话自动加载）",
+        f"├── README.md{' ' * 22}# 本文件",
+        f"├── matrix.md{' ' * 21}# 🎯 研究领域 × 核心问题矩阵",
+        "│",
+    ]
+    # .claude/ 单独处理
+    if (ROOT / ".claude").is_dir():
+        top.append(".claude/".rjust(4) + "├── .claude/" + " " * 22 + "# AI 配置")
+        if (ROOT / ".claude" / "rules").is_dir():
+            top.append(".claude/rules/".rjust(4) + "│   ├── rules/" + " " * 27 + "# 硬约束")
+        if (ROOT / ".claude" / "skills").is_dir():
+            top.append(".claude/skills/".rjust(4) + "│   └── skills/" + " " * 26 + "# 协作技能")
+        top.append("│")
+
+    # 其余顶级目录
+    rest_dirs = ["knowledge", "competencies", "projects", "outputs", "templates", "scripts", "data"]
+    for d in rest_dirs:
+        dpath = ROOT / d
+        if not dpath.exists():
+            continue
+        entries = build_tree_entries(dpath, "│   " if d != "data" else "    ")
+        rel = d + "/"
+        comment = DIR_COMMENTS.get(rel, "")
+        prefix = "├── " if d != "data" else "└── "
+        line = f"{prefix}{d}/"
+        if comment:
+            line += f"{' ' * max(1, 30 - len(d))}# {comment}"
+        top.append(line)
+        for entry in entries:
+            top.append(entry)
+        if d != "data":
+            top.append("│")
+        else:
+            break
+
+    return "academic-operating-system/\n" + "\n".join(top)
+
+
+def sync_readme_tree(readme_content: str) -> str:
+    """用实际文件系统重建 README 中的目录树块。"""
+    tree = build_readme_tree()
+    # 找到 ``` 包围的树块并替换
+    pattern = r'(academic-operating-system/\n)(.*?)(\n```)'
+    return re.sub(pattern, tree + r'\3', readme_content, count=1, flags=re.DOTALL)
+
+
+def sync_claude_scripts(claude_content: str) -> str:
+    """同步 CLAUDE.md 中的脚本列表与 scripts/ 实际文件。"""
+    scripts = sorted(
+        [f.name for f in (ROOT / "scripts").glob("*") if f.suffix in (".py", ".sh")]
+    )
+    lines = []
+    for s in scripts:
+        comments = DIR_COMMENTS.get(f"scripts/{s}", "")
+        comment = f"  # {comments}" if comments else ""
+        lines.append(f"python scripts/{s}{comment}")
+
+    new_block = "```bash\n" + "\n".join(lines) + "\n```"
+
+    # 替换 "## 核心脚本" 后的第一个 ```bash 块
+    pattern = r'(## 核心脚本\n\n)```bash\n.*?\n```'
+    return re.sub(pattern, r'\1' + new_block, claude_content, count=1, flags=re.DOTALL)
+
+
+def sync_claude_skills(claude_content: str) -> str:
+    """同步 CLAUDE.md 中的 Skills 表格与 .claude/skills/ 实际文件。"""
+    skills_root = ROOT / ".claude" / "skills"
+    if not skills_root.is_dir():
+        return claude_content
+
+    rows = ["| Skill | 文件 | 用途 | 触发词 |",
+            "|-------|------|------|--------|"]
+
+    skill_info = {
+        "qian-skill": (".claude/skills/qian-skill/SKILL.md",
+                       "钱学森系统科学方法论——复杂工程诊断 + 总体设计 + 涌现检查",
+                       "多模块/跨服务/重构/性能排查时自动启用"),
+        "aos-guardian": (".claude/skills/aos-guardian.md",
+                         "系统守护——不变式巡检 + 新鲜度漂移 + 修复提案",
+                         '"检查 AOS" / "守护" / "维护"'),
+        "aos-operations": (".claude/skills/aos-operations.md",
+                           "操作引导——建原子/建项目/改词汇表/出初稿时自动检查",
+                           "任何 AOS 文件修改操作时自动启用"),
+        "run-aos": (".claude/skills/run-aos/SKILL.md",
+                    "构建、运行、烟雾测试 AOS 全部 CLI 入口",
+                    '"run AOS" / "test AOS" / "verify AOS"'),
+    }
+
+    for skill_dir in sorted(skills_root.iterdir()):
+        if skill_dir.is_dir() and (skill_dir / "SKILL.md").exists():
+            name = skill_dir.name
+            if name not in skill_info:
+                skill_info[name] = (f".claude/skills/{name}/SKILL.md", "", "")
+        elif skill_dir.is_file() and skill_dir.suffix == ".md":
+            name = skill_dir.stem
+            if name not in skill_info:
+                skill_info[name] = (f".claude/skills/{skill_dir.name}", "", "")
+
+    for name, (path, purpose, trigger) in sorted(skill_info.items()):
+        if not (skills_root / name).exists() and not (skills_root / (name + ".md")).exists():
+            # Try alternate names
+            found = False
+            for f in skills_root.glob(f"{name}*"):
+                found = True
+                break
+            if not found and name not in ("qian-skill", "aos-guardian", "aos-operations", "run-aos"):
+                continue
+        rows.append(f"| `{name}` | `{path}` | {purpose} | {trigger} |")
+
+    new_table = "\n".join(rows)
+    pattern = r'(\| Skill \| 文件 \| 用途 \| 触发词 \|\n\|-------\|------\|------\|--------\|\n)(.*?)(\n\n##)'
+    return re.sub(pattern, r'\1' + "\n".join(rows[2:]) + r'\3', claude_content, count=1, flags=re.DOTALL)
+
+
 # ─── 自动修复 ──────────────────────────────────────────────────
 
 def _read_file(path: Path) -> str:
@@ -665,6 +855,26 @@ def auto_fix(violations: list[dict]) -> int:
         if new_content != content:
             _write_file(fpath, new_content)
             fixed += 1
+
+    # ── 文档同步修复（有任一漂移 → 全量重建，保证一致）──
+    doc_violations = [v for v in violations if v.get("invariant") == "文档同步"]
+    if doc_violations:
+        # README 目录树：全量重建
+        if README_PATH.exists():
+            old = _read_file(README_PATH)
+            new = sync_readme_tree(old)
+            if new != old:
+                _write_file(README_PATH, new)
+                fixed += 1
+
+        # CLAUDE.md：脚本列表 + Skills 表格 全量重建
+        if CLAUDE_PATH.exists():
+            old = _read_file(CLAUDE_PATH)
+            new = sync_claude_scripts(old)
+            new = sync_claude_skills(new)
+            if new != old:
+                _write_file(CLAUDE_PATH, new)
+                fixed += 1
 
     return fixed
 

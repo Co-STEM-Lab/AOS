@@ -23,48 +23,53 @@
 ```
 academic-operating-system/
 ├── CLAUDE.md                     # 🤖 AI 入口（每次对话自动加载）
-├── README.md                     # 本文件
+├── README.md                      # 本文件
 ├── matrix.md                     # 🎯 研究领域 × 核心问题矩阵
 │
-├── .claude/                      # AI 配置
-│   ├── rules/                    #   硬约束
-│   └── skills/                   #   协作技能（guardian, operations, qian）
+.claude/├── .claude/                      # AI 配置
+.claude/rules/│   ├── rules/                           # 硬约束
+.claude/skills/│   └── skills/                          # 协作技能
 │
-├── knowledge/                    # 🧠 知识库
-│   ├── atoms/                    #   产出原子（最小可重组知识单元）
-│   │   └── scripts/              #     计算原子配套的可复用脚本
-│   ├── literature/               #   文献笔记
-│   ├── datasets/                 #   数据集描述
-│   ├── controlled-vocabulary.yml #   受控标签词汇表
-│   └── maintenance-log.md        #   系统维护日志
+├── knowledge/                     # 🧠 知识库
+│   ├── atoms/                        # 产出原子（最小可重组知识单元）
+│   │   ├── scripts/                      # 计算原子配套的可复用脚本
+│   │   │   └── compute-0001.py
+│   │   ├── compute-0001.md
+│   │   ├── example-compute-0001.md
+│   │   └── example-gap-0001.md
+│   ├── datasets/                     # 数据集描述
+│   ├── literature/                   # 文献笔记
+│   ├── controlled-vocabulary.yml     # 受控标签词汇表
+│   └── maintenance-log.md            # 系统维护日志
 │
-├── competencies/                 # 💪 人的学术能力库
-│   └── skill-tree.md             #   技能树（自评 + 证据 + 成长路径）
+├── competencies/                  # 💪 人的学术能力库
+│   └── skill-tree.md                 # 技能树（自评 + 证据 + 成长路径）
 │
-├── projects/                     # 🔄 项目管线
-│   ├── active/                   #   进行中
-│   ├── completed/                #   已完成
-│   └── ideas/                    #   想法池
+├── projects/                      # 🔄 项目管线
+│   ├── active/                       # 进行中
+│   ├── completed/                    # 已完成
+│   └── ideas/                        # 想法池
 │
-├── outputs/                      # 📄 聚合产物
-│   ├── papers/
-│   ├── proposals/
-│   └── talks/
+├── outputs/                       # 📄 聚合产物
+│   ├── papers/                       # 论文草稿
+│   ├── proposals/                    # 基金本子
+│   └── talks/                        # 演讲 slides
 │
-├── templates/                    # 📋 标准化模板
-│   ├── atom-template.md
-│   ├── project-template.md
-│   ├── skill-template.md
-│   └── paper-template.md
+├── templates/                     # 📋 标准化模板
+│   ├── atom-template.md              # 原子模板
+│   ├── paper-template.md             # 论文草稿模板
+│   ├── project-template.md           # 项目卡片模板
+│   └── skill-template.md             # 技能项模板
 │
-├── scripts/                      # 🔧 辅助工具
-│   ├── scan.py                   #   统一扫描入口
-│   ├── check_invariants.py       #   不变式校验引擎
-│   ├── check_status.py           #   系统健康度 + 新鲜度
-│   ├── aggregate.py              #   聚合原子生成初稿
-│   └── install-hooks.sh          #   安装 pre-commit hook
+├── scripts/                       # 🔧 辅助工具
+│   ├── aggregate.py                  # 聚合原子生成初稿
+│   ├── check_invariants.py           # 不变式校验引擎
+│   ├── check_status.py               # 系统健康度 + 新鲜度
+│   ├── install-hooks.sh              # 安装 pre-commit hook
+│   └── scan.py                       # 统一扫描入口
 │
-└── data/                         # 📊 示例/测试数据
+└── data/                          # 📊 示例/测试数据
+    └── experiment_results.csv
 ```
 
 ---
