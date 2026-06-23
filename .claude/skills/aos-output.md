@@ -10,12 +10,12 @@ description: >-
 
 # AOS Output Skill
 
-两种输出格式，用途不同：
+两种输出格式：
 
-| 格式 | 模板 | 用途 | 命令 |
-|------|------|------|------|
-| **HTML 报告** | `templates/output.css` | 展示/汇报/快速预览 | `--html` |
-| **LaTeX 论文** | `templates/paper-latex.tex` | 期刊/会议投稿 | `--latex` |
+| 格式 | 模板 | 用途 |
+|------|------|------|
+| **HTML 报告** | `templates/output.css` | 展示/汇报/快速预览 |
+| **LaTeX 论文** | `templates/paper-elsevier-sc.tex` | 投稿（Elsevier CAS 单栏） |
 
 ## 渲染管线
 
@@ -27,7 +27,18 @@ description: >-
 ### 命令
 
 ```bash
-# HTML 报告（展示用）
+# HTML 报告（展示/汇报）
+python scripts/aggregate.py <proj> --html -o report.html
+
+# LaTeX 论文（投稿）
+python scripts/aggregate.py <proj> > draft.md
+# ... 人编辑 draft.md ...
+python scripts/render.py draft.md --latex -o paper.tex
+
+# 编译（需复制 templates/elsevier/* 到 .tex 同目录）
+cp templates/elsevier/* .
+xelatex paper && xelatex paper
+```
 python scripts/aggregate.py <proj> --html -o report.html
 
 # LaTeX 论文（投稿用）
@@ -55,60 +66,41 @@ A4 报告模板，适合打印/导出 PDF。
 | 对齐 | 两端对齐 (justify) |
 | 页码 | 底部居中 |
 
-## 渲染管线
+## 输入格式
 
-```
-原子 → aggregate.py → Markdown 初稿 → render.py → A4 HTML → 浏览器打印 → PDF
-```
+Markdown 文件带 YAML front-matter。HTML 报告用简单字段，LaTeX 论文用 Elsevier 完整字段。
 
-### 命令
-
-```bash
-# Markdown → 排好版的 A4 HTML
-python scripts/render.py paper.md -o paper.html
-
-# 生成并在浏览器打开
-python scripts/render.py paper.md -o paper.html --open
-```
-
-### 输入格式
-
-Markdown 文件带 YAML front-matter：
+### HTML 报告（简单）
 
 ```yaml
 ---
 title: "论文标题"
-authors: "作者一, 作者二"
+authors: "张三, 李四"
 affiliation: "某某大学"
-abstract: "摘要内容..."
+abstract: "摘要..."
 keywords: "关键词1, 关键词2"
-references:
-  - "Author A. Title. Journal, Year."
-  - "Author B. Another Title. Conf, Year."
 ---
-
-# 引言
-
-正文内容...
 ```
 
-## LaTeX 排版标准（`templates/paper-latex.tex`）
+### LaTeX 论文（Elsevier CAS 完整）
 
-中文 LaTeX 论文模板，基于 `ctexart`。
-
-| 属性 | 值 |
-|------|-----|
-| 文档类 | ctexart 12pt A4 |
-| 行距 | 1.5 倍 |
-| 中文字体 | Noto Serif/Sans CJK SC |
-| 英文字体 | Source Serif 4 / Source Sans 3 |
-| 参考文献 | natbib + plainnat |
-
-### 编译
-
-```bash
-xelatex paper.tex
-xelatex paper.tex   # 两次以生成目录/参考文献
+```yaml
+---
+title: "A Novel Method for Medical Image Segmentation"
+shorttitle: "Novel Medical Image Segmentation"
+shortauthors: "Zhang et al."
+author1: "San Zhang"
+orcid1: "0000-0001-2345-6789"
+email1: "zhang@university.edu"
+credit1: "Conceptualization, Methodology"
+org1: "University of Science"
+city1: "Beijing"
+country1: "China"
+# author2, author3 ... 同上
+abstract: "We propose..."
+keywords: "deep learning \\sep medical imaging \\sep segmentation"
+bibfile: "references"
+---
 ```
 
 ## 可选增强
