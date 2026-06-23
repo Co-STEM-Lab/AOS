@@ -83,6 +83,8 @@ academic-operating-system/
 │
 ├── templates/                     # 📋 标准化模板
 │   ├── atom-template.md              # 原子模板
+│   ├── output.css
+│   ├── paper-html.html
 │   ├── paper-template.md             # 论文草稿模板
 │   ├── project-template.md           # 项目卡片模板
 │   └── skill-template.md             # 技能项模板
@@ -92,6 +94,7 @@ academic-operating-system/
 │   ├── check_invariants.py           # 不变式校验引擎
 │   ├── check_status.py               # 系统健康度 + 新鲜度
 │   ├── install-hooks.sh              # 安装 pre-commit hook
+│   ├── render.py
 │   ├── scan.py                       # 统一扫描入口
 │   └── smoke.py                      # 全量烟雾测试（= run-aos driver）
 │

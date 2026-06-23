@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{title}}</title>
+<link rel="stylesheet" href="../../templates/output.css">
+</head>
+<body>
+<div class="page">
+
+<!-- 标题 -->
+<h1>{{title}}</h1>
+
+<!-- 作者 -->
+<div class="authors">{{authors}}</div>
+<div class="affiliation">{{affiliation}}</div>
+
+<!-- 摘要 + 关键词 -->
+<div class="abstract">
+  <p><strong>摘要：</strong>{{abstract}}</p>
+</div>
+<div class="keywords"><strong>关键词：</strong>{{keywords}}</div>
+
+<!-- 正文 -->
+{{body}}
+
+<!-- 参考文献 -->
+{{#references}}
+<div class="page-break"></div>
+<h2>参考文献</h2>
+<ol class="references">
+{{references}}
+</ol>
+{{/references}}
+
+</div>
+</body>
+</html>
