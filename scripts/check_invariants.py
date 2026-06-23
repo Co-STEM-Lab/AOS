@@ -264,7 +264,7 @@ def check_matrix_project_coupling(vocab: dict) -> list[dict]:
             matrix_content = matrix_content[:example_start]
 
     # 匹配 [proj-xxx](...) 形式的链接
-    matrix_projects = set(re.findall(r'\[(proj-\w+)\]\(', matrix_content))
+    matrix_projects = set(re.findall(r'\[(proj-[\w-]+)\]\(', matrix_content))
 
     # 2. 扫描所有项目
     all_projects = set()
@@ -770,6 +770,125 @@ def sync_claude_skills(claude_content: str) -> str:
     return re.sub(pattern, r'\1' + "\n".join(rows[2:]) + r'\3', claude_content, count=1, flags=re.DOTALL)
 
 
+def sync_matrix_entries(matrix_content: str) -> str:
+    """根据所有项目的 domain/problem 自动填充矩阵。"""
+    lines = matrix_content.split("\n")
+    table_start = sep_line = table_end = -1
+
+    for i, line in enumerate(lines):
+        s = line.strip()
+        if s.startswith("| 研究领域") or s.startswith("| Research Domain"):
+            table_start = i
+        elif table_start >= 0 and s.startswith("|") and "---" in s:
+            sep_line = i
+        elif sep_line >= 0 and table_start >= 0 and not s.startswith("|"):
+            table_end = i
+            break
+
+    if table_start < 0 or sep_line < 0:
+        return matrix_content
+    if table_end < 0:
+        table_end = len(lines)
+
+    # 提取列名（跳过 HTML 注释占位）
+    header_cells = [c.strip() for c in lines[table_start].split("|")[1:-1]]
+    problems = []
+    for h in header_cells[1:]:
+        if h.startswith("<!--"):
+            continue  # 跳过注释占位列
+        problems.append(h)
+
+    # 提取现有行: domain → [cell, cell, ...]
+    existing_rows: dict[str, list[str]] = {}
+    for i in range(sep_line + 1, table_end):
+        line = lines[i]
+        if not line.strip().startswith("|"):
+            break
+        cells = [c.strip() for c in line.split("|")[1:-1]]
+        if len(cells) >= 2 and not cells[0].startswith("<!--"):
+            existing_rows[cells[0]] = cells[1:]
+
+    # 扫描所有项目
+    status_icons = {
+        "idea": "💡", "active": "🔬", "writing": "✍️",
+        "submitted": "📤", "published": "✅"
+    }
+    project_cells: dict[tuple[str, str], str] = {}
+
+    for bucket in ["active", "completed", "ideas"]:
+        bucket_dir = PROJECTS_DIR / bucket
+        if not bucket_dir.is_dir():
+            continue
+        for proj_dir in bucket_dir.iterdir():
+            if not proj_dir.is_dir():
+                continue
+            idx = proj_dir / "index.md"
+            if not idx.exists():
+                continue
+            fm = parse_front_matter(str(idx))
+            if not fm:
+                continue
+            pid = fm.get("id", proj_dir.name)
+            domain = fm.get("domain", "")
+            problem = fm.get("problem", "")
+            status = fm.get("status", "idea")
+            if not domain or not problem:
+                continue
+            icon = status_icons.get(status, "❓")
+            rel = str(idx.relative_to(ROOT).parent)
+            project_cells[(domain, problem)] = f"[{pid}]({rel}/) {icon}"
+
+    # 收集所有 domain/problem
+    all_domains = list(existing_rows.keys())
+    all_problems = list(problems)
+    for d, p in project_cells:
+        if d not in all_domains:
+            all_domains.append(d)
+        if p not in all_problems:
+            all_problems.append(p)
+
+    # 补全新 domain 的空行
+    for d in all_domains:
+        if d not in existing_rows:
+            existing_rows[d] = ["—"] * len(all_problems)
+
+    # 扩展列
+    old_pc = len(problems)
+    if len(all_problems) > old_pc:
+        for d in existing_rows:
+            existing_rows[d].extend(["—"] * (len(all_problems) - old_pc))
+
+    # 清除旧的项目引用（项目已不存在 → 恢复为 "—"）
+    all_project_ids = {pid for (d, p), cell in project_cells.items()
+                       for pid in [cell.split("]")[0].lstrip("[")] if "proj-" in pid}
+    for d in existing_rows:
+        for ci in range(len(existing_rows[d])):
+            cell = existing_rows[d][ci]
+            if cell != "—" and "proj-" in cell:
+                ref_id = cell.split("]")[0].lstrip("[")
+                if ref_id not in all_project_ids:
+                    existing_rows[d][ci] = "—"
+
+    # 填入项目
+    for (d, p), cell in project_cells.items():
+        if d in existing_rows and p in all_problems:
+            pi = all_problems.index(p)
+            while len(existing_rows[d]) <= pi:
+                existing_rows[d].append("—")
+            existing_rows[d][pi] = cell
+
+    # 重建表
+    header = "| 研究领域 \\ 核心问题 |" + "|".join(f" {p} " for p in all_problems) + "|"
+    sep = "|" + "|".join("---------------------" for _ in range(len(all_problems) + 1)) + "|"
+    new_rows = []
+    for d in all_domains:
+        cells = existing_rows.get(d, ["—"] * len(all_problems))
+        new_rows.append("| " + " | ".join([d] + cells) + " |")
+
+    result = lines[:table_start] + [header, sep] + new_rows + lines[table_end:]
+    return "\n".join(result)
+
+
 # ─── 自动修复 ──────────────────────────────────────────────────
 
 def _read_file(path: Path) -> str:
@@ -876,6 +995,15 @@ def auto_fix(violations: list[dict]) -> int:
             if new != old:
                 _write_file(CLAUDE_PATH, new)
                 fixed += 1
+
+    # ── 矩阵同步修复（项目变更 → 矩阵自动填）──
+    matrix_violations = [v for v in violations if v.get("invariant") == "矩阵封闭"]
+    if matrix_violations and MATRIX_PATH.exists():
+        old = _read_file(MATRIX_PATH)
+        new = sync_matrix_entries(old)
+        if new != old:
+            _write_file(MATRIX_PATH, new)
+            fixed += 1
 
     return fixed
 
