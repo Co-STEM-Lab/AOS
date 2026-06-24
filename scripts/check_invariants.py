@@ -24,6 +24,7 @@ import yaml
 from pathlib import Path
 from datetime import datetime, date
 from collections import defaultdict
+from aos_utils import parse_front_matter, parse_body
 
 ROOT = Path(__file__).resolve().parent.parent
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
@@ -42,29 +43,6 @@ def load_vocab() -> dict:
     """加载受控词汇表。"""
     with open(VOCAB_PATH, "r", encoding="utf-8") as f:
         return yaml.safe_load(f)
-
-
-def parse_front_matter(filepath) -> dict | None:
-    """从 Markdown 文件提取 YAML front-matter。"""
-    try:
-        with open(filepath, "r", encoding="utf-8") as f:
-            content = f.read()
-    except Exception:
-        return None
-    match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
-    if not match:
-        return None
-    try:
-        return yaml.safe_load(match.group(1))
-    except yaml.YAMLError:
-        return None
-
-
-def parse_body(filepath) -> str:
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-    match = re.match(r"^---\s*\n.*?\n---\s*\n", content, re.DOTALL)
-    return content[match.end():].strip() if match else content.strip()
 
 
 def file_mtime(filepath: Path) -> str:
@@ -118,7 +96,7 @@ def check_atom_front_matter(vocab: dict) -> list[dict]:
                 "file": str(f.relative_to(ROOT)),
                 "field": "id",
                 "value": atom_id,
-                "message": f"id 格式错误，应为 {expected_prefix}-{有意义的命名} (如 result-ferrite-grain-dataset)",
+                "message": f"id 格式错误，应为 {expected_prefix}-{"有意义的命名"} (如 result-ferrite-grain-dataset)",
                 "fix": f"将 id 改为有意义的 {expected_prefix}-slug 格式",
             })
 
@@ -854,6 +832,9 @@ def sync_claude_skills(claude_content: str) -> str:
             "|-------|------|------|--------|"]
 
     skill_info = {
+        "aos-website": (".claude/skills/aos-website.md",
+                        "个人学术网站维护——构建、预览、配置修改、部署",
+                        '"建站" / "更新网站" / "部署" / "website"'),
         "qian-skill": (".claude/skills/qian-skill/SKILL.md",
                        "钱学森系统科学方法论——复杂工程诊断 + 总体设计 + 涌现检查",
                        "多模块/跨服务/重构/性能排查时自动启用"),
@@ -863,6 +844,9 @@ def sync_claude_skills(claude_content: str) -> str:
         "aos-operations": (".claude/skills/aos-operations.md",
                            "操作引导——建原子/建项目/改词汇表/出初稿时自动检查",
                            "任何 AOS 文件修改操作时自动启用"),
+        "aos-output": (".claude/skills/aos-output.md",
+                       "学术输出规范——论文/报告的图片、公式、表格、引用等格式标准",
+                       '"渲染" / "排版" / "导出" / "格式"'),
         "run-aos": (".claude/skills/run-aos/SKILL.md",
                     "构建、运行、烟雾测试 AOS 全部 CLI 入口",
                     '"run AOS" / "test AOS" / "verify AOS"'),
@@ -1169,6 +1153,7 @@ def main():
         if fixed > 0:
             # 重新检查
             all_violations = check_atom_front_matter(vocab)
+            all_violations.extend(check_evidence_anchoring(vocab))
             all_violations.extend(check_matrix_project_coupling(vocab))
             all_violations.extend(check_skill_evidence(vocab))
             all_violations.extend(check_script_self_containment(vocab))

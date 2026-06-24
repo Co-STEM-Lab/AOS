@@ -27,6 +27,7 @@ import re
 import yaml
 from pathlib import Path
 from datetime import datetime
+from aos_utils import parse_front_matter, parse_body
 
 ROOT = Path(__file__).resolve().parent.parent
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
@@ -36,37 +37,13 @@ CSS_PATH = ROOT / "templates" / "output.css"
 HTML_TEMPLATE = ROOT / "templates" / "paper-html.html"
 
 
-def parse_front_matter(filepath: str) -> dict | None:
-    """从 Markdown 文件中提取 YAML front-matter。"""
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
-    if not match:
-        return None
-    try:
-        return yaml.safe_load(match.group(1))
-    except yaml.YAMLError:
-        return None
-
-
-def parse_body(filepath: str) -> str:
-    """提取 Markdown 文件的正文（去掉 front-matter）。"""
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-
-    match = re.match(r"^---\s*\n.*?\n---\s*\n", content, re.DOTALL)
-    if match:
-        return content[match.end() :].strip()
-    return content.strip()
-
 
 def find_atoms_by_project(project_id: str) -> list[dict]:
     """查找所有属于指定项目的原子。"""
     atoms = []
-    for atom_file in ATOMS_DIR.glob("*.md"):
-        if atom_file.name.startswith("example-"):
-            continue  # 跳过示例文件
+    for atom_file in ATOMS_DIR.rglob("*.md"):
+        if atom_file.parent.name in ("example", "scripts"):
+            continue  # 跳过示例文件和脚本目录
         fm = parse_front_matter(str(atom_file))
         if fm and fm.get("project") == project_id:
             body = parse_body(str(atom_file))
@@ -328,7 +305,9 @@ def main():
 def check_script_deps(project_id: str) -> tuple[bool, list[str]]:
     """检查项目所有计算原子的依赖是否已安装。"""
     missing = set()
-    for atom_file in ATOMS_DIR.glob("*.md"):
+    for atom_file in ATOMS_DIR.rglob("*.md"):
+        if atom_file.parent.name in ("example", "scripts"):
+            continue
         fm = parse_front_matter(str(atom_file))
         if not fm or fm.get("project") != project_id or fm.get("type") != "compute":
             continue

@@ -146,6 +146,17 @@ academic-operating-system/
 │   │       └── compute-seg-evaluation.py
 │   ├── datasets/                     # 数据集描述
 │   ├── literature/                   # 文献笔记
+│   ├── publications/
+│   │   ├── pub-2018-MnO2-graphene.md
+│   │   ├── pub-2022-exit-wave.md
+│   │   ├── pub-2024-STEM-multislice.md
+│   │   ├── pub-2025-SiC-fibers.md
+│   │   ├── pub-2025-T1-AlCuLiMg.md
+│   │   ├── pub-2025-topological-tellurium.md
+│   │   ├── pub-2026-theta-AlCu.md
+│   │   └── pub-template.md
+│   ├── software/
+│   │   └── sw-template.md
 │   ├── controlled-vocabulary.yml     # 受控标签词汇表
 │   └── maintenance-log.md            # 系统维护日志
 │
@@ -222,6 +233,7 @@ academic-operating-system/
 │
 ├── scripts/                       # 🔧 辅助工具
 │   ├── aggregate.py                  # 聚合原子生成初稿
+│   ├── aos_utils.py
 │   ├── check_invariants.py           # 不变式校验引擎
 │   ├── check_status.py               # 系统健康度 + 新鲜度
 │   ├── install-hooks.sh              # 安装 pre-commit hook

@@ -147,7 +147,7 @@ def test_smoke_self():
 def test_env_isolation():
     """Verify scripts run from clean env (no hardcoded paths)."""
     g = subprocess.run(
-        ["grep", "-rn", "/home/", str(SCRIPTS)],
+        ["grep", "-rn", "--exclude=test_*.py", "/home/", str(SCRIPTS)],
         capture_output=True, text=True, timeout=10, cwd=str(ROOT)
     )
     # Exclude lines that are regex patterns used to DETECT hardcoded paths

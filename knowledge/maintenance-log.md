@@ -12,6 +12,7 @@
 
 | 时间 | 触发方式 | 🔴 HARD | 🟡 SOFT | 处置 |
 |------|---------|---------|---------|------|
+| 2026-06-24 20:12 | scan --log | 0 | 3 | 待处理 |
 | 2026-06-23 15:21 | scan --log | 0 | 0 | ✅ 无需处置 |
 | 2026-06-23 | 初始化 | 0 | — | 系统建立，基线检查通过 |
 | 2026-06-23 | 用户手动 (Claude Code) | 0 | 0 | 全部通过，附填充建议 |
@@ -39,6 +40,12 @@
   - `knowledge/controlled-vocabulary.yml` — 受控词汇表
 
 ---
+
+
+### 2026-06-24 20:12 扫描发现
+- [SOFT] README.md: README 目录树与实际文件系统不一致
+- [SOFT] CLAUDE.md: 脚本 scripts/aos_utils.py 实际存在但 CLAUDE.md 未列出
+- [SOFT] CLAUDE.md: 脚本 scripts/test_check_invariants.py 实际存在但 CLAUDE.md 未列出
 
 ## 巡检协议
 

@@ -21,6 +21,7 @@ from jinja2 import Environment, FileSystemLoader
 
 # ─── 路径 ───────────────────────────────────────────────────
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "scripts"))
 WEBSITE_DIR = ROOT / "website"
 TEMPLATES_DIR = WEBSITE_DIR / "templates"
 STATIC_DIR = WEBSITE_DIR / "static"

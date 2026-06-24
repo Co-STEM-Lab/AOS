@@ -404,7 +404,7 @@ def main():
         sys.exit(1)
 
     text = src.read_text(encoding="utf-8")
-    meta, body_md = parse_front_matter(text)
+    meta, body_md = parse_front_matter_text(text)
 
     if mode == "latex":
         body_converted = md_to_latex(body_md)

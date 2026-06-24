@@ -18,6 +18,7 @@ import yaml
 from pathlib import Path
 from datetime import datetime, date, timedelta
 from collections import defaultdict
+from aos_utils import parse_front_matter, parse_body
 
 ROOT = Path(__file__).resolve().parent.parent
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
@@ -26,28 +27,6 @@ VOCAB_PATH = ROOT / "knowledge" / "controlled-vocabulary.yml"
 SKILL_TREE_PATH = ROOT / "competencies" / "skill-tree.md"
 MATRIX_PATH = ROOT / "matrix.md"
 
-
-def parse_front_matter(filepath: str) -> dict | None:
-    """解析 YAML front-matter，返回字典。"""
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-    match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
-    if not match:
-        return None
-    try:
-        return yaml.safe_load(match.group(1))
-    except yaml.YAMLError:
-        return None
-
-
-def parse_body(filepath: str) -> str:
-    """提取 YAML front-matter 之后的正文。"""
-    with open(filepath, "r", encoding="utf-8") as f:
-        content = f.read()
-    match = re.match(r"^---\s*\n.*?\n---\s*\n(.*)", content, re.DOTALL)
-    if not match:
-        return content
-    return match.group(1)
 
 
 def count_atoms() -> dict:

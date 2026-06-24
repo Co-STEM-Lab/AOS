@@ -15,10 +15,10 @@
 
 | Skill | 文件 | 用途 | 触发词 |
 |-------|------|------|--------|
-| `aos-website` | `.claude/skills/aos-website.md` | 个人学术网站维护——构建、预览、配置修改、部署 | "建站" / "更新网站" / "部署" / "website" |
 | `aos-guardian` | `.claude/skills/aos-guardian.md` | 系统守护——不变式巡检 + 新鲜度漂移 + 修复提案 | "检查 AOS" / "守护" / "维护" |
 | `aos-operations` | `.claude/skills/aos-operations.md` | 操作引导——建原子/建项目/改词汇表/出初稿时自动检查 | 任何 AOS 文件修改操作时自动启用 |
-| `aos-output` | `.claude/skills/aos-output.md` |  |  |
+| `aos-output` | `.claude/skills/aos-output.md` | 学术输出规范——论文/报告的图片、公式、表格、引用等格式标准 | "渲染" / "排版" / "导出" / "格式" |
+| `aos-website` | `.claude/skills/aos-website.md` | 个人学术网站维护——构建、预览、配置修改、部署 | "建站" / "更新网站" / "部署" / "website" |
 | `qian-skill` | `.claude/skills/qian-skill/SKILL.md` | 钱学森系统科学方法论——复杂工程诊断 + 总体设计 + 涌现检查 | 多模块/跨服务/重构/性能排查时自动启用 |
 | `run-aos` | `.claude/skills/run-aos/SKILL.md` | 构建、运行、烟雾测试 AOS 全部 CLI 入口 | "run AOS" / "test AOS" / "verify AOS" |
 
@@ -26,17 +26,13 @@
 
 ```bash
 python scripts/aggregate.py  # 聚合原子生成初稿
+python scripts/aos_utils.py
 python scripts/check_invariants.py  # 不变式校验引擎
 python scripts/check_status.py  # 系统健康度 + 新鲜度
 python scripts/install-hooks.sh  # 安装 pre-commit hook
 python scripts/render.py
 python scripts/scan.py  # 统一扫描入口
 python scripts/smoke.py  # 全量烟雾测试（= run-aos driver）
-python website/build.py  # 构建个人学术网站
-python website/build.py --watch  # 监听模式，文件变化自动重建
-
-## 目录约定
-
 ```
 CLAUDE.md                       # 本文件（每次对话自动加载）
 .claude/skills/                 # AI 协作技能
