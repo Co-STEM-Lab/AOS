@@ -19,24 +19,12 @@ import subprocess
 import tempfile
 from pathlib import Path
 from datetime import date
+from aos_utils import parse_front_matter, parse_body
 
 ROOT = Path(__file__).resolve().parent.parent
 CSS_PATH = ROOT / "templates" / "output.css"
 HTML_TEMPLATE = ROOT / "templates" / "paper-html.html"
 
-
-def parse_front_matter(text: str) -> tuple[dict, str]:
-    """解析 YAML front-matter，返回 (元数据, 正文)。"""
-    match = re.match(r"^---\s*\n(.*?)\n---\s*\n", text, re.DOTALL)
-    if not match:
-        return {}, text
-    import yaml
-    try:
-        meta = yaml.safe_load(match.group(1)) or {}
-    except yaml.YAMLError:
-        meta = {}
-    body = text[match.end():].strip()
-    return meta, body
 
 
 def md_to_html_simple(md: str) -> str:
@@ -403,8 +391,8 @@ def main():
         print(f"❌ 文件不存在: {src}")
         sys.exit(1)
 
-    text = src.read_text(encoding="utf-8")
-    meta, body_md = parse_front_matter_text(text)
+    meta = parse_front_matter(str(src))
+    body_md = parse_body(str(src))
 
     if mode == "latex":
         body_converted = md_to_latex(body_md)

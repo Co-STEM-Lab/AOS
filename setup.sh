@@ -15,7 +15,7 @@ fi
 
 # 安装依赖
 echo "📦 安装依赖..."
-pip3 install -r requirements.txt -q
+python3 -m pip install -r requirements.txt -q
 echo "   ✅ 完成"
 
 # 安装 Codex 技能（项目级）

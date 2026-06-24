@@ -293,6 +293,43 @@ def check_matrix_project_coupling(vocab: dict) -> list[dict]:
     return violations
 
 
+
+
+def check_project_status(vocab: dict) -> list[dict]:
+    """不变式④ 标签一致 — 项目 status 必须在受控词汇表中。"""
+    violations = []
+    allowed_statuses = vocab["project_statuses"]
+    allowed_buckets = vocab["project_buckets"]
+
+    for bucket in allowed_buckets:
+        bucket_dir = PROJECTS_DIR / bucket
+        if not bucket_dir.is_dir():
+            continue
+        for proj_dir in sorted(bucket_dir.iterdir()):
+            if not proj_dir.is_dir():
+                continue
+            idx = proj_dir / "index.md"
+            if not idx.exists():
+                continue
+            fm = parse_front_matter(str(idx))
+            if not fm:
+                continue
+            pid = fm.get("id", proj_dir.name)
+            status = fm.get("status", "")
+
+            if status not in allowed_statuses:
+                violations.append({
+                    "level": "HARD",
+                    "invariant": "标签一致",
+                    "file": str(idx.relative_to(ROOT)),
+                    "field": "status",
+                    "value": status,
+                    "message": f"项目 status '{status}' 不在受控词汇表: {allowed_statuses}",
+                    "fix": f"改为 {allowed_statuses} 之一（如 'idea'）",
+                })
+
+    return violations
+
 def check_skill_evidence(vocab: dict) -> list[dict]:
     """不变式② 证据前置 — L3/L4 技能必须有证据。"""
     violations = []
@@ -1139,6 +1176,7 @@ def main():
     all_violations.extend(check_atom_front_matter(vocab))
     all_violations.extend(check_evidence_anchoring(vocab))
     all_violations.extend(check_matrix_project_coupling(vocab))
+    all_violations.extend(check_project_status(vocab))
     all_violations.extend(check_skill_evidence(vocab))
     all_violations.extend(check_script_self_containment(vocab))
     all_violations.extend(check_atom_independence(vocab))
@@ -1155,6 +1193,7 @@ def main():
             all_violations = check_atom_front_matter(vocab)
             all_violations.extend(check_evidence_anchoring(vocab))
             all_violations.extend(check_matrix_project_coupling(vocab))
+            all_violations.extend(check_project_status(vocab))
             all_violations.extend(check_skill_evidence(vocab))
             all_violations.extend(check_script_self_containment(vocab))
             all_violations.extend(check_atom_independence(vocab))

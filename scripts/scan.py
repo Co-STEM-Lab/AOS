@@ -14,6 +14,7 @@ import sys
 import json
 import subprocess
 from pathlib import Path
+import re
 from datetime import date, datetime
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -44,8 +45,8 @@ def write_log(invariants: dict, health: dict):
 
     content = LOG_PATH.read_text(encoding="utf-8")
 
-    # 避免同日重复写入
-    if f"| {today}" in content and "scan --log" in content:
+    # 避免同日重复写入（匹配完整日期+触发方式）
+    if re.search(f'\\| {today} \\d{{2}}:\\d{{2}} \\| scan --log \\|', content):
         return
 
     # 找到巡检记录表格末尾，插入新行

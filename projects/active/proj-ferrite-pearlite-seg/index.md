@@ -3,7 +3,7 @@ id: "proj-ferrite-pearlite-seg"
 title: "⚠️ F+P组织图像分割（F+P含义待确认）"
 domain: "金相分析"
 problem: "⚠️ F+P组织分割（含义待确认）"
-status: draft
+status: idea
 priority: low
 skills_required: ["金相分析", "图像分割", "计算机视觉"]
 target_venue: ""

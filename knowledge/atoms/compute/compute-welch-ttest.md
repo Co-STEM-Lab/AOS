@@ -7,7 +7,7 @@ project: "uncategorized"
 status: final
 source: ""
 created: "2026-06-23"
-script: "compute-0001.py"
+script: "compute-welch-ttest.py"
 script_deps: []
 script_input: "data/experiment_results.csv"
 script_input_desc: "CSV 格式，含分组列和数值列。"

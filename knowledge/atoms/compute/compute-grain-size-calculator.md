@@ -7,8 +7,8 @@ project: "proj-ferrite-grain"
 status: draft
 source: "GB/T 6394—2017"
 created: "2026-06-23"
-script: "compute-0002.py"
-script_deps: ["numpy"]
+script: "compute-grain-size-calculator.py"
+script_deps: []
 script_input: "data/grain-size-measurements.csv"
 script_input_desc: "CSV 格式：sample_id, magnification, line_length_mm, intercept_count, 每行一条截线数据"
 script_args: ""

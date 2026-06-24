@@ -141,9 +141,9 @@ academic-operating-system/
 │   │   │   ├── result-ferrite-pearlite-dataset.md
 │   │   │   └── result-network-carbide-spacing-dataset.md
 │   │   └── scripts/                      # 计算原子配套的可复用脚本
-│   │       ├── compute-0001.py
-│   │       ├── compute-0002.py
-│   │       └── compute-seg-evaluation.py
+│   │       ├── compute-grain-size-calculator.py
+│   │       ├── compute-seg-evaluation.py
+│   │       └── compute-welch-ttest.py
 │   ├── datasets/                     # 数据集描述
 │   ├── literature/                   # 文献笔记
 │   ├── publications/
