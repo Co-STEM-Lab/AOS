@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ t.research.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <h1>{{ t.research.title }}</h1>
+  <p class="page-desc">{{ t.research.desc }}</p>
+</section>
+
+<section class="section">
+  {% if matrix and matrix.rows %}
+  <div class="matrix-wrapper">
+    <table class="matrix-table">
+      <thead>
+        <tr>
+          <th>{{ t.research.title }}</th>
+          {% for prob in matrix.problems %}
+          <th>{{ prob }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in matrix.rows %}
+        <tr>
+          <td class="matrix-domain">{{ row.domain }}</td>
+          {% for cell in row.cells %}
+          <td class="matrix-cell {% if cell.empty %}matrix-empty{% endif %}">
+            {% if cell.project_url %}
+            <a href="/{{ prefix }}{{ cell.project_url }}" class="matrix-link">
+              {{ cell.project_id }}
+              {% if cell.status %}
+              <span class="matrix-status">{{ cell.status }}</span>
+              {% endif %}
+            </a>
+            {% elif cell.empty %}
+            <span class="matrix-placeholder">{{ t.research.empty_cell }}</span>
+            {% else %}
+            <span>{{ cell.raw }}</span>
+            {% endif %}
+          </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="empty-state">
+    <p>{{ t.research.no_matrix }}</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

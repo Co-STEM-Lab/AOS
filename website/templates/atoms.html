@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}{{ t.atoms.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <h1>{{ t.atoms.title }}</h1>
+  <p class="page-desc">{{ t.atoms.desc }}</p>
+</section>
+
+<section class="section">
+  {% if atoms %}
+  <!-- 筛选 -->
+  <div class="filter-bar">
+    <div class="filter-group">
+      <span class="filter-label">{{ t.atoms.filter_type }}:</span>
+      <button class="filter-btn active" data-filter="all" onclick="filterAtoms('all', 'type')">{{ t.atoms.all }}</button>
+      {% for type_key in all_types %}
+      <button class="filter-btn" data-filter="{{ type_key }}" onclick="filterAtoms('{{ type_key }}', 'type')">
+        {{ resolve_atom_type_name(type_key, lang) }}
+      </button>
+      {% endfor %}
+    </div>
+    {% if all_tags %}
+    <div class="filter-group">
+      <span class="filter-label">{{ t.atoms.filter_tag }}:</span>
+      <button class="filter-btn active" data-filter="all" onclick="filterAtoms('all', 'tag')">{{ t.atoms.all }}</button>
+      {% for tag in all_tags %}
+      <button class="filter-btn" data-filter="{{ tag }}" onclick="filterAtoms('{{ tag }}', 'tag')">
+        {{ tag }}
+      </button>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="atom-grid" id="atom-grid">
+    {% for atom in atoms %}
+    <a href="/{{ prefix }}atoms/{{ atom.id }}/" class="atom-card" data-type="{{ atom.type }}" data-tags="{{ atom.tags | join(' ') }}">
+      <span class="atom-type-badge type-{{ atom.type }}">{{ resolve_atom_type_name(atom.type, lang) }}</span>
+      <h3 class="atom-card-title">{{ atom.title }}</h3>
+      <p class="atom-card-body">{{ atom.body_preview }}</p>
+      <div class="atom-card-meta">
+        <span>{{ atom.created }}</span>
+        <span>{{ atom.project }}</span>
+      </div>
+      {% if atom.tags %}
+      <div class="atom-card-tags">
+        {% for tag in atom.tags[:3] %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+
+  <script>
+  function filterAtoms(value, mode) {
+    const btns = event.target.closest('.filter-group').querySelectorAll('.filter-btn');
+    btns.forEach(b => b.classList.toggle('active', b.dataset.filter === value));
+
+    document.querySelectorAll('#atom-grid .atom-card').forEach(card => {
+      let match = value === 'all';
+      if (!match) {
+        if (mode === 'type') {
+          match = card.dataset.type === value;
+        } else if (mode === 'tag') {
+          match = card.dataset.tags.includes(value);
+        }
+      }
+      card.style.display = match ? '' : 'none';
+    });
+  }
+  </script>
+  {% else %}
+  <div class="empty-state">
+    <p>{{ t.atoms.no_atoms }}</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

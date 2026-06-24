@@ -28,6 +28,12 @@ python scripts/aggregate.py <项目id> --execute   # 执行计算原子
 
 # 安装 pre-commit 硬守卫
 bash scripts/install-hooks.sh
+
+# 构建个人学术网站（中英文双语）
+python website/build.py                     # 构建全站
+python website/build.py --watch             # 监听模式，自动重建
+python website/build.py --serve             # 构建 + 本地预览
+cd website/public && python -m http.server 8000  # 仅预览
 ```
 
 ---
@@ -489,19 +495,22 @@ python scripts/check_status.py --freshness   # 仅漂移检测
 git clone <your-repo-url> academic-operating-system
 cd academic-operating-system
 
-# 2. 填写第一个真实内容
+# 2. 一键初始化（安装依赖 + 系统检查 + 构建网站）
+bash setup.sh
+
+# 3. 本地预览
+cd website/public && python -m http.server 8000
+# 浏览器打开 http://localhost:8000
+
+# 4. 填写第一个真实内容
 #    a. 打开 matrix.md，写下你最核心的一个领域和一个问题
 #    b. 在 projects/active/ 下创建第一个项目卡片
 #    c. 在 knowledge/atoms/ 中写下今天第一个原子
 
-# 3. 上线
+# 5. 上线
 git add -A
 git commit -m "Initialize my academic operating system"
 git push
-
-# 4. 安装脚本依赖（可选）
-pip install pyyaml
-python scripts/check_status.py
 ```
 
 ---

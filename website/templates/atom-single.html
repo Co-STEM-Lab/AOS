@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{{ atom.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <a href="/{{ prefix }}atoms/" class="back-link">{{ t.atoms.back }}</a>
+  <div class="atom-meta-bar">
+    <span class="atom-type-badge type-{{ atom.type }}">{{ resolve_atom_type_name(atom.type, lang) }}</span>
+    {% if atom.status %}
+    <span class="atom-status">{{ t.atoms.status }}: {{ atom.status }}</span>
+    {% endif %}
+    {% if atom.created %}
+    <span>{{ t.atoms.created }}: {{ atom.created }}</span>
+    {% endif %}
+    {% if atom.project and atom.project != "uncategorized" %}
+    <span>{{ t.atoms.project }}: {{ atom.project }}</span>
+    {% endif %}
+  </div>
+  <h1>{{ atom.title }}</h1>
+</section>
+
+<section class="section">
+  <div class="atom-detail">
+    <div class="atom-detail-body prose">
+      {{ atom.body_html | safe }}
+    </div>
+
+    <aside class="atom-sidebar">
+      {% if atom.tags %}
+      <div class="atom-sidebar-block">
+        <h3>{{ t.atoms.tags }}</h3>
+        <div class="tag-list">
+          {% for tag in atom.tags %}
+          <span class="tag">{{ tag }}</span>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      {% if atom.source %}
+      <div class="atom-sidebar-block">
+        <h3>{{ t.atoms.source }}</h3>
+        <p>{{ atom.source }}</p>
+      </div>
+      {% endif %}
+
+      {% if atom.type == "compute" and atom.script %}
+      <div class="atom-sidebar-block">
+        <h3>Script</h3>
+        <p class="mono">{{ atom.script }}</p>
+        {% if atom.script_deps %}
+        <p>Deps: {{ atom.script_deps | join(", ") }}</p>
+        {% endif %}
+        {% if atom.script_input %}
+        <p>Input: <code>{{ atom.script_input }}</code></p>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <div class="atom-sidebar-block">
+        <h3>{{ t.atoms.type_label }}</h3>
+        <p>{{ resolve_atom_type_name(atom.type, lang) }}</p>
+      </div>
+    </aside>
+  </div>
+</section>
+{% endblock %}

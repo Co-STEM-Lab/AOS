@@ -15,6 +15,7 @@
 
 | Skill | 文件 | 用途 | 触发词 |
 |-------|------|------|--------|
+| `aos-website` | `.claude/skills/aos-website.md` | 个人学术网站维护——构建、预览、配置修改、部署 | "建站" / "更新网站" / "部署" / "website" |
 | `aos-guardian` | `.claude/skills/aos-guardian.md` | 系统守护——不变式巡检 + 新鲜度漂移 + 修复提案 | "检查 AOS" / "守护" / "维护" |
 | `aos-operations` | `.claude/skills/aos-operations.md` | 操作引导——建原子/建项目/改词汇表/出初稿时自动检查 | 任何 AOS 文件修改操作时自动启用 |
 | `aos-output` | `.claude/skills/aos-output.md` |  |  |
@@ -31,7 +32,8 @@ python scripts/install-hooks.sh  # 安装 pre-commit hook
 python scripts/render.py
 python scripts/scan.py  # 统一扫描入口
 python scripts/smoke.py  # 全量烟雾测试（= run-aos driver）
-```
+python website/build.py  # 构建个人学术网站
+python website/build.py --watch  # 监听模式，文件变化自动重建
 
 ## 目录约定
 

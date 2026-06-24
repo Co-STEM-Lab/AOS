@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}{{ project.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <a href="/{{ prefix }}projects/" class="back-link">{{ t.projects.back }}</a>
+  <h1>{{ project.title }}</h1>
+  <div class="page-header-meta">
+    <span class="status-badge status-{{ project.status }}">{{ resolve_project_status_name(project.status, lang) }}</span>
+    {% if project.domain %}
+    <span>{{ t.projects.domain }}: <strong>{{ project.domain }}</strong></span>
+    {% endif %}
+    {% if project.problem %}
+    <span>{{ t.projects.problem }}: <strong>{{ project.problem }}</strong></span>
+    {% endif %}
+    <span>{{ t.projects.status }}: {{ project.status }}</span>
+    {% if project.created %}
+    <span>{{ project.created }}</span>
+    {% endif %}
+    {% if project.updated %}
+    <span>Updated: {{ project.updated }}</span>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  {% if project.description_html %}
+  <div class="prose">
+    {{ project.description_html | safe }}
+  </div>
+  {% endif %}
+</section>
+
+<!-- 关联原子 -->
+{% if project_atoms %}
+<section class="section">
+  <h2>Atoms</h2>
+  <div class="atom-grid">
+    {% for atom in project_atoms %}
+    <a href="/{{ prefix }}atoms/{{ atom.id }}/" class="atom-card">
+      <span class="atom-type-badge type-{{ atom.type }}">{{ resolve_atom_type_name(atom.type, lang) }}</span>
+      <h3 class="atom-card-title">{{ atom.title }}</h3>
+      <p class="atom-card-body">{{ atom.body_preview }}</p>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+{% endblock %}

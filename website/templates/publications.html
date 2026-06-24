@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% block title %}{{ t.publications.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <h1>{{ t.publications.title }}</h1>
+  <p class="page-desc">{{ t.publications.desc }}</p>
+</section>
+
+<section class="section">
+  {% if publications %}
+  <div class="filter-bar">
+    <span class="filter-label">{{ t.publications.by_type }}:</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterPubs('all')">{{ t.publications.all }}</button>
+    {% for type_key in all_types %}
+    <button class="filter-btn" data-filter="{{ type_key }}" onclick="filterPubs('{{ type_key }}')">
+      {{ resolve_atom_type_name(type_key, lang) }}
+    </button>
+    {% endfor %}
+  </div>
+
+  <div class="pub-list" id="pub-list">
+    {% for pub in publications %}
+    <div class="pub-item" data-type="{{ pub.type }}">
+      <div class="pub-main">
+        <h3 class="pub-title">
+          <a href="/{{ prefix }}atoms/{{ pub.id }}/">{{ pub.title }}</a>
+        </h3>
+        <div class="pub-meta">
+          <span class="atom-type-badge type-{{ pub.type }}">{{ resolve_atom_type_name(pub.type, lang) }}</span>
+          {% if pub.project and pub.project != "uncategorized" %}
+          <span class="pub-project">{{ t.publications.project }}: {{ pub.project }}</span>
+          {% endif %}
+          {% if pub.source %}
+          <span>{{ pub.source }}</span>
+          {% endif %}
+          <span>{{ pub.created }}</span>
+        </div>
+        <div class="pub-body">{{ pub.body_html | safe | truncate(200) }}</div>
+      </div>
+      {% if pub.tags %}
+      <div class="pub-tags">
+        {% for tag in pub.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+
+  <script>
+  function filterPubs(type) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.filter-btn[data-filter="${type}"]`).classList.add('active');
+    document.querySelectorAll('.pub-item').forEach(item => {
+      item.style.display = (type === 'all' || item.dataset.type === type) ? '' : 'none';
+    });
+  }
+  </script>
+  {% else %}
+  <div class="empty-state"><p>{{ t.publications.no_pubs }}</p></div>
+  {% endif %}
+</section>
+{% endblock %}

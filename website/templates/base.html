@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}{{ config.site["title_" + lang] }}{% endblock %}</title>
+<meta name="description" content="{{ config.site["description_" + lang] }}">
+<link rel="stylesheet" href="/static/css/style.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+{% block head %}{% endblock %}
+</head>
+<body>
+
+<!-- ─── 导航栏 ─── -->
+<nav class="navbar" role="navigation">
+  <div class="nav-inner">
+    <a href="/{{ prefix }}" class="nav-brand">{{ config.author["name_" + lang] }}</a>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links">
+      {% for item in config.nav %}
+      <li><a href="/{{ prefix }}{{ item.path.lstrip('/') }}"
+             class="nav-link {% if page_id == item.id %}active{% endif %}">{{ t.nav[item.id] }}</a></li>
+      {% endfor %}
+      <li class="nav-lang">
+        <a href="{{ t.switch_url }}" class="nav-lang-btn">{{ t.switch_label }}</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── 主内容 ─── -->
+<main class="main-content">
+  {% block content %}{% endblock %}
+</main>
+
+<!-- ─── 页脚 ─── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-social">
+      {% if config.social.github %}
+      <a href="https://github.com/{{ config.social.github }}" target="_blank" rel="noopener" title="GitHub">GitHub</a>
+      {% endif %}
+      {% if config.social.google_scholar %}
+      <a href="https://scholar.google.com/citations?user={{ config.social.google_scholar }}" target="_blank" rel="noopener" title="Google Scholar">Scholar</a>
+      {% endif %}
+      {% if config.social.twitter %}
+      <a href="https://twitter.com/{{ config.social.twitter }}" target="_blank" rel="noopener" title="Twitter">Twitter</a>
+      {% endif %}
+      {% if config.social.orcid %}
+      <a href="https://orcid.org/{{ config.social.orcid }}" target="_blank" rel="noopener" title="ORCID">ORCID</a>
+      {% endif %}
+      {% if config.social.linkedin %}
+      <a href="https://linkedin.com/in/{{ config.social.linkedin }}" target="_blank" rel="noopener" title="LinkedIn">LinkedIn</a>
+      {% endif %}
+      {% if config.author.email %}
+      <a href="mailto:{{ config.author.email }}" title="Email">Email</a>
+      {% endif %}
+    </div>
+    <p class="footer-meta">{{ t.footer.copyright }}</p>
+  </div>
+</footer>
+
+<!-- 返回顶部 -->
+<a href="#" class="back-to-top" title="{{ t.back_to_top if t.back_to_top else 'Back to top' }}">↑</a>
+
+<script>
+// 返回顶部按钮
+window.addEventListener('scroll', function() {
+  document.querySelector('.back-to-top').classList.toggle('visible', window.scrollY > 400);
+});
+</script>
+</body>
+</html>

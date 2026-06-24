@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}{{ config.author["name_" + lang] }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-inner">
+    {% if config.author.avatar %}
+    <img src="/static/images/{{ config.author.avatar }}" alt="" class="hero-avatar">
+    {% endif %}
+    <h1 class="hero-name">{{ config.author["name_" + lang] }}</h1>
+    <p class="hero-title">{{ config.author["title_" + lang] }}</p>
+    {% if config.author["affiliation_" + lang] %}
+    <p class="hero-affiliation">{{ config.author["affiliation_" + lang] }}</p>
+    {% endif %}
+    <div class="hero-actions">
+      {% if config.author.email %}
+      <a href="mailto:{{ config.author.email }}" class="btn btn-primary">{{ config.author.email }}</a>
+      {% endif %}
+      {% if config.social.github %}
+      <a href="https://github.com/{{ config.social.github }}" class="btn btn-outline" target="_blank">GitHub</a>
+      {% endif %}
+      {% if config.social.google_scholar %}
+      <a href="https://scholar.google.com/citations?user={{ config.social.google_scholar }}" class="btn btn-outline" target="_blank">Scholar</a>
+      {% endif %}
+      {% if lang == "zh" and config.author.cv_url_zh %}
+      <a href="{{ config.author.cv_url_zh }}" class="btn btn-outline">CV</a>
+      {% elif lang == "en" and config.author.cv_url_en %}
+      <a href="{{ config.author.cv_url_en }}" class="btn btn-outline">CV</a>
+      {% endif %}
+    </div>
+    {% if config.author["bio_" + lang] %}
+    <div class="hero-bio">
+      {{ config.author["bio_" + lang] | trim | replace('\n', '<br>') }}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<!-- 最新动态 -->
+{% if atoms %}
+<section class="section">
+  <div class="section-header">
+    <h2>{{ t.index.latest }}</h2>
+    <a href="/{{ prefix }}atoms/" class="section-more">{{ t.index.view_all_atoms }}</a>
+  </div>
+  <div class="atom-grid">
+    {% for atom in atoms %}
+    <a href="/{{ prefix }}atoms/{{ atom.id }}/" class="atom-card">
+      <span class="atom-type-badge type-{{ atom.type }}">{{ resolve_atom_type_name(atom.type, lang) }}</span>
+      <h3 class="atom-card-title">{{ atom.title }}</h3>
+      <p class="atom-card-body">{{ atom.body_preview }}</p>
+      <div class="atom-card-meta">
+        <span>{{ atom.created }}</span>
+        {% if atom.tags %}
+        <span>{{ atom.tags[:2] | join(', ') }}</span>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<!-- 进行中项目 -->
+<section class="section">
+  <div class="section-header">
+    <h2>{{ t.index.projects }}</h2>
+    <a href="/{{ prefix }}projects/" class="section-more">{{ t.index.all_projects }}</a>
+  </div>
+  {% if active_projects %}
+  <div class="project-mini-list">
+    {% for proj in active_projects %}
+    <a href="/{{ prefix }}projects/{{ proj.id }}/" class="project-mini-card">
+      <div class="project-mini-info">
+        <h3>{{ proj.title }}</h3>
+        {% if proj.description_html %}
+        <p>{{ proj.description_html | striptags | truncate(120) }}</p>
+        {% endif %}
+      </div>
+      <span class="status-badge status-{{ proj.status }}">{{ resolve_project_status_name(proj.status, lang) }}</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-state">{{ t.index.no_projects }}</p>
+  {% endif %}
+</section>
+
+{% endblock %}

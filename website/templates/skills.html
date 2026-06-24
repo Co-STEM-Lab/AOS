@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}{{ t.skills.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <h1>{{ t.skills.title }}</h1>
+  <p class="page-desc">{{ t.skills.desc }}</p>
+</section>
+
+<section class="section">
+  {% if skill_tree %}
+  {% for category, skills in skill_tree.items() %}
+  <div class="skill-category">
+    <h2 class="skill-category-title">{{ category }}</h2>
+    {% if skills %}
+    <div class="skill-list">
+      {% for skill in skills %}
+      <div class="skill-item">
+        <div class="skill-header">
+          <span class="skill-name">{{ skill.name }}</span>
+          {% if skill.level %}
+          <span class="skill-level-badge level-{{ skill.level }}">{{ skill.level }}</span>
+          <span class="skill-level-label">{{ t.skill_level_names.get(skill.level, skill.level) }}</span>
+          {% endif %}
+        </div>
+        {% if skill.level %}
+        <div class="skill-bar">
+          <div class="skill-bar-fill" style="width: {{ skill_level_int(skill.level) }}%"></div>
+        </div>
+        {% endif %}
+        {% if skill.evidence %}
+        <div class="skill-evidence">
+          <span class="evidence-label">{{ t.skills.evidence }}:</span>
+          {{ skill.evidence }}
+        </div>
+        {% elif skill.level in ("L3", "L4") %}
+        <div class="skill-evidence skill-evidence-missing">
+          ⚠️ {{ t.skills.no_evidence }}
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="empty-state">
+    <p>{{ t.skills.no_skills }}</p>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
