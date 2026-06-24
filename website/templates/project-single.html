@@ -13,7 +13,6 @@
     {% if project.problem %}
     <span>{{ t.projects.problem }}: <strong>{{ project.problem }}</strong></span>
     {% endif %}
-    <span>{{ t.projects.status }}: {{ project.status }}</span>
     {% if project.created %}
     <span>{{ project.created }}</span>
     {% endif %}
@@ -21,6 +20,17 @@
     <span>Updated: {{ project.updated }}</span>
     {% endif %}
   </div>
+
+  <!-- 报告链接 -->
+  {% if project.reports %}
+  <div class="page-header-actions">
+    {% for rpt in project.reports %}
+    <a href="/{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" class="btn btn-outline" target="_blank">
+      📄 {{ rpt | replace('report-', '') | replace('.html', '') }}
+    </a>
+    {% endfor %}
+  </div>
+  {% endif %}
 </section>
 
 <section class="section">

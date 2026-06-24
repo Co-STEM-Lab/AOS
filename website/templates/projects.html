@@ -24,6 +24,7 @@
       <div class="project-card-meta">
         {% if proj.domain %}<span>{{ t.projects.domain }}: {{ proj.domain }}</span>{% endif %}
         {% if proj.updated %}<span>{{ proj.updated }}</span>{% endif %}
+        {% if proj.reports %}<span class="report-indicator">📄 {{ proj.reports | length }} 份报告</span>{% endif %}
       </div>
     </a>
     {% endfor %}

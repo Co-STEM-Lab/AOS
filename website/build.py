@@ -468,6 +468,11 @@ def load_projects() -> dict:
             if not fm:
                 continue
             body = parse_body(str(idx))
+
+            # 扫描报告 HTML 和数据目录
+            reports = sorted([f.name for f in proj_dir.glob("report-*.html")])
+            has_data_dir = (proj_dir / "data").is_dir()
+
             proj = {
                 "id": fm.get("id", proj_dir.name),
                 "title": fm.get("title", proj_dir.name),
@@ -480,6 +485,9 @@ def load_projects() -> dict:
                 "description": body,
                 "description_html": md_to_html(body),
                 "url": f"/projects/{proj_dir.name}/",
+                "dir_name": proj_dir.name,
+                "reports": reports,
+                "has_data_dir": has_data_dir,
             }
             projects[bucket_key].append(proj)
 
@@ -577,6 +585,9 @@ def build_site(lang: str, config: dict, atoms: list, skill_tree: dict,
                         PUBLIC_DIR / prefix / "projects" / proj_dir_name / "index.html")
             pages_created += 1
 
+            # 复制项目报告 HTML 和 data/ 图片到网站输出
+            _copy_project_assets(bucket_key, proj, prefix)
+
     # ── 能力 ──
     mkdir(prefix + "skills")
     skills_ctx = {**ctx, "page_id": "skills", "skill_tree": skill_tree,
@@ -605,6 +616,27 @@ def build_site(lang: str, config: dict, atoms: list, skill_tree: dict,
         pages_created += 1
 
     return pages_created
+
+
+def _copy_project_assets(bucket: str, proj: dict, prefix: str):
+    """复制项目的报告 HTML 和 data/ 目录到网站输出。"""
+    proj_src = PROJECTS_DIR / bucket / proj["dir_name"]
+    proj_dst = PUBLIC_DIR / prefix / "projects" / proj["dir_name"]
+
+    # 复制 report-*.html
+    for rpt in proj.get("reports", []):
+        rpt_src = proj_src / rpt
+        if rpt_src.exists():
+            shutil.copy2(str(rpt_src), str(proj_dst / rpt))
+            print(f"     📄 报告: {proj['dir_name']}/{rpt}")
+
+    # 复制 data/ 目录（图片等）
+    data_src = proj_src / "data"
+    if data_src.is_dir():
+        data_dst = proj_dst / "data"
+        shutil.copytree(str(data_src), str(data_dst), dirs_exist_ok=True)
+        n_files = len(list(data_dst.rglob("*")))
+        print(f"     🖼️  图片: {proj['dir_name']}/data/ ({n_files} 个文件)")
 
 
 def _write_page(template_name: str, context: dict, env: Environment, output_path: Path):
