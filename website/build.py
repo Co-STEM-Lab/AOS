@@ -276,7 +276,10 @@ def parse_front_matter(filepath: str) -> dict | None:
             content = f.read()
     except Exception:
         return None
-    match = re.match(r"^---\s*\n(.*?)\n---\s*\n", content, re.DOTALL)
+    match = re.match(r"^---\s*\n(.*?)\n---\s*\n?", content, re.DOTALL)
+    if not match:
+        # 也匹配无尾部换行的文件
+        match = re.match(r"^---\s*\n(.*?)\n---\s*$", content, re.DOTALL)
     if not match:
         return None
     try:
