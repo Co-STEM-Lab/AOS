@@ -24,6 +24,7 @@ description: >-
 
 | 规则 | 说明 | 违反示例 |
 |------|------|---------|
+| **产出三合一** | `/outputs/` 页面包含三个独立区块：已发表论文（`knowledge/publications/`）、软件开发（`knowledge/software/`）、研究成果（`knowledge/atoms/` 中 result/method 类型），用锚点导航切换 | 只展示其中一个类型
 | **报告内嵌不跳转** | 项目报告通过 iframe 嵌入详情页底部，保留导航栏和上下文；禁止仅提供链接跳转 | 按钮链接"查看完整报告"跳转新页面 |
 | **数据不遗漏** | `projects/*/data/` 目录下的图片自动复制到网站输出 | 项目详情页图片 404 |
 | **内容如实** | AOS 数据（原子/技能/项目）原文展示，不做机器翻译 | 用 AI 翻译原子正文 |
@@ -247,6 +248,62 @@ jobs:
 
 ### 翻译注册
 在 `build.py` 的 `T` 翻译字典中，为每种语言添加 `mypage` 下的 key。
+
+---
+
+## 操作 7：添加论文 / 软件条目
+
+### 触发
+- 用户说 "加论文" / "加软件" / "登记论文" / "add paper" / "add software"
+
+### 流程
+
+```bash
+# 添加论文
+cp knowledge/publications/pub-template.md knowledge/publications/pub-2025-short-name.md
+# 编辑 front-matter 填入标题、作者、期刊、DOI 等
+python website/build.py            # 重建网站
+python website/build.py --watch    # 或启动监听模式
+
+# 添加软件
+cp knowledge/software/sw-template.md knowledge/software/sw-tool-name.md
+# 编辑 front-matter 填入名称、仓库、语言、许可等
+python website/build.py
+```
+
+### 字段说明
+
+**论文 (`knowledge/publications/`)**：
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `id` | ✅ | `pub-{年份}-{简短名}` |
+| `title` | ✅ | 论文标题 |
+| `type` | ✅ | `journal` / `conference` / `preprint` |
+| `authors` | ✅ | 作者列表 |
+| `journal` | ✅ | 期刊或会议名称 |
+| `year` | ✅ | 发表年份 |
+| `doi` | 选填 | DOI 号，自动生成链接 |
+| `arxiv` | 选填 | arXiv ID，自动生成链接 |
+| `pdf` | 选填 | 本地的 PDF 文件路径 |
+| `abstract` | 选填 | 论文摘要 |
+
+**软件 (`knowledge/software/`)**：
+
+| 字段 | 必填 | 说明 |
+|------|------|------|
+| `id` | ✅ | `sw-{简短名}` |
+| `title` | ✅ | 软件名称 |
+| `description` | ✅ | 一句话描述 |
+| `language` | ✅ | 主要编程语言 |
+| `repo` | ✅ | GitHub 等仓库 URL |
+| `docs` | 选填 | 文档 URL |
+| `license` | ✅ | 开源许可 |
+| `status` | ✅ | `active` / `stable` / `archived` |
+
+### 效果
+- 论文自动出现在 `/outputs/#papers`，按年份倒序排列，可筛选
+- 软件自动出现在 `/outputs/#software`，卡片展示
 
 ---
 

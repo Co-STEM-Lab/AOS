@@ -117,6 +117,71 @@ img { max-width: 100%; height: auto; }
 .page-header h1 { font-size: 2rem; font-weight: 700; color: #1a365d; margin-bottom: 0.5rem; }
 .page-desc { color: #718096; font-size: 1.05rem; max-width: 640px; }
 
+/* ─── Page Anchors ─── */
+.page-anchors {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.page-anchors a {
+  padding: 0.35rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  font-size: 0.88rem;
+  color: #4a5568;
+  transition: all 0.15s;
+}
+.page-anchors a:hover { border-color: #2b6cb0; color: #2b6cb0; }
+
+/* ─── Outputs Section ─── */
+.outputs-section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a365d;
+  margin-bottom: 0.3rem;
+}
+.outputs-section-desc {
+  font-size: 0.9rem;
+  color: #718096;
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Pub Links ─── */
+.pub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+.pub-link {
+  display: inline-block;
+  padding: 0.15rem 0.55rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  color: #2b6cb0;
+}
+.pub-link:hover { border-color: #2b6cb0; background: #ebf8ff; }
+
+/* ─── Software Grid ─── */
+.software-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.software-card {
+  padding: 1.25rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: box-shadow 0.15s;
+}
+.software-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+.software-title { font-size: 1rem; font-weight: 600; color: #1a365d; margin-bottom: 0.3rem; }
+.software-desc { font-size: 0.88rem; color: #718096; margin-bottom: 0.6rem; line-height: 1.5; }
+.software-meta { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 0.5rem; }
+
 .page-header-meta {
   display: flex;
   flex-wrap: wrap;

@@ -28,6 +28,8 @@ PUBLIC_DIR = WEBSITE_DIR / "public"
 ATOMS_DIR = ROOT / "knowledge" / "atoms"
 SCRIPTS_DIR = ATOMS_DIR / "scripts"
 PROJECTS_DIR = ROOT / "projects"
+PUBLICATIONS_DIR = ROOT / "knowledge" / "publications"
+SOFTWARE_DIR = ROOT / "knowledge" / "software"
 CONFIG_PATH = WEBSITE_DIR / "config.yml"
 MATRIX_PATH = ROOT / "matrix.md"
 SKILL_TREE_PATH = ROOT / "competencies" / "skill-tree.md"
@@ -45,7 +47,7 @@ T = {
         "nav": {
             "index": "首页",
             "research": "研究领域",
-            "publications": "学术产出",
+            "publications": "产出",
             "projects": "项目",
             "skills": "能力",
             "atoms": "知识库",
@@ -65,15 +67,28 @@ T = {
             "empty_cell": "—",
             "no_matrix": "矩阵尚未配置。请先在 matrix.md 中填写研究领域与核心问题。",
         },
-        "publications": {
+        "outputs": {
             "title": "学术产出",
-            "desc": "来自 AOS 知识库的全部可公开产出。",
-            "by_type": "按类型筛选",
+            "desc": "论文 · 软件 · 研究成果",
+            "papers": "📄 已发表论文",
+            "papers_desc": "同行评议的期刊论文、会议论文和预印本。",
+            "no_papers": "暂无已发表论文。在 knowledge/publications/ 下创建后自动展示。",
+            "software": "🛠️ 软件开发",
+            "software_desc": "开源的学术工具、库和应用程序。",
+            "no_software": "暂无软件项目。在 knowledge/software/ 下创建后自动展示。",
+            "research": "🔬 研究成果",
+            "research_desc": "AOS 知识库中的方法组件和实验结果。",
+            "no_research": "暂无研究成果。",
+            "filter_type": "按类型筛选",
             "all": "全部",
-            "no_pubs": "暂无学术产出。创建 result/method 类型原子后自动展示。",
-            "project": "项目",
+            "authors": "作者",
+            "journal": "期刊",
+            "year": "年份",
+            "doi": "DOI",
+            "repo": "仓库",
+            "language": "语言",
+            "license": "许可",
             "status": "状态",
-            "type": "类型",
         },
         "projects": {
             "title": "项目",
@@ -145,7 +160,7 @@ T = {
         "nav": {
             "index": "Home",
             "research": "Research",
-            "publications": "Publications",
+            "publications": "Outputs",
             "projects": "Projects",
             "skills": "Skills",
             "atoms": "Knowledge",
@@ -165,15 +180,28 @@ T = {
             "empty_cell": "—",
             "no_matrix": "Matrix not configured. Fill in matrix.md first.",
         },
-        "publications": {
-            "title": "Publications",
-            "desc": "All public outputs from the AOS knowledge base.",
-            "by_type": "Filter by type",
+        "outputs": {
+            "title": "Outputs",
+            "desc": "Papers · Software · Research",
+            "papers": "📄 Publications",
+            "papers_desc": "Peer-reviewed journal articles, conference papers, and preprints.",
+            "no_papers": "No publications yet. Create entries in knowledge/publications/ to populate.",
+            "software": "🛠️ Software",
+            "software_desc": "Open-source academic tools, libraries, and applications.",
+            "no_software": "No software yet. Create entries in knowledge/software/ to populate.",
+            "research": "🔬 Research Outputs",
+            "research_desc": "Method components and experimental results from the AOS knowledge base.",
+            "no_research": "No research outputs yet.",
+            "filter_type": "Filter by type",
             "all": "All",
-            "no_pubs": "No publications yet. Create result/method type atoms to populate.",
-            "project": "Project",
+            "authors": "Authors",
+            "journal": "Journal",
+            "year": "Year",
+            "doi": "DOI",
+            "repo": "Repository",
+            "language": "Language",
+            "license": "License",
             "status": "Status",
-            "type": "Type",
         },
         "projects": {
             "title": "Projects",
@@ -336,6 +364,58 @@ def load_atoms() -> list[dict]:
         }
         atoms.append(atom)
     return atoms
+
+
+def load_publications() -> list[dict]:
+    """加载已发表论文（knowledge/publications/ 下的 .md 文件）。"""
+    pubs = []
+    if not PUBLICATIONS_DIR.is_dir():
+        return pubs
+    for f in sorted(PUBLICATIONS_DIR.glob("*.md")):
+        if f.name.startswith("pub-template"):
+            continue
+        fm = parse_front_matter(str(f))
+        if not fm:
+            continue
+        pubs.append({
+            "id": fm.get("id", f.stem),
+            "title": fm.get("title", f.stem),
+            "type": fm.get("type", "journal"),
+            "authors": fm.get("authors", []),
+            "journal": fm.get("journal", ""),
+            "year": fm.get("year", ""),
+            "doi": fm.get("doi", ""),
+            "arxiv": fm.get("arxiv", ""),
+            "pdf": fm.get("pdf", ""),
+            "abstract": fm.get("abstract", ""),
+            "tags": fm.get("tags", []),
+        })
+    return pubs
+
+
+def load_software() -> list[dict]:
+    """加载软件项目（knowledge/software/ 下的 .md 文件）。"""
+    sw_list = []
+    if not SOFTWARE_DIR.is_dir():
+        return sw_list
+    for f in sorted(SOFTWARE_DIR.glob("*.md")):
+        if f.name.startswith("sw-template"):
+            continue
+        fm = parse_front_matter(str(f))
+        if not fm:
+            continue
+        sw_list.append({
+            "id": fm.get("id", f.stem),
+            "title": fm.get("title", f.stem),
+            "description": fm.get("description", ""),
+            "language": fm.get("language", ""),
+            "repo": fm.get("repo", ""),
+            "docs": fm.get("docs", ""),
+            "license": fm.get("license", ""),
+            "status": fm.get("status", "active"),
+            "tags": fm.get("tags", []),
+        })
+    return sw_list
 
 
 def load_skill_tree() -> dict:
@@ -555,13 +635,18 @@ def build_site(lang: str, config: dict, atoms: list, skill_tree: dict,
     pages_created += 1
 
     # ── 学术产出 ──
-    mkdir(prefix + "publications")
-    # 只展示 result 和 method 类型原子作为发表物
-    pubs = [a for a in atoms if a["type"] in ("result", "method")]
-    pubs_ctx = {**ctx, "page_id": "publications", "publications": pubs,
-        "all_types": sorted(set(a["type"] for a in pubs)),
+    mkdir(prefix + "outputs")
+    pubs_data = load_publications()
+    sw_data = load_software()
+    research_atoms = [a for a in atoms if a["type"] in ("result", "method")]
+    outputs_ctx = {**ctx, "page_id": "outputs",
+        "publications": pubs_data,
+        "software": sw_data,
+        "research_atoms": research_atoms,
+        "research_types": sorted(set(a["type"] for a in research_atoms)),
+        "pub_types": sorted(set(p["type"] for p in pubs_data)),
         "resolve_atom_type_name": resolve_atom_type_name}
-    _write_page("publications.html", pubs_ctx, env, PUBLIC_DIR / prefix / "publications" / "index.html")
+    _write_page("outputs.html", outputs_ctx, env, PUBLIC_DIR / prefix / "outputs" / "index.html")
     pages_created += 1
 
     # ── 项目 ──

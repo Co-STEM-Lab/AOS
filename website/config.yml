@@ -50,7 +50,7 @@ nav:
   - id: research
     path: "/research/"
   - id: publications
-    path: "/publications/"
+    path: "/outputs/"
   - id: projects
     path: "/projects/"
   - id: skills
