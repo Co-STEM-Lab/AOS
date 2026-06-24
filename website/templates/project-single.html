@@ -20,17 +20,6 @@
     <span>Updated: {{ project.updated }}</span>
     {% endif %}
   </div>
-
-  <!-- 报告链接 -->
-  {% if project.reports %}
-  <div class="page-header-actions">
-    {% for rpt in project.reports %}
-    <a href="/{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" class="btn btn-outline" target="_blank">
-      📄 {{ rpt | replace('report-', '') | replace('.html', '') }}
-    </a>
-    {% endfor %}
-  </div>
-  {% endif %}
 </section>
 
 <section class="section">
@@ -40,6 +29,21 @@
   </div>
   {% endif %}
 </section>
+
+<!-- 报告嵌入 -->
+{% if project.reports %}
+<section class="section">
+  {% for rpt in project.reports %}
+  <div class="report-embed">
+    <div class="report-embed-header">
+      <span class="report-embed-label">📄 {{ rpt | replace('report-', '') | replace('.html', '') }}</span>
+      <a href="/{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" target="_blank" class="report-embed-link">新窗口打开 ↗</a>
+    </div>
+    <iframe src="/{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" class="report-iframe" loading="lazy"></iframe>
+  </div>
+  {% endfor %}
+</section>
+{% endif %}
 
 <!-- 关联原子 -->
 {% if project_atoms %}
