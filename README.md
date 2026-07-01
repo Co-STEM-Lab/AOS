@@ -119,9 +119,12 @@ python website/build.py          # 构建网站
 
 `skills/` 目录下的技能文件给 Claude Code / Codex 使用，自动加载对应能力：
 
-| 技能 | 用途 | 触发方式 |
-|------|------|---------|
+| 技能 | 用途 | 触发词 |
+|------|------|--------|
 | `skills/writing.md` | 学术写作规范（结构/图片/公式/表格/引用） | "写论文" / "排版" / "渲染" |
+| `skills/figure.md` | 学术图片规范（字体/panel/分辨率/配色） | "插图" / "图片" / "figure" |
+| `skills/research.md` | 研究方法论（设计/假设/统计/可复现） | "实验设计" / "研究方法" |
+| `skills/survey.md` | 文献调研与综述方法论 | "文献调研" / "综述" / "survey" |
 
 新建 `skills/xxx.md` 即可添加技能，文件头部声明 name + description + 触发词。
 
