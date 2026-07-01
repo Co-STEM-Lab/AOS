@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-AOS 渲染引擎 —— Markdown 论文草稿 → HTML 报告 或 LaTeX 论文。
+论文渲染引擎 —— Markdown 论文草稿 → HTML 报告 或 LaTeX 论文。
 
 用法：
     python scripts/render.py <input.md>                    # HTML 到 stdout
@@ -16,15 +16,49 @@ LaTeX 用途：期刊/会议投稿
 import sys
 import re
 import subprocess
-import tempfile
 import html as html_mod
+import yaml
 from pathlib import Path
 from datetime import date
-from aos_utils import parse_front_matter, parse_body
 
 ROOT = Path(__file__).resolve().parent.parent
 CSS_PATH = ROOT / "templates" / "output.css"
 HTML_TEMPLATE = ROOT / "templates" / "paper-html.html"
+
+
+# ─── Front-matter 解析（内联，消除 aos_utils 依赖）────────────
+
+_FM_PATTERN = re.compile(
+    r"^---\s*\r?\n(.*?)\r?\n---\s*(?:\r?\n|$)",
+    re.DOTALL,
+)
+
+
+def parse_front_matter(filepath: str | Path) -> dict | None:
+    """从 Markdown 文件提取 YAML front-matter。"""
+    try:
+        content = Path(filepath).read_text(encoding="utf-8")
+    except Exception:
+        return None
+    m = _FM_PATTERN.match(content)
+    if not m:
+        return None
+    try:
+        return yaml.safe_load(m.group(1))
+    except yaml.YAMLError:
+        return None
+
+
+def parse_body(filepath: str | Path) -> str:
+    """提取 front-matter 之后的正文。"""
+    try:
+        content = Path(filepath).read_text(encoding="utf-8")
+    except Exception:
+        return ""
+    m = _FM_PATTERN.match(content)
+    if m:
+        return content[m.end():].strip()
+    return content.strip()
 
 
 

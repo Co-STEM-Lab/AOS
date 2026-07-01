@@ -1,9 +1,9 @@
-# AOS 依赖
+# 论文管理工具依赖
 # 安装方式: pip install -r requirements.txt
 
-# 脚本依赖
+# 渲染引擎
 PyYAML>=6.0
-
-# 网站构建依赖
-Jinja2>=3.0
 Markdown>=3.4
+
+# 网站构建（可选）
+Jinja2>=3.0

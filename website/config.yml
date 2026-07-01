@@ -47,16 +47,10 @@ theme:
 nav:
   - id: index
     path: "/"
-  - id: research
-    path: "/research/"
   - id: publications
-    path: "/outputs/"
+    path: "/publications/"
   - id: projects
     path: "/projects/"
-  - id: skills
-    path: "/skills/"
-  - id: atoms
-    path: "/atoms/"
 
 homepage:
   show_latest_atoms: 5
