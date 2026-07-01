@@ -76,7 +76,7 @@ cp papers/_template/index.md papers/_active/my-new-paper/
 
 1. 在 `notes/` 中记录想法、文献要点、实验结果
 2. 在 `scripts/` 中写分析脚本，结果输出到 `data/`
-3. 在 `drafts/` 中写 Markdown 草稿（参考 `templates/paper-template.md`）
+3. 在 `drafts/` 中写 Markdown 草稿（参考 `skills/writing.md` 格式规范）
 4. 用 `scripts/render.py` 转为 LaTeX 或 HTML
 5. 投稿后更新 `index.md`，论文移到 `papers/YYYY-name/`
 
@@ -106,11 +106,24 @@ python website/build.py          # 构建网站
 | 目录 | 内容 |
 |------|------|
 | `papers/` | 全部论文，按 `_active/`（进行中）和 `YYYY-name/`（已发表）组织 |
+| `skills/` | LLM 协作技能（给 Claude Code / Codex 用） |
 | `templates/` | 论文模板、LaTeX 类文件、CSS |
 | `scripts/` | `render.py` — Markdown→LaTeX/HTML 渲染引擎 |
 | `website/` | 个人学术网站生成器（中英文双语） |
 
 网站从 `papers/` 自动读取论文列表和进行中项目，无需手动配置。
+
+---
+
+## LLM 技能
+
+`skills/` 目录下的技能文件给 Claude Code / Codex 使用，自动加载对应能力：
+
+| 技能 | 用途 | 触发方式 |
+|------|------|---------|
+| `skills/writing.md` | 学术写作规范（结构/图片/公式/表格/引用） | "写论文" / "排版" / "渲染" |
+
+新建 `skills/xxx.md` 即可添加技能，文件头部声明 name + description + 触发词。
 
 ---
 

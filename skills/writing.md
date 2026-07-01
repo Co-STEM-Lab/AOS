@@ -1,3 +1,11 @@
+---
+name: academic-writing
+description: >-
+  学术写作规范——论文结构、Markdown 格式、图片/公式/表格/引用的嵌入方式和格式要求。
+  适用于从草稿到投稿的全流程。搭配 scripts/render.py 使用，同一源文件输出 HTML 和 LaTeX。
+  当用户说"写论文"、"排版"、"格式"、"渲染"、"导出论文"时自动使用本技能。
+---
+
 # 学术写作指南
 
 > 从草稿到投稿的格式规范。搭配 `scripts/render.py` 使用，同一 Markdown 源输出 HTML 报告和 LaTeX 论文。
