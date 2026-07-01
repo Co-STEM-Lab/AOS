@@ -3,6 +3,7 @@
 \documentclass[a4paper,fleqn]{cas-sc}
 
 \usepackage[authoryear,longnamesfirst]{natbib}
+\usepackage{hyperref}
 
 % ── 标题信息 ──
 \shorttitle{ {{shorttitle}} }
@@ -10,8 +11,10 @@
 
 \title [mode = title]{ {{title}} }
 
-% ── 作者（最多支持 6 位，模板已预设占位） ──
-% 作者 1
+% ── 作者列表 ──
+% 支持 1-6 位作者，每位作者占一个 \author 块
+% 在 front-matter 中按 author1/author2/... 提供数据
+{{#author1}}
 \author[1]{ {{author1}} }[orcid={ {{orcid1}} }]
 \cormark[1]
 \ead{ {{email1}} }
@@ -22,8 +25,9 @@
             postcode={ {{postcode1}} },
             state={ {{state1}} },
             country={ {{country1}} }}
+{{/author1}}
 
-% 作者 2
+{{#author2}}
 \author[2]{ {{author2}} }
 \ead{ {{email2}} }
 \credit{ {{credit2}} }
@@ -32,9 +36,9 @@
             city={ {{city2}} },
             postcode={ {{postcode2}} },
             state={ {{state2}} },
-            country={ {{country2}} }}
+            country={\ifx\empty{{country2}}\empty else {{country2}} \fi}}
+{{/author2}}
 
-% 作者 3（无内容则注释掉）
 {{#author3}}
 \author[3]{ {{author3}} }
 \ead{ {{email3}} }
@@ -47,6 +51,42 @@
             country={ {{country3}} }}
 {{/author3}}
 
+{{#author4}}
+\author[4]{ {{author4}} }
+\ead{ {{email4}} }
+\credit{ {{credit4}} }
+\affiliation[4]{organization={ {{org4}} },
+            addressline={ {{addr4}} },
+            city={ {{city4}} },
+            postcode={ {{postcode4}} },
+            state={ {{state4}} },
+            country={ {{country4}} }}
+{{/author4}}
+
+{{#author5}}
+\author[5]{ {{author5}} }
+\ead{ {{email5}} }
+\credit{ {{credit5}} }
+\affiliation[5]{organization={ {{org5}} },
+            addressline={ {{addr5}} },
+            city={ {{city5}} },
+            postcode={ {{postcode5}} },
+            state={ {{state5}} },
+            country={ {{country5}} }}
+{{/author5}}
+
+{{#author6}}
+\author[6]{ {{author6}} }
+\ead{ {{email6}} }
+\credit{ {{credit6}} }
+\affiliation[6]{organization={ {{org6}} },
+            addressline={ {{addr6}} },
+            city={ {{city6}} },
+            postcode={ {{postcode6}} },
+            state={ {{state6}} },
+            country={ {{country6}} }}
+{{/author6}}
+
 \cortext[1]{Corresponding author}
 
 % ── 摘要 ──
@@ -54,10 +94,10 @@
 {{abstract}}
 \end{abstract}
 
-% ── 研究亮点 ──
+% ── 研究亮点（可选） ──
 {{#highlights}}
 \begin{highlights}
-{{highlights}}
+{{highlights_text}}
 \end{highlights}
 {{/highlights}}
 
@@ -78,9 +118,9 @@
 \bibliographystyle{cas-model2-names}
 \bibliography{ {{bibfile}} }
 
-% ── 作者简介 ──
+% ── 作者简介（可选） ──
 {{#bios}}
-{{bios}}
+{{bios_text}}
 {{/bios}}
 
 \end{document}

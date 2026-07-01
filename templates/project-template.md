@@ -10,6 +10,9 @@ target_venue: ""         # 选填。目标期刊/会议名
 deadline: ""             # 选填。YYYY-MM-DD
 created: ""              # YYYY-MM-DD
 updated: ""              # YYYY-MM-DD
+authors: []              # 选填。项目作者/成员列表
+abstract: ""             # 选填。项目摘要（aggregate.py --html 时显示）
+keywords: ""             # 选填。关键词（aggregate.py --html 时显示）
 ---
 
 # {{title}}

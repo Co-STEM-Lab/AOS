@@ -9,6 +9,7 @@ project: ""              # 必填。关联项目 id，无项目填 "uncategorize
 status: draft            # 必填。draft | final
 source: ""               # result/insight 必填。文献 key / 实验编号 / 数据来源文档
 created: ""              # 自动或手动填写日期 YYYY-MM-DD
+version: "1"             # 可选。版本号，每次实质性修改递增
 
 # --- 以下仅 type=compute 时填写 ---
 script: ""               # 脚本文件名，位于 knowledge/atoms/scripts/
@@ -16,6 +17,7 @@ script_deps: []           # pip 依赖列表，如 ["numpy", "scipy"]
 script_input: ""          # 默认输入数据文件路径（相对于仓库根）
 script_input_desc: ""     # 输入格式说明（供人阅读）
 script_args: ""           # 额外命令行参数，如 "--group-col treatment --value-col score"
+script_output: ""         # 输出说明：脚本输出什么（JSON 字段、表格等）
 # --------------------------------
 ---
 

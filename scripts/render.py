@@ -17,6 +17,7 @@ import sys
 import re
 import subprocess
 import tempfile
+import html as html_mod
 from pathlib import Path
 from datetime import date
 from aos_utils import parse_front_matter, parse_body
@@ -168,31 +169,70 @@ def md_to_html(text: str) -> str:
     return html
 
 
+# ─── 模板渲染引擎 ──────────────────────────────────────────────
+
+def _render_template(template: str, context: dict) -> str:
+    """简易 Mustache 风格模板渲染：{{var}} + {{#var}}...{{/var}} 条件块。
+
+    支持：
+      - {{var}}           → 简单变量替换
+      - {{#var}}...{{/var}} → 条件块：var 为真值时保留，假值/空/None 时移除
+      - 嵌套条件块有限支持（逐层收敛）
+    """
+    def _replace_var(m):
+        key = m.group(1).strip()
+        val = context.get(key, "")
+        return str(val) if val else ""
+
+    # 逐层清除条件块（从内向外，支持嵌套）
+    prev = ""
+    result = template
+    while prev != result:
+        prev = result
+        result = re.sub(
+            r'\{\{#(\w+)\}\}(.*?)\{\{/\1\}\}',
+            lambda m: m.group(2) if context.get(m.group(1)) else "",
+            result,
+            flags=re.DOTALL,
+        )
+
+    # 替换简单变量
+    result = re.sub(r'\{\{(\w+)\}\}', _replace_var, result)
+    return result
+
+
+def _format_authors(authors) -> str:
+    """将 authors 字段格式化为 HTML 或 LaTeX 字符串。
+
+    接受格式：
+      - 列表：["Name1", "Name2"] → "Name1, Name2"
+      - 字符串原样返回
+    """
+    if isinstance(authors, list):
+        return ", ".join(authors)
+    return str(authors) if authors else ""
+
+
 def build_html(meta: dict, body_html: str) -> str:
     """将元数据和正文 HTML 注入模板。"""
     template = HTML_TEMPLATE.read_text(encoding="utf-8")
 
-    title = meta.get("title", "未命名")
-    authors = meta.get("authors", "")
-    affiliation = meta.get("affiliation", "")
-    abstract = meta.get("abstract", "")
-    keywords = meta.get("keywords", "")
+    ctx = {}
+    ctx["title"] = html_mod.escape(meta.get("title", "未命名"))
+    ctx["authors"] = _format_authors(meta.get("authors", ""))
+    ctx["affiliation"] = _format_authors(meta.get("affiliation", ""))
+    ctx["abstract"] = meta.get("abstract", "")
+    ctx["keywords"] = meta.get("keywords", "")
+    ctx["body"] = body_html
+    ctx["references"] = bool(meta.get("references"))
+
+    html = _render_template(template, ctx)
+
+    # 生成参考文献 HTML
     refs = meta.get("references", [])
-
-    html = template.replace("{{title}}", _escape(title))
-    html = html.replace("{{authors}}", authors)
-    html = html.replace("{{affiliation}}", affiliation)
-    html = html.replace("{{abstract}}", abstract)
-    html = html.replace("{{keywords}}", keywords)
-    html = html.replace("{{body}}", body_html)
-
     if refs:
         refs_html = "\n".join(f"<li>{r}</li>" for r in refs)
-        # 保留 Mustache 条件块
-        html = re.sub(r'\{\{#references\}\}.*?\{\{/references\}\}', "", html, flags=re.DOTALL)
         html += f'\n<div class="page-break"></div>\n<h2>参考文献</h2>\n<ol class="references">\n{refs_html}\n</ol>'
-    else:
-        html = re.sub(r'\{\{#references\}\}.*?\{\{/references\}\}', "", html, flags=re.DOTALL)
 
     return html
 
@@ -207,30 +247,61 @@ def build_latex(meta: dict, body_latex: str, style: str = "elsevier-sc") -> str:
     if not template:
         return body_latex
 
-    title = meta.get("title", "未命名")
-    authors = meta.get("authors", "")
-    abstract = meta.get("abstract", "")
-    keywords = meta.get("keywords", "")
+    ctx = {}
+    ctx["title"] = meta.get("title", "未命名")
+    ctx["shorttitle"] = meta.get("shorttitle", meta.get("title", ""))[:60]
+    ctx["authors"] = _format_authors(meta.get("authors", ""))
+    ctx["shortauthors"] = meta.get("shortauthors", "")
+    ctx["abstract"] = meta.get("abstract", "")
+    ctx["keywords"] = meta.get("keywords", "")
+    ctx["body"] = body_latex
+    ctx["bibfile"] = meta.get("bibfile", "references")
+    ctx["highlights"] = bool(meta.get("highlights"))
+    ctx["highlights_text"] = meta.get("highlights", "")
+    ctx["bios"] = bool(meta.get("bios"))
+    ctx["bios_text"] = meta.get("bios", "")
+
+    # 作者详情（支持 up to 6 位作者，每位含 name/email/org/address/等）
+    for i in range(1, 7):
+        author_key = f"author{i}"
+        author_data = meta.get(author_key, {})
+        if isinstance(author_data, dict):
+            ctx[f"author{i}"] = author_data.get("name", "")
+            ctx[f"email{i}"] = author_data.get("email", "")
+            ctx[f"org{i}"] = author_data.get("org", "")
+            ctx[f"addr{i}"] = author_data.get("address", "")
+            ctx[f"city{i}"] = author_data.get("city", "")
+            ctx[f"postcode{i}"] = author_data.get("postcode", "")
+            ctx[f"state{i}"] = author_data.get("state", "")
+            ctx[f"country{i}"] = author_data.get("country", "")
+            ctx[f"credit{i}"] = author_data.get("credit", "")
+            ctx[f"orcid{i}"] = author_data.get("orcid", "")
+        elif isinstance(author_data, str):
+            ctx[f"author{i}"] = author_data
+            for field in ("email", "org", "addr", "city", "postcode", "state", "country", "credit", "orcid"):
+                ctx[f"{field}{i}"] = ""
+
+    tex = _render_template(template, ctx)
+
+    # 生成参考文献
     refs = meta.get("references", [])
-
-    tex = template.replace("{{title}}", title)
-    tex = tex.replace("{{authors}}", authors)
-    tex = tex.replace("{{abstract}}", abstract)
-    tex = tex.replace("{{keywords}}", keywords)
-    tex = tex.replace("{{body}}", body_latex)
-
     if refs:
         refs_tex = "\n".join(r"\bibitem{" + f"ref{i}" + "} " + r for i, r in enumerate(refs))
         tex = tex.replace(r"\bibliography{references}",
                           r"\begin{thebibliography}{99}\n" + refs_tex + r"\n\end{thebibliography}")
-    else:
-        tex = re.sub(r'\{\{#references\}\}.*?\{\{/references\}\}', "", tex, flags=re.DOTALL)
 
     return tex
 
 
 def md_to_latex(md: str) -> str:
-    """Markdown → LaTeX 简易转换。"""
+    """Markdown → LaTeX 简易转换。
+
+    支持：
+      - $$...$$ → \\begin{equation}...\\end{equation}
+      - ![caption](path) → figure 环境
+      - Markdown 表格 → LaTeX 三线表
+      - [@citekey] → \\citep{citekey}
+    """
     # 预处理：$$ 公式块 → \begin{equation}
     eq_count = [0]
     def _replace_eq(m):
@@ -245,9 +316,35 @@ def md_to_latex(md: str) -> str:
                 r'\\begin{figure}[htbp]\n  \\centering\n  \\includegraphics[width=\\linewidth]{\2}\n  \\caption{\1}\n\\end{figure}',
                 md)
 
+    # 预处理：[@citation] → \citep{citation}  支持 [@key1; @key2]
+    md = re.sub(
+        r'\[@([^\]]+)\]',
+        lambda m: r'\citep{' + m.group(1).replace('; ', ',').replace(';', ',') + '}',
+        md,
+    )
+    # 也支持 plain @citation 在句子中
+    md = re.sub(r'(?<!\w)@(\w[\w:-]+)', r'\\citet{\1}', md)
+
+    # 保护预生成的 LaTeX 命令，防止 _latex_inline 转义反斜杠
+    # 用 @P{n}@ 占位（@ 不在 _latex_inline 的转义列表中）
+    protected = {}
+    protect_count = [0]
+
+    def _protect_latex(m):
+        protect_count[0] += 1
+        key = f"@P{protect_count[0]}@"
+        protected[key] = m.group(0)
+        return key
+
+    # 保护所有 \command{...} 结构（已由预处理生成）
+    md = re.sub(r'\\(?:citep|citet|begin|end|textbf|textit|texttt)\{[^}]*\}', _protect_latex, md)
+    # 也保护单独的 \command
+    md = re.sub(r'\\(?:toprule|midrule|bottomrule)', _protect_latex, md)
+
     lines = md.split("\n")
     out = []
     in_itemize = in_enumerate = in_verbatim = in_equation = in_figure = False
+    in_table = False
 
     for line in lines:
         # 原样保留块
@@ -291,6 +388,38 @@ def md_to_latex(md: str) -> str:
                 in_figure = False
             continue
 
+        # 表格：Markdown 表格 → LaTeX 三线表
+        if line.strip().startswith("|") and line.count("|") >= 3:
+            cells = [c.strip() for c in line.strip().split("|")[1:-1]]
+
+            # 分隔行（|---|---|）— 跳过，标记为表头已处理
+            if all(re.match(r"^[-:\s]+$", c) for c in cells):
+                continue
+
+            if not in_table:
+                # 计算列数和对齐
+                n_cols = len(cells)
+                out.append(r"\begin{table}[htbp]")
+                out.append(r"\centering")
+                out.append(r"\caption{待补充}\label{tbl:todo}")
+                out.append(r"\begin{tabular}{" + "l" * n_cols + "}")
+                out.append(r"\toprule")
+                out.append(" & ".join(cells) + r" \\")
+                out.append(r"\midrule")
+                in_table = True
+            else:
+                # 内容行
+                escaped = [_latex_inline(c) for c in cells]
+                out.append(" & ".join(escaped) + r" \\")
+            continue
+
+        if in_table:
+            out.append(r"\bottomrule")
+            out.append(r"\end{tabular}")
+            out.append(r"\end{table}")
+            in_table = False
+            # 不 continue，让当前行(非表格)被正常处理
+
         if not line.strip():
             if in_itemize: out.append(r"\end{itemize}"); in_itemize = False
             if in_enumerate: out.append(r"\end{enumerate}"); in_enumerate = False
@@ -332,7 +461,16 @@ def md_to_latex(md: str) -> str:
     if in_itemize: out.append(r"\end{itemize}")
     if in_enumerate: out.append(r"\end{enumerate}")
     if in_verbatim: out.append(r"\end{verbatim}")
-    return "\n".join(out)
+    if in_table:
+        out.append(r"\bottomrule")
+        out.append(r"\end{tabular}")
+        out.append(r"\end{table}")
+
+    # 恢复被保护的 LaTeX 命令
+    result = "\n".join(out)
+    for key, value in protected.items():
+        result = result.replace(key, value)
+    return result
 
 
 def _latex_inline(text: str) -> str:

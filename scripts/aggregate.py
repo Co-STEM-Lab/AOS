@@ -292,7 +292,12 @@ def main():
     # 4. 输出
     if html_mode:
         body_html = md_to_html(md_text)
-        html = wrap_html(project_title, body_html)
+        meta = {
+            "authors": card_fm.get("authors", "") if card_fm else "",
+            "abstract": card_fm.get("abstract", "") if card_fm else "",
+            "keywords": card_fm.get("keywords", "") if card_fm else "",
+        }
+        html = wrap_html(project_title, body_html, meta)
         if output_path:
             Path(output_path).write_text(html, encoding="utf-8")
             print(f"✅ 已输出 A4 HTML: {output_path}")
@@ -397,16 +402,25 @@ def md_to_html(md: str) -> str:
     return "\n".join(out)
 
 
-def wrap_html(title: str, body_html: str) -> str:
-    """将正文 HTML 注入 A4 模板，CSS 内联。"""
+def wrap_html(title: str, body_html: str, meta: dict = None) -> str:
+    """将正文 HTML 注入 A4 模板，CSS 内联。
+
+    meta 可选字典，可含：authors, abstract, keywords
+    """
     css = ""
     if CSS_PATH.exists():
         css = CSS_PATH.read_text(encoding="utf-8")
+
+    meta = meta or {}
+    authors_html = f'<div class="authors">{_escape_html(meta.get("authors", ""))}</div>' if meta.get("authors") else ""
+    abstract_html = f'<div class="abstract"><p><strong>摘要：</strong>{_escape_html(meta.get("abstract", ""))}</p></div>' if meta.get("abstract") else ""
+    keywords_html = f'<div class="keywords"><strong>关键词：</strong>{_escape_html(meta.get("keywords", ""))}</div>' if meta.get("keywords") else ""
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{_escape_html(title)}</title>
 <style>
 {css}
@@ -415,10 +429,9 @@ def wrap_html(title: str, body_html: str) -> str:
 <body>
 <div class="page">
 <h1>{_escape_html(title)}</h1>
-<div class="authors"></div>
-<div class="affiliation"></div>
-<div class="abstract"><p><strong>摘要：</strong></p></div>
-<div class="keywords"><strong>关键词：</strong></div>
+{authors_html}
+{abstract_html}
+{keywords_html}
 {body_html}
 </div>
 </body>
