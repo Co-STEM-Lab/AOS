@@ -742,7 +742,7 @@ DIR_COMMENTS = {
     "projects/completed/": "已完成",
     "projects/ideas/": "想法池",
     "outputs/": "📄 聚合产物",
-    "outputs/papers/": "论文草稿",
+    "drafts/": "📝 论文草稿",
     "outputs/proposals/": "基金本子",
     "outputs/talks/": "演讲 slides",
     "templates/": "📋 标准化模板",
@@ -809,8 +809,8 @@ def build_readme_tree() -> str:
             top.append("│   └── skills/" + " " * 26 + "# 协作技能")
         top.append("│")
 
-    # 其余顶级目录
-    rest_dirs = ["knowledge", "competencies", "projects", "outputs", "templates", "scripts", "data"]
+    # 其余顶级目录（drafts 插入在 outputs 之后）
+    rest_dirs = ["knowledge", "competencies", "projects", "outputs", "drafts", "templates", "scripts", "data"]
     for d in rest_dirs:
         dpath = ROOT / d
         if not dpath.exists():

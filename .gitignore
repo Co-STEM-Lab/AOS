@@ -4,7 +4,7 @@ __pycache__/
 .DS_Store
 
 # 脚本输出产物不入库（可复现，不入版本）
-outputs/papers/*-with-results.md
+drafts/*-with-results.md
 
 # 网站构建产物（可复现，不入版本）
 website/public/

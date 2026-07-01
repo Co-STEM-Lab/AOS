@@ -131,7 +131,9 @@ academic-operating-system/
 │   │   │   ├── compute-seg-evaluation.md
 │   │   │   └── compute-welch-ttest.md
 │   │   ├── gap/
+│   │   │   └── .gitkeep
 │   │   ├── insight/
+│   │   │   └── .gitkeep
 │   │   ├── method/
 │   │   │   ├── method-gb-t6394-intercept.md
 │   │   │   └── method-semantic-seg-annotation.md
@@ -145,7 +147,9 @@ academic-operating-system/
 │   │       ├── compute-seg-evaluation.py
 │   │       └── compute-welch-ttest.py
 │   ├── datasets/                     # 数据集描述
+│   │   └── .gitkeep
 │   ├── literature/                   # 文献笔记
+│   │   └── .gitkeep
 │   ├── publications/
 │   │   ├── pub-2018-MnO2-graphene.md
 │   │   ├── pub-2022-exit-wave.md
@@ -210,12 +214,18 @@ academic-operating-system/
 │   │       ├── report-network-carbide-spacing.html
 │   │       └── report-network-carbide-spacing.md
 │   ├── completed/                    # 已完成
+│   │   └── .gitkeep
 │   └── ideas/                        # 想法池
+│       └── .gitkeep
 │
 ├── outputs/                       # 📄 聚合产物
-│   ├── papers/                       # 论文草稿
+│   ├── papers/
 │   ├── proposals/                    # 基金本子
+│   │   └── .gitkeep
 │   └── talks/                        # 演讲 slides
+│       └── .gitkeep
+│
+├── drafts/                        # 📝 论文草稿
 │
 ├── templates/                     # 📋 标准化模板
 │   ├── elsevier/
@@ -401,10 +411,10 @@ python scripts/aggregate.py proj-dynamic-X --execute --input data/experiment_v2.
 
 ```bash
 # 纯文本聚合：按项目提取原子，生成论文初稿
-python scripts/aggregate.py proj-dynamic-X > outputs/papers/proj-dynamic-X-draft.md
+python scripts/aggregate.py proj-dynamic-X > drafts/proj-dynamic-X-draft.md
 
 # 执行模式：同时运行所有计算原子脚本，结果嵌在初稿中
-python scripts/aggregate.py proj-dynamic-X --execute > outputs/papers/proj-dynamic-X-draft.md
+python scripts/aggregate.py proj-dynamic-X --execute > drafts/proj-dynamic-X-draft.md
 ```
 
 脚本做的事：按 `#引言缺口` / `#方法组件` / `#结果讨论` 分组输出原子内容；`--execute` 模式下，计算原子的脚本被实际执行，输出（p 值、效应量、预处理统计等）自动嵌入对应段落。**你只做排列和润色，不做从零写作。**
