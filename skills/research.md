@@ -232,3 +232,20 @@ torch.backends.cudnn.deterministic = True
 - [ ] 所有脚本可自包含复现
 - [ ] 随机种子固定
 - [ ] 结论有数据和边界支撑
+
+---
+
+## 外部资源
+
+| 资源 | 链接 | 说明 |
+|------|------|------|
+| 可复现研究课程 | https://github.com/aaronpeikert/reproducible-research | ⭐132 — 可复现研究指南 |
+| 学术写作风格规范 | https://github.com/SebastianElvis/english-research-lint | ⭐19 — 学术英语写作风格检查 |
+| 论文写作清单 | https://github.com/khufkens/paper_writing_checklist | ⭐61 — 论文写作逐项检查表 |
+| 统计检验选择指南 | https://stats.idre.ucla.edu/other/mult-pkg/whatstat/ | UCLA 统计方法选择器 |
+| 功效分析工具 | https://www.stat.ubc.ca/~rollin/stats/ssize/ | 样本量/功效在线计算 |
+| 中文学术写作指南 | https://github.com/SYSUSELab/academic-writing-guide | ⭐363 — 学术写作常见错误 |
+| Obsidian 学术工作流 | https://github.com/MarcosNicolau/obsidian-for-academia | ⭐80 — Obsidian 转换为学术写作工具 |
+| 研究论文写作掌握 | https://github.com/rohanmistry231/Research-Paper-Writing-Mastery | ⭐29 — 完整论文写作资源 |
+| 学位论文模板汇总 | https://github.com/tuna/thuthesis | ⭐5403 — 清华学位论文 LaTeX 模板 |
+| Typst 学位论文模板 | https://github.com/ls1intum/thesis-template-typst | ⭐128 — 新兴排版系统 Typst 模板 |

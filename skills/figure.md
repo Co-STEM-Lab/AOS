@@ -242,3 +242,17 @@ plt.rcParams.update({
 | **ACS** | EPS / PDF / TIFF | ≥ 300 | RGB | 图形摘要需单独准备（5×3 inch） |
 | **RSC** | EPS / PDF / TIFF / PNG | ≥ 300 | RGB | 彩色图免收彩版费 |
 | **PNAS** | EPS / PDF / TIFF | ≥ 300 | CMYK | 宽 ≤ 8.7 cm（单栏）/ ≤ 17.8 cm（双栏） |
+
+---
+
+## 外部资源
+
+| 资源 | 链接 | 说明 |
+|------|------|------|
+| ColorBrewer 2.0 | https://colorbrewer2.org | 色盲友好调色板在线取色 |
+| Nature 图片格式 | https://www.nature.com/nature/for-authors/format-of-figures | Nature 投稿图片规范原文 |
+| Elsevier 图文指南 | https://www.elsevier.com/authors/policies-and-guidelines/artwork-and-media-instructions | Elsevier 图片/插图要求 |
+| IEEE 图形规范 | https://journals.ieeeauthorcenter.ieee.org/create-your-article/graphics-and-tables/ | IEEE 图形和表格规范 |
+| Inkscape 科学插图模板 | https://github.com/lukmuk/inkscape-scientific-figure-template | ⭐18 — Inkscape 科学插图模板 |
+| Python 学术调色板 | https://jiffyclub.github.io/palettable/ | Python 色盲友好调色板库 |
+| 配色无障碍检查 | https://colororacle.org | 色盲模拟器，检查图片可读性 |

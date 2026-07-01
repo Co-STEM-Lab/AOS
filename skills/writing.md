@@ -199,3 +199,18 @@ python scripts/render.py draft.md --latex -o paper.tex
 cp templates/elsevier/* .
 xelatex paper && xelatex paper
 ```
+
+---
+
+## 外部资源
+
+| 资源 | 链接 | 说明 |
+|------|------|------|
+| 中文学术写作教程 | https://github.com/SYSUSELab/academic-writing-guide | ⭐363 — 论文写作常见错误与规范 |
+| 学术论文写作全流程 | https://github.com/KejiaZhang-Robust/Academic-paper-writing | ⭐32 — 从零到投稿的完整指南 |
+| Research Workflow Assistant | https://github.com/andre-inter-collab-llc/research-workflow-assistant | ⭐20 — VS Code AI 科研助手，连接 PubMed/Zotero |
+| 英语学术写作风格 | https://github.com/SebastianElvis/english-research-lint | ⭐19 — 计算机领域学术英语规范 |
+| 论文写作检查清单 | https://github.com/khufkens/paper_writing_checklist | ⭐61 — 投稿前逐项检查表 |
+| 学位论文 LaTeX 模板 | https://github.com/tuna/thuthesis | ⭐5403 — 清华学位论文模板 |
+| Science 写作资源 | https://www.science.org/content/page/science-journal-writing-resources | Science 官方写作指南 |
+| Elsevier 作者指南 | https://www.elsevier.com/authors | Elsevier 投稿准备清单和模板 |

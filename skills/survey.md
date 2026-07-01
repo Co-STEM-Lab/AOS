@@ -217,3 +217,20 @@ Language: English
 - [ ] 对比表格包含了关键指标
 - [ ] 引用了奠基工作和最新 SOTA
 - [ ] 综述范围清晰，不泛不散
+
+---
+
+## 外部资源
+
+| 资源 | 链接 | 说明 |
+|------|------|------|
+| PRISMA 声明 | https://www.prisma-statement.org | 系统性综述报告标准 |
+| Connected Papers | https://www.connectedpapers.com | 论文关系图可视化 |
+| Semantic Scholar | https://www.semanticscholar.org | AI 增强学术检索 |
+| Zotero | https://www.zotero.org | 开源文献管理工具 |
+| Zotero + Obsidian 工作流 | https://github.com/idlhy0218/ZOA-zotero-obsidian-ai | ⭐13 — Zotero-Obsidian-AI 集成 |
+| MetaScreener | https://github.com/ChaokunHong/MetaScreener | ⭐1318 — 高通量文献筛选工具 |
+| Parsifal | https://github.com/vitorfs/parsifal | ⭐501 — 系统性文献综述工具 |
+| 研究缺口识别框架 | https://www.researchgate.net/publication/228871013_Identifying_research_gaps | 六种研究缺口类型原始论文 |
+| 综述论文写作指南 | https://www.nature.com/nature-research/editorial-policies/review-policy | Nature 综述论文政策与指南 |
+| 三遍读文法 | https://web.stanford.edu/class/ee384m/Handouts/HowtoReadPaper.pdf | S. Keshav 经典论文阅读方法论 |
