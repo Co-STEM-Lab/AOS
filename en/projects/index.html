@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark-matter">
+<html lang="en" data-theme="metal">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
 <script>
 // 主题初始化：从 localStorage 读取，在页面渲染前生效
 (function() {
-  var theme = localStorage.getItem('aos-theme') || 'dark-matter';
+  var theme = localStorage.getItem('aos-theme') || 'metal';
   document.documentElement.setAttribute('data-theme', theme);
 })();
 </script>
@@ -42,10 +42,13 @@
         <a href="/AOS/" class="nav-lang-btn">中</a>
       </li>
       <li>
-        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch theme" title="Switch theme">
-          <span class="theme-icon-dark">🌌</span>
-          <span class="theme-icon-amber">🔥</span>
-        </button>
+        <select class="theme-select" onchange="setTheme(this.value)" aria-label="Theme">
+          <option value="metal">金 Metal</option>
+          <option value="wood">木 Wood</option>
+          <option value="water">水 Water</option>
+          <option value="fire">火 Fire</option>
+          <option value="earth">土 Earth</option>
+        </select>
       </li>
     </ul>
   </div>
@@ -113,13 +116,19 @@ window.addEventListener('scroll', function() {
 });
 
 // 主题切换
-function toggleTheme() {
-  var html = document.documentElement;
-  var current = html.getAttribute('data-theme') || 'dark-matter';
-  var next = current === 'dark-matter' ? 'amber-haze' : 'dark-matter';
-  html.setAttribute('data-theme', next);
-  localStorage.setItem('aos-theme', next);
+function setTheme(theme) {
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('aos-theme', theme);
 }
+// 恢复上次选择的主题
+(function() {
+  var saved = localStorage.getItem('aos-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    var sel = document.querySelector('.theme-select');
+    if (sel) sel.value = saved;
+  }
+})();
 </script>
 </body>
 </html>

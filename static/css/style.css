@@ -1,102 +1,246 @@
 /* ============================================================
-   AOS Academic Website — Dual Theme Engine
-   Themes: "Dark Matter" (cyan/blue) · "Amber Haze" (amber/gold)
-   Fonts:  DM Sans (display) · Inter (body) · JetBrains Mono (code)
+   AOS Academic Website — Wǔ Xíng Themes
+   Five Elements: 金 Metal · 木 Wood · 水 Water · 火 Fire · 土 Earth
+   Fonts: DM Sans · Inter · JetBrains Mono
    ============================================================ */
 
-/* ─── Non-color tokens (shared across themes) ─── */
+/* ─── Non-color tokens ─── */
 :root {
   --radius:    12px;
   --nav-h:     60px;
 }
 
-/* ─── Theme: Dark Matter (default) ─── */
+/* ============================================================
+   金 Metal — precious, bright, refined
+   ============================================================ */
 :root,
-html[data-theme="dark-matter"],
+html[data-theme="metal"],
 html:not([data-theme]) {
-  --bg:        #050B14;
-  --bg-rgb:    5, 11, 20;
-  --surface:   #0C1628;
-  --surface-2: #111D35;
-  --primary:   #E8EDF5;
-  --accent-1:  #00E5FF;
-  --accent-1-rgb: 0, 229, 255;
-  --accent-2:  #4B8BFF;
-  --accent-2-rgb: 75, 139, 255;
-  --accent-3:  #7C3AED;
-  --gradient:  linear-gradient(90deg, #00E5FF, #4B8BFF);
-  --gradient-subtle: linear-gradient(90deg, rgba(0,229,255,0.12), rgba(75,139,255,0.12));
-  --text:      #C8D4E6;
-  --text-muted:#8899B4;
-  --text-dim:  #5A6E8C;
-  --border:    #1A2744;
-  --glow:      0 0 20px rgba(0,229,255,0.15);
-  --glow-2:    0 0 20px rgba(75,139,255,0.15);
+  --bg:        #0B0A08;
+  --bg-rgb:    11, 10, 8;
+  --surface:   #141210;
+  --surface-2: #1E1C18;
+  --primary:   #E8E0D0;
+  --accent-1:  #F5D78E;
+  --accent-1-rgb: 245, 215, 142;
+  --accent-2:  #C0C0C0;
+  --accent-2-rgb: 192, 192, 192;
+  --accent-3:  #E8B84B;
+  --gradient:  linear-gradient(90deg, #F5D78E, #C0C0C0);
+  --gradient-subtle: linear-gradient(90deg, rgba(245,215,142,0.12), rgba(192,192,192,0.12));
+  --text:      #C8C0B0;
+  --text-muted:#A09888;
+  --text-dim:  #706858;
+  --border:    #2A2620;
+  --glow:      0 0 20px rgba(245,215,142,0.15);
+  --glow-2:    0 0 20px rgba(192,192,192,0.15);
   --shadow:    0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-  --shadow-lg: 0 4px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(0,229,255,0.05);
-  --nav-bg:    rgba(5,11,20,0.92);
-  --nav-bg-mobile: rgba(5,11,20,0.98);
-  --footer-bg: #030812;
-  --btn-primary-text: #050B14;
-  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(0,229,255,0.06) 0%, transparent 60%);
-  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(75,139,255,0.04) 0%, transparent 50%);
-  --hero-deco: radial-gradient(circle, rgba(0,229,255,0.05) 0%, transparent 60%);
-  --hero-name-glow: 0 0 40px rgba(0,229,255,0.1);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(245,215,142,0.05);
+  --nav-bg:    rgba(11,10,8,0.92);
+  --nav-bg-mobile: rgba(11,10,8,0.98);
+  --footer-bg: #050403;
+  --btn-primary-text: #0B0A08;
+  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(245,215,142,0.06) 0%, transparent 60%);
+  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(192,192,192,0.04) 0%, transparent 50%);
+  --hero-deco: radial-gradient(circle, rgba(245,215,142,0.05) 0%, transparent 60%);
+  --hero-name-glow: 0 0 40px rgba(245,215,142,0.1);
   --body-bg-image:
-    radial-gradient(circle at 50% 0%, rgba(0,229,255,0.03) 0%, transparent 50%),
-    linear-gradient(rgba(26,39,68,0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26,39,68,0.3) 1px, transparent 1px);
-  --selection-bg: rgba(0,229,255,0.25);
-  --card-border-hover: rgba(0,229,255,0.2);
-  --pub-border-hover: rgba(0,229,255,0.1);
-  --prose-code-bg: rgba(26,39,68,0.5);
-  --prose-pre-bg: #030812;
-  --prose-pre-color: #C8D4E6;
-  --skill-bar-bg: rgba(26,39,68,0.5);
+    radial-gradient(circle at 50% 0%, rgba(245,215,142,0.03) 0%, transparent 50%),
+    linear-gradient(rgba(42,38,32,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,38,32,0.3) 1px, transparent 1px);
+  --selection-bg: rgba(245,215,142,0.25);
+  --card-border-hover: rgba(245,215,142,0.2);
+  --pub-border-hover: rgba(245,215,142,0.1);
+  --prose-code-bg: rgba(42,38,32,0.5);
+  --prose-pre-bg: #050403;
+  --prose-pre-color: #C8C0B0;
+  --skill-bar-bg: rgba(42,38,32,0.5);
 }
 
-/* ─── Theme: Amber Haze ─── */
-html[data-theme="amber-haze"] {
-  --bg:        #080502;
-  --bg-rgb:    8, 5, 2;
-  --surface:   #120C06;
-  --surface-2: #1C140E;
-  --primary:   #F0E6D0;
-  --accent-1:  #FF8C42;
-  --accent-1-rgb: 255, 140, 66;
-  --accent-2:  #FFD166;
-  --accent-2-rgb: 255, 209, 102;
-  --accent-3:  #E67E22;
-  --gradient:  linear-gradient(90deg, #FF8C42, #FFD166);
-  --gradient-subtle: linear-gradient(90deg, rgba(255,140,66,0.12), rgba(255,209,102,0.12));
-  --text:      #D4C5B0;
-  --text-muted:#A09080;
-  --text-dim:  #706050;
-  --border:    #2A1E14;
-  --glow:      0 0 20px rgba(255,140,66,0.15);
-  --glow-2:    0 0 20px rgba(255,209,102,0.15);
-  --shadow:    0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-  --shadow-lg: 0 4px 24px rgba(0,0,0,0.5), 0 2px 8px rgba(255,140,66,0.05);
-  --nav-bg:    rgba(8,5,2,0.92);
-  --nav-bg-mobile: rgba(8,5,2,0.98);
-  --footer-bg: #040201;
-  --btn-primary-text: #080502;
-  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(255,140,66,0.06) 0%, transparent 60%);
-  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(255,209,102,0.04) 0%, transparent 50%);
-  --hero-deco: radial-gradient(circle, rgba(255,140,66,0.05) 0%, transparent 60%);
-  --hero-name-glow: 0 0 40px rgba(255,140,66,0.1);
+/* ============================================================
+   木 Wood — natural, vital, growing
+   ============================================================ */
+html[data-theme="wood"] {
+  --bg:        #060C08;
+  --bg-rgb:    6, 12, 8;
+  --surface:   #0C1610;
+  --surface-2: #122018;
+  --primary:   #C8E0D0;
+  --accent-1:  #4ADE80;
+  --accent-1-rgb: 74, 222, 128;
+  --accent-2:  #22D3A0;
+  --accent-2-rgb: 34, 211, 160;
+  --accent-3:  #86EFAC;
+  --gradient:  linear-gradient(90deg, #4ADE80, #22D3A0);
+  --gradient-subtle: linear-gradient(90deg, rgba(74,222,128,0.12), rgba(34,211,160,0.12));
+  --text:      #B8D0C0;
+  --text-muted:#80A090;
+  --text-dim:  #587068;
+  --border:    #1A2820;
+  --glow:      0 0 20px rgba(74,222,128,0.15);
+  --glow-2:    0 0 20px rgba(34,211,160,0.15);
+  --shadow:    0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(74,222,128,0.05);
+  --nav-bg:    rgba(6,12,8,0.92);
+  --nav-bg-mobile: rgba(6,12,8,0.98);
+  --footer-bg: #030504;
+  --btn-primary-text: #060C08;
+  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(74,222,128,0.06) 0%, transparent 60%);
+  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(34,211,160,0.04) 0%, transparent 50%);
+  --hero-deco: radial-gradient(circle, rgba(74,222,128,0.05) 0%, transparent 60%);
+  --hero-name-glow: 0 0 40px rgba(74,222,128,0.1);
   --body-bg-image:
-    radial-gradient(circle at 50% 0%, rgba(255,140,66,0.03) 0%, transparent 50%),
-    linear-gradient(rgba(42,30,20,0.3) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(42,30,20,0.3) 1px, transparent 1px);
-  --selection-bg: rgba(255,140,66,0.25);
-  --card-border-hover: rgba(255,140,66,0.2);
-  --pub-border-hover: rgba(255,140,66,0.1);
-  --prose-code-bg: rgba(42,30,20,0.5);
-  --prose-pre-bg: #040201;
-  --prose-pre-color: #D4C5B0;
-  --skill-bar-bg: rgba(42,30,20,0.5);
+    radial-gradient(circle at 50% 0%, rgba(74,222,128,0.03) 0%, transparent 50%),
+    linear-gradient(rgba(26,40,32,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,40,32,0.3) 1px, transparent 1px);
+  --selection-bg: rgba(74,222,128,0.25);
+  --card-border-hover: rgba(74,222,128,0.2);
+  --pub-border-hover: rgba(74,222,128,0.1);
+  --prose-code-bg: rgba(26,40,32,0.5);
+  --prose-pre-bg: #030504;
+  --prose-pre-color: #B8D0C0;
+  --skill-bar-bg: rgba(26,40,32,0.5);
 }
+
+/* ============================================================
+   水 Water — fluid, deep, calm
+   ============================================================ */
+html[data-theme="water"] {
+  --bg:        #040810;
+  --bg-rgb:    4, 8, 16;
+  --surface:   #0A1020;
+  --surface-2: #101830;
+  --primary:   #C8D8E8;
+  --accent-1:  #38BDF8;
+  --accent-1-rgb: 56, 189, 248;
+  --accent-2:  #818CF8;
+  --accent-2-rgb: 129, 140, 248;
+  --accent-3:  #22D3EE;
+  --gradient:  linear-gradient(90deg, #38BDF8, #818CF8);
+  --gradient-subtle: linear-gradient(90deg, rgba(56,189,248,0.12), rgba(129,140,248,0.12));
+  --text:      #B8C8D8;
+  --text-muted:#80A0B8;
+  --text-dim:  #587088;
+  --border:    #182030;
+  --glow:      0 0 20px rgba(56,189,248,0.15);
+  --glow-2:    0 0 20px rgba(129,140,248,0.15);
+  --shadow:    0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(56,189,248,0.05);
+  --nav-bg:    rgba(4,8,16,0.92);
+  --nav-bg-mobile: rgba(4,8,16,0.98);
+  --footer-bg: #020408;
+  --btn-primary-text: #040810;
+  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(56,189,248,0.06) 0%, transparent 60%);
+  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(129,140,248,0.04) 0%, transparent 50%);
+  --hero-deco: radial-gradient(circle, rgba(56,189,248,0.05) 0%, transparent 60%);
+  --hero-name-glow: 0 0 40px rgba(56,189,248,0.1);
+  --body-bg-image:
+    radial-gradient(circle at 50% 0%, rgba(56,189,248,0.03) 0%, transparent 50%),
+    linear-gradient(rgba(24,32,48,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24,32,48,0.3) 1px, transparent 1px);
+  --selection-bg: rgba(56,189,248,0.25);
+  --card-border-hover: rgba(56,189,248,0.2);
+  --pub-border-hover: rgba(56,189,248,0.1);
+  --prose-code-bg: rgba(24,32,48,0.5);
+  --prose-pre-bg: #020408;
+  --prose-pre-color: #B8C8D8;
+  --skill-bar-bg: rgba(24,32,48,0.5);
+  --theme-indicator: #38BDF8;
+}
+
+/* ============================================================
+   火 Fire — passionate, hot, energetic
+   ============================================================ */
+html[data-theme="fire"] {
+  --bg:        #0F0605;
+  --bg-rgb:    15, 6, 5;
+  --surface:   #1A0C0A;
+  --surface-2: #261210;
+  --primary:   #E8D0C8;
+  --accent-1:  #FB7185;
+  --accent-1-rgb: 251, 113, 133;
+  --accent-2:  #F97316;
+  --accent-2-rgb: 249, 115, 22;
+  --accent-3:  #FBBF24;
+  --gradient:  linear-gradient(90deg, #FB7185, #F97316);
+  --gradient-subtle: linear-gradient(90deg, rgba(251,113,133,0.12), rgba(249,115,22,0.12));
+  --text:      #D8C0B8;
+  --text-muted:#A88878;
+  --text-dim:  #786058;
+  --border:    #2A1815;
+  --glow:      0 0 20px rgba(251,113,133,0.15);
+  --glow-2:    0 0 20px rgba(249,115,22,0.15);
+  --shadow:    0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(251,113,133,0.05);
+  --nav-bg:    rgba(15,6,5,0.92);
+  --nav-bg-mobile: rgba(15,6,5,0.98);
+  --footer-bg: #080302;
+  --btn-primary-text: #0F0605;
+  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(251,113,133,0.06) 0%, transparent 60%);
+  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(249,115,22,0.04) 0%, transparent 50%);
+  --hero-deco: radial-gradient(circle, rgba(251,113,133,0.05) 0%, transparent 60%);
+  --hero-name-glow: 0 0 40px rgba(251,113,133,0.1);
+  --body-bg-image:
+    radial-gradient(circle at 50% 0%, rgba(251,113,133,0.03) 0%, transparent 50%),
+    linear-gradient(rgba(42,24,21,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,24,21,0.3) 1px, transparent 1px);
+  --selection-bg: rgba(251,113,133,0.25);
+  --card-border-hover: rgba(251,113,133,0.2);
+  --pub-border-hover: rgba(251,113,133,0.1);
+  --prose-code-bg: rgba(42,24,21,0.5);
+  --prose-pre-bg: #080302;
+  --prose-pre-color: #D8C0B8;
+  --skill-bar-bg: rgba(42,24,21,0.5);
+}
+
+/* ============================================================
+   土 Earth — stable, warm, grounded
+   ============================================================ */
+html[data-theme="earth"] {
+  --bg:        #0A0805;
+  --bg-rgb:    10, 8, 5;
+  --surface:   #14100C;
+  --surface-2: #1E1814;
+  --primary:   #E0D4C8;
+  --accent-1:  #D4A373;
+  --accent-1-rgb: 212, 163, 115;
+  --accent-2:  #A98467;
+  --accent-2-rgb: 169, 132, 103;
+  --accent-3:  #C28B5E;
+  --gradient:  linear-gradient(90deg, #D4A373, #A98467);
+  --gradient-subtle: linear-gradient(90deg, rgba(212,163,115,0.12), rgba(169,132,103,0.12));
+  --text:      #C8BCB0;
+  --text-muted:#A09080;
+  --text-dim:  #786858;
+  --border:    #282018;
+  --glow:      0 0 20px rgba(212,163,115,0.15);
+  --glow-2:    0 0 20px rgba(169,132,103,0.15);
+  --shadow:    0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-lg: 0 4px 24px rgba(0,0,0,0.4), 0 2px 8px rgba(212,163,115,0.05);
+  --nav-bg:    rgba(10,8,5,0.92);
+  --nav-bg-mobile: rgba(10,8,5,0.98);
+  --footer-bg: #050403;
+  --btn-primary-text: #0A0805;
+  --hero-glow-1: radial-gradient(ellipse at 50% 20%, rgba(212,163,115,0.06) 0%, transparent 60%);
+  --hero-glow-2: radial-gradient(ellipse at 80% 80%, rgba(169,132,103,0.04) 0%, transparent 50%);
+  --hero-deco: radial-gradient(circle, rgba(212,163,115,0.05) 0%, transparent 60%);
+  --hero-name-glow: 0 0 40px rgba(212,163,115,0.1);
+  --body-bg-image:
+    radial-gradient(circle at 50% 0%, rgba(212,163,115,0.03) 0%, transparent 50%),
+    linear-gradient(rgba(40,32,24,0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(40,32,24,0.3) 1px, transparent 1px);
+  --selection-bg: rgba(212,163,115,0.25);
+  --card-border-hover: rgba(212,163,115,0.2);
+  --pub-border-hover: rgba(212,163,115,0.1);
+  --prose-code-bg: rgba(40,32,24,0.5);
+  --prose-pre-bg: #050403;
+  --prose-pre-color: #C8BCB0;
+  --skill-bar-bg: rgba(40,32,24,0.5);
+}
+
+/* ════════════════════════════════════════════════════════════
+   Shared Styles (below)
+   ════════════════════════════════════════════════════════════ */
 
 /* ─── Reset & Base ─── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -215,28 +359,38 @@ img { max-width: 100%; height: auto; }
 }
 .nav-lang-btn:hover { border-color: var(--accent-1); color: var(--accent-1); background: rgba(var(--accent-1-rgb), 0.1); box-shadow: var(--glow); text-shadow: none; }
 
-/* ─── Theme Toggle ─── */
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 8px;
-  border: 1px solid rgba(var(--accent-1-rgb), 0.2);
+/* ─── Theme Select ─── */
+.theme-select {
+  appearance: none;
+  -webkit-appearance: none;
   background: transparent;
+  border: 1px solid rgba(var(--accent-1-rgb), 0.2);
+  border-radius: 6px;
   color: var(--text-muted);
-  font-size: 1rem;
+  font-size: 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  padding: 0.2rem 1.4rem 0.2rem 0.5rem;
   cursor: pointer;
   transition: all 0.25s;
   margin-left: 0.2rem;
-  padding: 0;
-  line-height: 1;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238899B4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 8px 5px;
 }
-.theme-toggle:hover {
+.theme-select:hover {
   border-color: var(--accent-1);
   color: var(--accent-1);
-  background: rgba(var(--accent-1-rgb), 0.08);
+  box-shadow: var(--glow);
+}
+.theme-select option {
+  background: var(--surface);
+  color: var(--text);
+}
+.theme-select:focus-visible {
+  outline: none;
+  border-color: var(--accent-1);
   box-shadow: var(--glow);
 }
 
@@ -1226,17 +1380,6 @@ img { max-width: 100%; height: auto; }
 .back-to-top.visible { opacity: 1; pointer-events: auto; }
 .back-to-top:hover { transform: translateY(-2px); box-shadow: 0 4px 24px rgba(var(--accent-1-rgb), 0.4); color: var(--btn-primary-text); text-shadow: none; }
 
-/* ─── Theme Toggle Icon ─── */
-.theme-icon-dark,
-.theme-icon-amber {
-  display: inline-block;
-  transition: transform 0.3s;
-}
-html[data-theme="amber-haze"] .theme-icon-dark,
-html:not([data-theme="amber-haze"]) .theme-icon-amber {
-  display: none;
-}
-
 /* ─── Responsive ─── */
 @media (max-width: 768px) {
   .nav-toggle { display: flex; }
@@ -1259,6 +1402,7 @@ html:not([data-theme="amber-haze"]) .theme-icon-amber {
 
   .nav-link { padding: 0.6rem 0.75rem; width: 100%; border-radius: 6px; }
   .nav-lang { margin-left: 0; margin-top: 0.25rem; }
+  .theme-select { margin-left: 0; margin-top: 0.25rem; }
 
   .hero-inner { padding: 3rem 1.25rem 2.5rem; }
   .hero-name { font-size: 2.4rem; }
