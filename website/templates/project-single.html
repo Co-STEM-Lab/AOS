@@ -37,9 +37,9 @@
   <div class="report-embed">
     <div class="report-embed-header">
       <span class="report-embed-label">📄 {{ rpt | replace('report-', '') | replace('.html', '') }}</span>
-      <a href="{{ root }}{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" target="_blank" class="report-embed-link">新窗口打开 ↗</a>
+      <a href="{{ root }}{{ prefix }}projects/{{ project.id }}/{{ rpt }}" target="_blank" class="report-embed-link">新窗口打开 ↗</a>
     </div>
-    <iframe src="{{ root }}{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" class="report-iframe" loading="lazy"></iframe>
+    <iframe src="{{ root }}{{ prefix }}projects/{{ project.id }}/{{ rpt }}" class="report-iframe" loading="lazy"></iframe>
   </div>
   {% endfor %}
 </section>

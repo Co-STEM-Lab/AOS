@@ -486,7 +486,7 @@ def build_site(lang: str, config: dict, skill_tree: dict,
 def _copy_project_assets(proj: dict, prefix: str):
     """复制项目的报告 HTML 和 data/ 目录到网站输出。"""
     proj_src = PAPERS_DIR / "_active" / proj["dir_name"]
-    proj_dst = PUBLIC_DIR / prefix / "projects" / proj["dir_name"]
+    proj_dst = PUBLIC_DIR / prefix / "projects" / proj["id"]
     proj_dst.mkdir(parents=True, exist_ok=True)
 
     # 复制 report-*.html（来自 drafts/）
@@ -502,12 +502,7 @@ def _copy_project_assets(proj: dict, prefix: str):
         data_dst = proj_dst / "data"
         shutil.copytree(str(data_src), str(data_dst), dirs_exist_ok=True)
         n_files = len(list(data_dst.rglob("*")))
-        print(f"     🖼️  图片: {proj['dir_name']}/data/ ({n_files} 个文件)")
-    if data_src.is_dir():
-        data_dst = proj_dst / "data"
-        shutil.copytree(str(data_src), str(data_dst), dirs_exist_ok=True)
-        n_files = len(list(data_dst.rglob("*")))
-        print(f"     🖼️  图片: {proj['dir_name']}/data/ ({n_files} 个文件)")
+        print(f"     🖼️  图片: {proj['id']}/data/ ({n_files} 个文件)")
 
 
 def _write_page(template_name: str, context: dict, env: Environment, output_path: Path):
