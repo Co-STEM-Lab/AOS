@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{% block title %}{{ config.site["title_" + lang] }}{% endblock %}</title>
 <meta name="description" content="{{ config.site["description_" + lang] }}">
-<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="{{ root }}static/css/style.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 {% block head %}{% endblock %}
@@ -15,17 +15,17 @@
 <!-- ─── 导航栏 ─── -->
 <nav class="navbar" role="navigation">
   <div class="nav-inner">
-    <a href="/{{ prefix }}" class="nav-brand">{{ config.author["name_" + lang] }}</a>
+    <a href="{{ root }}{{ prefix }}" class="nav-brand">{{ config.author["name_" + lang] }}</a>
     <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.nav-links').classList.toggle('open')">
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-links">
       {% for item in config.nav %}
-      <li><a href="/{{ prefix }}{{ item.path.lstrip('/') }}"
+      <li><a href="{{ root }}{{ prefix }}{{ item.path.lstrip('/') }}"
              class="nav-link {% if page_id == item.id %}active{% endif %}">{{ t.nav[item.id] }}</a></li>
       {% endfor %}
       <li class="nav-lang">
-        <a href="{{ t.switch_url }}" class="nav-lang-btn">{{ t.switch_label }}</a>
+        <a href="{{ root }}{{ t.switch_url.lstrip('/') }}" class="nav-lang-btn">{{ t.switch_label }}</a>
       </li>
     </ul>
   </div>

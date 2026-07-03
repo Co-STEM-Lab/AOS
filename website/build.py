@@ -425,6 +425,10 @@ def build_site(lang: str, config: dict, skill_tree: dict,
     mkdir = lambda p: (PUBLIC_DIR / p).mkdir(parents=True, exist_ok=True)
 
     # 基础上下文
+    from urllib.parse import urlparse
+    parsed = urlparse(config.get("site", {}).get("base_url", ""))
+    root_path = parsed.path.rstrip("/") + "/"
+
     ctx = {
         "lang": lang,
         "lang_other": t["switch_label"],
@@ -434,6 +438,7 @@ def build_site(lang: str, config: dict, skill_tree: dict,
         "current_year": date.today().year,
         "is_primary": is_primary,
         "prefix": prefix,
+        "root": root_path,
     }
 
     # ── 首页 ──

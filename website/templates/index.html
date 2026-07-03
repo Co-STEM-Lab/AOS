@@ -7,7 +7,7 @@
 <section class="hero">
   <div class="hero-inner">
     {% if config.author.avatar %}
-    <img src="/static/images/{{ config.author.avatar }}" alt="" class="hero-avatar">
+    <img src="{{ root }}static/images/{{ config.author.avatar }}" alt="" class="hero-avatar">
     {% endif %}
     <h1 class="hero-name">{{ config.author["name_" + lang] }}</h1>
     <p class="hero-title">{{ config.author["title_" + lang] }}</p>
