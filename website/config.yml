@@ -50,8 +50,6 @@ nav:
     path: "/"
   - id: publications
     path: "/publications/"
-  - id: projects
-    path: "/projects/"
 
 homepage:
   show_latest_atoms: 5
