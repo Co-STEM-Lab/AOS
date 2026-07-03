@@ -1,15 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh" data-theme="dark-matter">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>论文 · 陈桂森 · 学术主页</title>
 <meta name="description" content="个人学术网站，由 AOS (Academic Operating System) 自动生成">
-<link rel="stylesheet" href="/AOS/static/css/style.css?v=2">
+<link rel="stylesheet" href="/AOS/static/css/style.css?v=3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
+<script>
+// 主题初始化：从 localStorage 读取，在页面渲染前生效
+(function() {
+  var theme = localStorage.getItem('aos-theme') || 'dark-matter';
+  document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>
 </head>
 <body>
 
@@ -33,6 +40,12 @@
       
       <li class="nav-lang">
         <a href="/AOS/en/" class="nav-lang-btn">EN</a>
+      </li>
+      <li>
+        <button class="theme-toggle" onclick="toggleTheme()" aria-label="Switch theme" title="Switch theme">
+          <span class="theme-icon-dark">🌌</span>
+          <span class="theme-icon-amber">🔥</span>
+        </button>
       </li>
     </ul>
   </div>
@@ -342,6 +355,15 @@
 window.addEventListener('scroll', function() {
   document.querySelector('.back-to-top').classList.toggle('visible', window.scrollY > 400);
 });
+
+// 主题切换
+function toggleTheme() {
+  var html = document.documentElement;
+  var current = html.getAttribute('data-theme') || 'dark-matter';
+  var next = current === 'dark-matter' ? 'amber-haze' : 'dark-matter';
+  html.setAttribute('data-theme', next);
+  localStorage.setItem('aos-theme', next);
+}
 </script>
 </body>
 </html>
