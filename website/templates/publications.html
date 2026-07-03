@@ -10,11 +10,15 @@
 <section class="section">
   {% if publications %}
   <div class="filter-bar">
-    <span class="filter-label">{{ t.publications.by_type }}:</span>
-    <button class="filter-btn active" data-filter="all" onclick="filterPubs('all')">{{ t.publications.all }}</button>
-    {% for type_key in all_types %}
+    <span class="filter-label">{% if lang == "zh" %}按类型筛选{% else %}Filter by type{% endif %}:</span>
+    <button class="filter-btn active" data-filter="all" onclick="filterPubs('all')">{% if lang == "zh" %}全部{% else %}All{% endif %}</button>
+    {% for type_key in pub_types %}
     <button class="filter-btn" data-filter="{{ type_key }}" onclick="filterPubs('{{ type_key }}')">
-      {{ resolve_atom_type_name(type_key, lang) }}
+      {% if type_key == "journal" %}📄 Journal
+      {% elif type_key == "conference" %}🎤 Conference
+      {% elif type_key == "preprint" %}📋 Preprint
+      {% else %}{{ type_key }}
+      {% endif %}
     </button>
     {% endfor %}
   </div>
@@ -22,22 +26,27 @@
   <div class="pub-list" id="pub-list">
     {% for pub in publications %}
     <div class="pub-item" data-type="{{ pub.type }}">
-      <div class="pub-main">
-        <h3 class="pub-title">
-          <a href="/{{ prefix }}atoms/{{ pub.id }}/">{{ pub.title }}</a>
-        </h3>
-        <div class="pub-meta">
-          <span class="atom-type-badge type-{{ pub.type }}">{{ resolve_atom_type_name(pub.type, lang) }}</span>
-          {% if pub.project and pub.project != "uncategorized" %}
-          <span class="pub-project">{{ t.publications.project }}: {{ pub.project }}</span>
-          {% endif %}
-          {% if pub.source %}
-          <span>{{ pub.source }}</span>
-          {% endif %}
-          <span>{{ pub.created }}</span>
-        </div>
-        <div class="pub-body">{{ pub.body_html | safe | truncate(200) }}</div>
+      <h3 class="pub-title">
+        {% if pub.doi %}
+        <a href="https://doi.org/{{ pub.doi }}" target="_blank" rel="noopener">{{ pub.title }}</a>
+        {% else %}
+        {{ pub.title }}
+        {% endif %}
+      </h3>
+      <div class="pub-meta">
+        {% if pub.authors %}
+        <span>{{ pub.authors | join('; ') }}</span>
+        {% endif %}
+        {% if pub.journal %}
+        <span>{{ pub.journal }}{% if pub.year %}, {{ pub.year }}{% endif %}</span>
+        {% endif %}
+        {% if pub.doi %}
+        <a href="https://doi.org/{{ pub.doi }}" target="_blank" rel="noopener" style="color:var(--accent-1)">DOI</a>
+        {% endif %}
       </div>
+      {% if pub.abstract %}
+      <div class="pub-body">{{ pub.abstract | truncate(300) }}</div>
+      {% endif %}
       {% if pub.tags %}
       <div class="pub-tags">
         {% for tag in pub.tags %}
@@ -59,7 +68,7 @@
   }
   </script>
   {% else %}
-  <div class="empty-state"><p>{{ t.publications.no_pubs }}</p></div>
+  <div class="empty-state"><p>{{ t.publications.no_papers }}</p></div>
   {% endif %}
 </section>
 {% endblock %}
