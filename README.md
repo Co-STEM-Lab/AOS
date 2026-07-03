@@ -2,6 +2,8 @@
 
 > **个人论文仓库。** 每篇论文一个目录，自包含数据、脚本、草稿、图表。
 
+[![Deploy AOS website](https://github.com/Co-STEM-Lab/AOS/actions/workflows/deploy.yml/badge.svg)](https://github.com/Co-STEM-Lab/AOS/actions/workflows/deploy.yml)
+
 ```
 papers/
 ├── _template/              # 📋 新论文模板
@@ -36,6 +38,10 @@ python scripts/render.py draft.md --html -o report.html
 python website/build.py                     # 全站
 python website/build.py --serve             # 构建 + 预览
 cd website/public && python -m http.server 8000
+
+# 从 DOI 自动抓取论文元数据（摘要等）
+python scripts/fetch-metadata.py            # 更新所有论文
+python scripts/fetch-metadata.py --dry-run  # 试跑预览
 ```
 
 ---
@@ -108,10 +114,27 @@ python website/build.py          # 构建网站
 | `papers/` | 全部论文，按 `_active/`（进行中）和 `YYYY-name/`（已发表）组织 |
 | `skills/` | LLM 协作技能（给 Claude Code / Codex 用） |
 | `templates/` | 论文模板、LaTeX 类文件、CSS |
-| `scripts/` | `render.py` — Markdown→LaTeX/HTML 渲染引擎 |
+| `scripts/` | `render.py` — Markdown→LaTeX/HTML 渲染引擎；`fetch-metadata.py` — 从 DOI 抓取元数据 |
 | `website/` | 个人学术网站生成器（中英文双语） |
+| `.github/workflows/` | CI/CD — push 到 main 自动构建网站并部署到 GitHub Pages |
 
 网站从 `papers/` 自动读取论文列表和进行中项目，无需手动配置。
+
+---
+
+## 部署
+
+网站通过 GitHub Actions 自动部署到 GitHub Pages：
+
+1. **首次设置：** 在 GitHub 仓库 Settings → Pages → Build and deployment 选 **GitHub Actions**
+2. **之后：** 每次 `git push main`，自动构建并部署
+3. **访问：** `https://co-stem-lab.github.io/AOS/`
+
+也可本地预览：
+```bash
+bash setup.sh                    # 安装依赖 + 构建网站
+cd website/public && python -m http.server 8000
+```
 
 ---
 
