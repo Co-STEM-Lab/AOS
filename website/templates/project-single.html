@@ -3,7 +3,7 @@
 
 {% block content %}
 <section class="section page-header">
-  <a href="/{{ prefix }}projects/" class="back-link">{{ t.projects.back }}</a>
+  <a href="{{ root }}{{ prefix }}projects/" class="back-link">{{ t.projects.back }}</a>
   <h1>{{ project.title }}</h1>
   <div class="page-header-meta">
     <span class="status-badge status-{{ project.status }}">{{ resolve_project_status_name(project.status, lang) }}</span>
@@ -37,9 +37,9 @@
   <div class="report-embed">
     <div class="report-embed-header">
       <span class="report-embed-label">📄 {{ rpt | replace('report-', '') | replace('.html', '') }}</span>
-      <a href="/{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" target="_blank" class="report-embed-link">新窗口打开 ↗</a>
+      <a href="{{ root }}{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" target="_blank" class="report-embed-link">新窗口打开 ↗</a>
     </div>
-    <iframe src="/{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" class="report-iframe" loading="lazy"></iframe>
+    <iframe src="{{ root }}{{ prefix }}projects/{{ project.dir_name }}/{{ rpt }}" class="report-iframe" loading="lazy"></iframe>
   </div>
   {% endfor %}
 </section>
@@ -51,7 +51,7 @@
   <h2>Atoms</h2>
   <div class="atom-grid">
     {% for atom in project_atoms %}
-    <a href="/{{ prefix }}atoms/{{ atom.id }}/" class="atom-card">
+    <a href="{{ root }}{{ prefix }}atoms/{{ atom.id }}/" class="atom-card">
       <span class="atom-type-badge type-{{ atom.type }}">{{ resolve_atom_type_name(atom.type, lang) }}</span>
       <h3 class="atom-card-title">{{ atom.title }}</h3>
       <p class="atom-card-body">{{ atom.body_preview }}</p>

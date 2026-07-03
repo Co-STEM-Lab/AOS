@@ -13,7 +13,7 @@
   {% if projects.active %}
   <div class="project-grid">
     {% for proj in projects.active %}
-    <a href="/{{ prefix }}projects/{{ proj.id }}/" class="project-card">
+    <a href="{{ root }}{{ prefix }}projects/{{ proj.id }}/" class="project-card">
       <div class="project-card-header">
         <h3>{{ proj.title }}</h3>
         <span class="status-badge status-{{ proj.status }}">{{ resolve_project_status_name(proj.status, lang) }}</span>
@@ -40,7 +40,7 @@
   {% if projects.ideas %}
   <div class="project-grid">
     {% for proj in projects.ideas %}
-    <a href="/{{ prefix }}projects/{{ proj.id }}/" class="project-card project-card-idea">
+    <a href="{{ root }}{{ prefix }}projects/{{ proj.id }}/" class="project-card project-card-idea">
       <div class="project-card-header">
         <h3>{{ proj.title }}</h3>
         <span class="status-badge status-{{ proj.status }}">{{ resolve_project_status_name(proj.status, lang) }}</span>
@@ -66,7 +66,7 @@
   {% if projects.completed %}
   <div class="project-grid">
     {% for proj in projects.completed %}
-    <a href="/{{ prefix }}projects/{{ proj.id }}/" class="project-card project-card-completed">
+    <a href="{{ root }}{{ prefix }}projects/{{ proj.id }}/" class="project-card project-card-completed">
       <div class="project-card-header">
         <h3>{{ proj.title }}</h3>
         <span class="status-badge status-{{ proj.status }}">{{ resolve_project_status_name(proj.status, lang) }}</span>
