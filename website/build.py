@@ -460,27 +460,25 @@ def build_site(lang: str, config: dict, skill_tree: dict,
     _write_page("publications.html", outputs_ctx, env, PUBLIC_DIR / prefix / "publications" / "index.html")
     pages_created += 1
 
-    # ── 项目（仅在导航有 projects 条目时生成） ──
-    nav_ids = [item["id"] for item in config.get("nav", [])]
-    if "projects" in nav_ids:
-        mkdir(prefix + "projects")
-        projs_ctx = {**ctx, "page_id": "projects", "projects": projects}
-        _write_page("projects.html", projs_ctx, env, PUBLIC_DIR / prefix / "projects" / "index.html")
-        pages_created += 1
+    # ── 项目 ──
+    mkdir(prefix + "projects")
+    projs_ctx = {**ctx, "page_id": "projects", "projects": projects}
+    _write_page("projects.html", projs_ctx, env, PUBLIC_DIR / prefix / "projects" / "index.html")
+    pages_created += 1
 
-        # 单个项目详情页
-        for bucket_key in ("active",):
-            for proj in projects.get(bucket_key, []):
-                proj_dir_name = proj["id"]
-                mkdir(prefix + f"projects/{proj_dir_name}")
-                proj_ctx = {**ctx, "page_id": "project", "project": proj,
-                    "bucket_key": bucket_key}
-                _write_page("project-single.html", proj_ctx, env,
-                            PUBLIC_DIR / prefix / "projects" / proj_dir_name / "index.html")
-                pages_created += 1
+    # 单个项目详情页
+    for bucket_key in ("active",):
+        for proj in projects.get(bucket_key, []):
+            proj_dir_name = proj["id"]
+            mkdir(prefix + f"projects/{proj_dir_name}")
+            proj_ctx = {**ctx, "page_id": "project", "project": proj,
+                "bucket_key": bucket_key}
+            _write_page("project-single.html", proj_ctx, env,
+                        PUBLIC_DIR / prefix / "projects" / proj_dir_name / "index.html")
+            pages_created += 1
 
-                # 复制项目报告 HTML 和 data/ 图片到网站输出
-                _copy_project_assets(proj, prefix)
+            # 复制项目报告 HTML 和 data/ 图片到网站输出
+            _copy_project_assets(proj, prefix)
 
     return pages_created
 
