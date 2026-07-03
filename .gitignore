@@ -5,3 +5,4 @@ __pycache__/
 
 # 网站构建产物（可复现，不入版本）
 website/public/
+papers/_active/
