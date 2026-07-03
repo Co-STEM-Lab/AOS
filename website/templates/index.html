@@ -64,12 +64,12 @@
 {% endif %}
 
 <!-- 进行中项目 -->
+{% if active_projects %}
 <section class="section">
   <div class="section-header">
     <h2>{{ t.index.projects }}</h2>
     <a href="{{ root }}{{ prefix }}projects/" class="section-more">{{ t.index.all_projects }}</a>
   </div>
-  {% if active_projects %}
   <div class="project-mini-list">
     {% for proj in active_projects %}
     <a href="{{ root }}{{ prefix }}projects/{{ proj.id }}/" class="project-mini-card">
@@ -83,9 +83,7 @@
     </a>
     {% endfor %}
   </div>
-  {% else %}
-  <p class="empty-state">{{ t.index.no_projects }}</p>
-  {% endif %}
 </section>
+{% endif %}
 
 {% endblock %}
