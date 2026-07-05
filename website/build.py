@@ -27,6 +27,7 @@ STATIC_DIR = WEBSITE_DIR / "static"
 PUBLIC_DIR = WEBSITE_DIR / "public"
 PAPERS_DIR = ROOT / "papers"
 CONFIG_PATH = WEBSITE_DIR / "config.yml"
+TOOLS_PATH = WEBSITE_DIR / "tools.yml"
 
 MD = md_lib.Markdown(extensions=["fenced_code", "codehilite", "tables", "nl2br"])
 
@@ -41,6 +42,7 @@ T = {
             "index": "首页",
             "publications": "论文",
             "projects": "项目",
+            "tools": "工具",
         },
         "index": {
             "welcome": "欢迎来到我的学术主页",
@@ -91,6 +93,22 @@ T = {
             "domain": "领域",
             "problem": "问题",
             "back": "← 返回项目列表",
+        },
+        "tools": {
+            "title": "科研工具",
+            "desc": "面向电镜表征 · 金属材料 · DFT · 分子动力学的开源工具索引",
+            "no_tools": "暂未收录工具",
+            "search_placeholder": "搜索工具…",
+            "all_categories": "全部",
+            "category_microscopy": "🔬 电镜表征",
+            "category_metals": "⚙️ 金属材料",
+            "category_dft": "🔬 DFT 计算",
+            "category_lammps": "⚡ MD 模拟",
+            "stars": "Stars",
+            "language": "语言",
+            "license": "协议",
+            "category": "分类",
+            "view_on_github": "GitHub →",
         },
         "skills": {
             "title": "能力",
@@ -149,6 +167,7 @@ T = {
             "index": "Home",
             "publications": "Publications",
             "projects": "Projects",
+            "tools": "Tools",
         },
         "index": {
             "welcome": "Welcome to My Academic Homepage",
@@ -209,6 +228,22 @@ T = {
             "domain": "Domain",
             "problem": "Problem",
             "back": "← Back to Projects",
+        },
+        "tools": {
+            "title": "Open Tools",
+            "desc": "Curated open-source tools for microscopy · metals · DFT · molecular dynamics",
+            "no_tools": "No tools indexed yet",
+            "search_placeholder": "Search tools…",
+            "all_categories": "All",
+            "category_microscopy": "🔬 Microscopy",
+            "category_metals": "⚙️ Metals",
+            "category_dft": "🔬 DFT",
+            "category_lammps": "⚡ MD",
+            "stars": "Stars",
+            "language": "Language",
+            "license": "License",
+            "category": "Category",
+            "view_on_github": "GitHub →",
         },
         "skills": {
             "title": "Skills",
@@ -411,6 +446,15 @@ def _project_status_name(status: str, lang: str) -> str:
     return m[0] if m and lang == "zh" else (m[1] if m else status)
 
 
+def load_tools() -> list[dict]:
+    """从 website/tools.yml 加载开源工具列表。"""
+    if not TOOLS_PATH.exists():
+        return []
+    with open(TOOLS_PATH, "r", encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+    return data.get("tools", [])
+
+
 # ─── 页面构建器 ─────────────────────────────────────────────
 
 def build_site(lang: str, config: dict, skill_tree: dict,
@@ -479,6 +523,15 @@ def build_site(lang: str, config: dict, skill_tree: dict,
 
             # 复制项目报告 HTML 和 data/ 图片到网站输出
             _copy_project_assets(proj, prefix)
+
+    # ── 工具库 ──
+    mkdir(prefix + "tools")
+    tools_data = load_tools()
+    tools_ctx = {**ctx, "page_id": "tools",
+        "tools": tools_data,
+        "tool_categories": sorted(set(t["category"] for t in tools_data))}
+    _write_page("tools.html", tools_ctx, env, PUBLIC_DIR / prefix / "tools" / "index.html")
+    pages_created += 1
 
     return pages_created
 

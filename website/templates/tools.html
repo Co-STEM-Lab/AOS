@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block title %}{{ t.tools.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <h1>{{ t.tools.title }}</h1>
+  <p class="page-desc">{{ t.tools.desc }}</p>
+</section>
+
+<section class="section">
+  {% if tools %}
+
+  <!-- 搜索栏 -->
+  <div class="tools-controls">
+    <input type="text" id="tool-search" class="tool-search-input" placeholder="{{ t.tools.search_placeholder }}" oninput="filterTools()">
+    <div class="tools-categories">
+      <button class="filter-btn active" data-cat="all" onclick="filterByCategory('all')">{{ t.tools.all_categories }}</button>
+      <button class="filter-btn" data-cat="microscopy" onclick="filterByCategory('microscopy')">{{ t.tools.category_microscopy }}</button>
+      <button class="filter-btn" data-cat="metals" onclick="filterByCategory('metals')">{{ t.tools.category_metals }}</button>
+      <button class="filter-btn" data-cat="dft" onclick="filterByCategory('dft')">{{ t.tools.category_dft }}</button>
+      <button class="filter-btn" data-cat="lammps" onclick="filterByCategory('lammps')">{{ t.tools.category_lammps }}</button>
+    </div>
+  </div>
+
+  <!-- 工具卡片网格 -->
+  <div class="tool-grid" id="tool-grid">
+    {% for tool in tools %}
+    <div class="tool-card" data-category="{{ tool.category }}"
+         data-name="{{ tool.name | lower }}" data-tags="{{ tool.tags | join(' ') | lower }}">
+      <div class="tool-card-header">
+        <h3 class="tool-name">{{ tool.name }}</h3>
+        <span class="tool-category-badge cat-{{ tool.category }}">
+          {% if tool.category == 'microscopy' %}{{ t.tools.category_microscopy }}
+          {% elif tool.category == 'metals' %}{{ t.tools.category_metals }}
+          {% elif tool.category == 'dft' %}{{ t.tools.category_dft }}
+          {% elif tool.category == 'lammps' %}{{ t.tools.category_lammps }}
+          {% else %}{{ tool.category }}
+          {% endif %}
+        </span>
+      </div>
+      <p class="tool-desc">{{ tool["description_" + lang] if ("description_" + lang) in tool else tool.description_en }}</p>
+      <div class="tool-meta">
+        {% if tool.language %}
+        <span class="tool-meta-item">{% if lang == "zh" %}语言{% else %}Lang{% endif %}: {{ tool.language }}</span>
+        {% endif %}
+        {% if tool.license %}
+        <span class="tool-meta-item">{% if lang == "zh" %}协议{% else %}License{% endif %}: {{ tool.license }}</span>
+        {% endif %}
+        {% if tool.stars %}
+        <span class="tool-meta-item tool-stars">★ {{ tool.stars }}</span>
+        {% endif %}
+      </div>
+      {% if tool.tags %}
+      <div class="tool-tags">
+        {% for tag in tool.tags %}
+        <span class="tag">{{ tag }}</span>
+        {% endfor %}
+      </div>
+      {% endif %}
+      <div class="tool-card-footer">
+        <a href="{{ tool.url }}" class="tool-link" target="_blank" rel="noopener">
+          {% if 'github.com' in tool.url %}GitHub{% endif %} →</a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="tool-empty" id="tool-empty" style="display:none">
+    <p>{{ t.tools.no_tools }}</p>
+  </div>
+
+  <script>
+  var currentCategory = 'all';
+  var currentQuery = '';
+
+  function filterTools() {
+    currentQuery = document.getElementById('tool-search').value.toLowerCase().trim();
+    applyFilters();
+  }
+
+  function filterByCategory(cat) {
+    currentCategory = cat;
+    document.querySelectorAll('.tools-categories .filter-btn').forEach(function(b) {
+      b.classList.toggle('active', b.dataset.cat === cat);
+    });
+    applyFilters();
+  }
+
+  function applyFilters() {
+    var cards = document.querySelectorAll('.tool-card');
+    var visibleCount = 0;
+    cards.forEach(function(card) {
+      var catMatch = currentCategory === 'all' || card.dataset.category === currentCategory;
+      var searchMatch = !currentQuery ||
+        card.dataset.name.indexOf(currentQuery) !== -1 ||
+        card.dataset.tags.indexOf(currentQuery) !== -1;
+      var show = catMatch && searchMatch;
+      card.style.display = show ? '' : 'none';
+      if (show) visibleCount++;
+    });
+    document.getElementById('tool-empty').style.display = visibleCount === 0 ? '' : 'none';
+  }
+  </script>
+
+  {% else %}
+  <div class="empty-state"><p>{{ t.tools.no_tools }}</p></div>
+  {% endif %}
+</section>
+{% endblock %}
