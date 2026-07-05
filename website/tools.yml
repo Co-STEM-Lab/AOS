@@ -1571,3 +1571,2505 @@ tools:
   - trajectory analysis
   - dimensionality reduction
   stars: 310
+- name: IMOD
+  description_zh: 电子断层扫描数据处理套件，支持 tilt series 对齐和三维重建
+  description_en: Electron tomography data processing suite for tilt series alignment and 3D reconstruction
+  url: https://github.com/IMOD/IMOD
+  category: microscopy
+  language: C
+  license: GPL-2.0
+  tags:
+  - tomography
+  - tilt series
+  - 3D reconstruction
+  - alignment
+  stars: 260
+- name: AreTomo
+  description_zh: 自动电子断层 tilt series 对齐与重建
+  description_en: Automated electron tomography tilt series alignment and reconstruction
+  url: https://github.com/fei-company/AreTomo
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - tomography
+  - alignment
+  - reconstruction
+  - automation
+  stars: 70
+- name: UCSF ChimeraX
+  description_zh: 分子与 EM 密度图三维可视化分析平台
+  description_en: 3D visualization and analysis platform for molecules and EM density maps
+  url: https://github.com/RBVI/ChimeraX
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - visualization
+  - cryo-EM
+  - density map
+  - molecular graphics
+  stars: 700
+- name: UCSF Chimera
+  description_zh: 分子结构和 EM 密度图交互式可视化
+  description_en: Interactive visualization of molecular structures and EM density maps
+  url: https://github.com/merenlab/chimera
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - visualization
+  - molecular graphics
+  - density map
+  stars: 950
+- name: PyMOL
+  description_zh: 分子三维结构可视化软件，也用于 EM 密度图展示
+  description_en: 3D molecular visualization software, also used for EM density display
+  url: https://github.com/schrodinger/pymol-open-source
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - visualization
+  - molecular graphics
+  - structure
+  stars: 1900
+- name: DiffSim
+  description_zh: 电子衍射图案模拟软件，支持多束动力学衍射
+  description_en: Electron diffraction pattern simulation with multi-beam dynamical diffraction
+  url: https://github.com/ciholas/DiffSim
+  category: microscopy
+  language: C
+  license: GPL-3.0
+  tags:
+  - diffraction
+  - simulation
+  - electron diffraction
+  - dynamical
+  stars: 30
+- name: PtyPy
+  description_zh: 扫描相干衍射成像（Ptychography）重建框架
+  description_en: Scanning coherent diffraction imaging (Ptychography) reconstruction framework
+  url: https://github.com/pgroves/PtyPy
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - ptychography
+  - coherent diffraction
+  - reconstruction
+  - phase retrieval
+  stars: 120
+- name: PyNX
+  description_zh: X射线纳米成像与相干衍射数据分析
+  description_en: X-ray nano-imaging and coherent diffraction data analysis
+  url: https://github.com/saxs-project/pynx
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - X-ray
+  - coherent imaging
+  - ptychography
+  - GPU
+  stars: 60
+- name: silx
+  description_zh: 同步辐射与 X 射线数据采集、可视化和分析工具包
+  description_en: Synchrotron and X-ray data acquisition, visualization and analysis toolkit
+  url: https://github.com/silx-kit/silx
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - data acquisition
+  - visualization
+  - X-ray
+  - synchrotron
+  stars: 360
+- name: ScopeFoundry
+  description_zh: 科学仪器控制与数据采集 Python 框架
+  description_en: Python framework for scientific instrument control and data acquisition
+  url: https://github.com/scope-foundry/scope-foundry
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - instrument control
+  - data acquisition
+  - microscope
+  - automation
+  stars: 80
+- name: Pycro-Manager
+  description_zh: Micro-Manctor 的 Python 接口，用于显微控制
+  description_en: Python interface to Micro-Manager for microscope control
+  url: https://github.com/micro-manager/pycro-manager
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - microscope control
+  - Python
+  - automation
+  stars: 110
+- name: µManager
+  description_zh: 显微镜控制标准开源软件，支持数百种相机和硬件
+  description_en: Standard open-source microscope control software, supporting hundreds of cameras and hardware
+  url: https://github.com/micro-manager/micro-manager
+  category: microscopy
+  language: Java
+  license: BSD-3
+  tags:
+  - microscope control
+  - hardware
+  - camera
+  - automation
+  stars: 820
+- name: fabio
+  description_zh: X射线衍射图像 I/O 库，支持 20+ 文件格式
+  description_en: X-ray diffraction image I/O library supporting 20+ file formats
+  url: https://github.com/silx-kit/fabio
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - file I/O
+  - X-ray
+  - diffraction
+  - formats
+  stars: 80
+- name: nexus
+  description_zh: NeXus 科学数据格式的 Python API
+  description_en: Python API for the NeXus scientific data format
+  url: https://github.com/nexusformat/code
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - data format
+  - NeXus
+  - HDF5
+  - scientific data
+  stars: 130
+- name: dxchange
+  description_zh: 交换数据格式读写库，用于 X-ray 和 EM 层析数据
+  description_en: Exchange data format I/O library for X-ray and EM tomography data
+  url: https://github.com/data-exchange/dxchange
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - data exchange
+  - tomography
+  - HDF5
+  - IO
+  stars: 30
+- name: PySAXS
+  description_zh: 小角 X 射线散射（SAXS）数据分析工具包
+  description_en: Small-angle X-ray scattering (SAXS) data analysis toolkit
+  url: https://github.com/jameswouters/PySAXS
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - SAXS
+  - X-ray
+  - scattering
+  - nanoparticle
+  stars: 50
+- name: SASfit
+  description_zh: 小角散射数据拟合与分析软件
+  description_en: Small-angle scattering data fitting and analysis software
+  url: https://github.com/SASfit/SASfit
+  category: microscopy
+  language: C
+  license: GPL-3.0
+  tags:
+  - SAXS
+  - SANS
+  - fitting
+  - scattering
+  stars: 70
+- name: OMERO
+  description_zh: 显微图像数据管理与分析平台
+  description_en: Microscopy image data management and analysis platform
+  url: https://github.com/ome/omero
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - data management
+  - image database
+  - microscopy
+  - server
+  stars: 420
+- name: Bio-Formats
+  description_zh: 生物图像格式转换标准库，支持 150+ 格式
+  description_en: Standard library for biological image format conversion, supporting 150+ formats
+  url: https://github.com/ome/bio-formats
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - file formats
+  - image I/O
+  - conversion
+  - standard
+  stars: 280
+- name: ilastik
+  description_zh: 交互式机器学习，用于显微镜图像分割和分类
+  description_en: Interactive machine learning for microscopy image segmentation and classification
+  url: https://github.com/ilastik/ilastik
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - machine learning
+  - segmentation
+  - classification
+  - interactive
+  stars: 580
+- name: Cellpose
+  description_zh: 通用细胞/颗粒分割深度学习工具，也可用于 EM 图像
+  description_en: Generalist cell/particle segmentation deep learning tool, also works for EM images
+  url: https://github.com/MouseLand/cellpose
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - segmentation
+  - deep learning
+  - generalist
+  - particle
+  stars: 3500
+- name: StarDist
+  description_zh: 星形卷积神经网络目标检测，用于显微镜图像分割
+  description_en: Star-convex object detection for microscopy image segmentation
+  url: https://github.com/stardist/stardist
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - object detection
+  - segmentation
+  - deep learning
+  - nuclei
+  stars: 700
+- name: Noise2Void
+  description_zh: 自监督显微镜图像去噪，无需干净训练数据
+  description_en: Self-supervised microscopy image denoising without clean training data
+  url: https://github.com/juglab/Noise2Void
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - denoising
+  - self-supervised
+  - deep learning
+  - image restoration
+  stars: 420
+- name: CARE
+  description_zh: 内容感知图像恢复，用于显微镜图像去噪和超分辨
+  description_en: Content-aware image restoration for microscopy denoising and super-resolution
+  url: https://github.com/CSBDeep/CSBDeep
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - image restoration
+  - denoising
+  - super-resolution
+  - deep learning
+  stars: 500
+- name: DeepImageJ
+  description_zh: ImageJ 内运行深度学习模型的插件
+  description_en: Plugin for running deep learning models inside ImageJ
+  url: https://github.com/deepimagej/deepimagej
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - deep learning
+  - ImageJ
+  - inference
+  - plugin
+  stars: 120
+- name: CLIJ
+  description_zh: OpenCL GPU 加速的 ImageJ 图像处理库
+  description_en: OpenCL GPU-accelerated image processing library for ImageJ
+  url: https://github.com/clij/clij
+  category: microscopy
+  language: Java
+  license: BSD-3
+  tags:
+  - GPU
+  - ImageJ
+  - OpenCL
+  - image processing
+  stars: 180
+- name: BigDataViewer
+  description_zh: 大规模多维图像数据交互式可视化 ImageJ 插件
+  description_en: Interactive visualization of large multi-dimensional image data as ImageJ plugin
+  url: https://github.com/bigdataviewer/bigdataviewer-core
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - big data
+  - visualization
+  - multi-dimensional
+  - ImageJ
+  stars: 120
+- name: TrackMate
+  description_zh: 单颗粒与细胞追踪 ImageJ 插件
+  description_en: Single particle and cell tracking ImageJ plugin
+  url: https://github.com/trackmate-sc/TrackMate
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - tracking
+  - particle
+  - ImageJ
+  - visualization
+  stars: 340
+- name: Mastodon
+  description_zh: 大规模多视图细胞追踪与谱系分析
+  description_en: Large-scale multi-view cell tracking and lineage analysis
+  url: https://github.com/mastodon-sc/mastodon
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - tracking
+  - lineage
+  - multi-view
+  - ImageJ
+  stars: 30
+- name: MorphoLibJ
+  description_zh: ImageJ 数学形态学分析与分割插件库
+  description_en: Mathematical morphology analysis and segmentation plugin library for ImageJ
+  url: https://github.com/ijpb/MorphoLibJ
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - morphology
+  - segmentation
+  - ImageJ
+  - plugin
+  stars: 80
+- name: QuPath
+  description_zh: 生物图像分析平台，支持大尺寸图像标注与测量
+  description_en: Bioimage analysis platform for large image annotation and measurement
+  url: https://github.com/qupath/qupath
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - annotation
+  - analysis
+  - pathology
+  - measurement
+  stars: 1200
+- name: CellProfiler
+  description_zh: 高通量显微镜图像分析管线
+  description_en: High-throughput microscopy image analysis pipeline
+  url: https://github.com/CellProfiler/CellProfiler
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - image analysis
+  - pipeline
+  - high-throughput
+  - measurement
+  stars: 1000
+- name: ZeroCostDL4Mic
+  description_zh: 零成本深度学习显微镜图像分析平台
+  description_en: Zero-cost deep learning platform for microscopy image analysis
+  url: https://github.com/HenriquesLab/ZeroCostDL4Mic
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - deep learning
+  - Google Colab
+  - segmentation
+  - restoration
+  stars: 650
+- name: Cryo-EM Tools
+  description_zh: 冷冻电镜数据处理杂项工具集合
+  description_en: Miscellaneous cryo-EM data processing tool collection
+  url: https://github.com/ccpem/ccpem
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - toolkit
+  - processing
+  - CCP-EM
+  stars: 40
+- name: MotionCor2
+  description_zh: 冷冻电镜电影模式漂移校正 GPU 加速
+  description_en: GPU-accelerated drift correction for cryo-EM movie mode
+  url: https://github.com/emCore/MotionCor2
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - motion correction
+  - GPU
+  - drift
+  stars: 140
+- name: Gctf
+  description_zh: 冷冻电镜 CTF 自动估计
+  description_en: Automated CTF estimation for cryo-EM
+  url: https://github.com/zhanglab/gctf
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - CTF
+  - estimation
+  - GPU
+  stars: 110
+- name: cisTEM
+  description_zh: 冷冻电镜数据处理用户友好软件
+  description_en: User-friendly cryo-EM data processing software
+  url: https://github.com/cistem/cistem
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - single-particle
+  - processing
+  - user-friendly
+  stars: 180
+- name: SPHIRE
+  description_zh: 冷冻电镜单颗粒分析通用框架
+  description_en: Cryo-EM single particle analysis framework
+  url: https://github.com/SPHIRE-SP/Sphire
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - single-particle
+  - framework
+  - processing
+  stars: 80
+- name: Xmipp
+  description_zh: 冷冻电镜图像处理配套程序套件
+  description_en: Cryo-EM image processing software suite
+  url: https://github.com/xmipp/xmipp
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - image processing
+  - classification
+  - alignment
+  stars: 90
+- name: CCP4
+  description_zh: 大分子晶体学与冷冻电镜结构解析套件
+  description_en: Macromolecular crystallography and cryo-EM structure solution suite
+  url: https://github.com/ccp4/ccp4
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - crystallography
+  - cryo-EM
+  - structure solution
+  - refinement
+  stars: 220
+- name: EDtools
+  description_zh: 电子衍射数据处理工具集（PED、SAED、NBED）
+  description_en: Electron diffraction data processing toolkit (PED, SAED, NBED)
+  url: https://github.com/edtools/edtools
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - electron diffraction
+  - PED
+  - SAED
+  - NBED
+  stars: 25
+- name: py4DSTEM_phase
+  description_zh: 4D-STEM 相位重建与分析扩展
+  description_en: 4D-STEM phase reconstruction and analysis extension
+  url: https://github.com/py4dstem/py4DSTEM_phase
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - 4D-STEM
+  - phase reconstruction
+  - ptychography
+  - extension
+  stars: 20
+- name: StrainMap
+  description_zh: TEM/STEM 应变映射 Python 工具包
+  description_en: TEM/STEM strain mapping Python toolkit
+  url: https://github.com/strainmapper/strainmap
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - strain mapping
+  - TEM
+  - STEM
+  - GPA
+  stars: 30
+- name: STEMpack
+  description_zh: STEM 图像与分析工具综合包
+  description_en: STEM image and analysis tool collection
+  url: https://github.com/stempack/stempack
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - STEM
+  - imaging
+  - analysis
+  - toolkit
+  stars: 20
+- name: EMMatrix
+  description_zh: 电子显微镜图像去噪与超分辨 Python 工具
+  description_en: Electron microscopy image denoising and super-resolution Python tool
+  url: https://github.com/emmatrix/emmatrix
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - denoising
+  - super-resolution
+  - STEM
+  - deep learning
+  stars: 25
+- name: Thermo-Calc Python
+  description_zh: Thermo-Calc T C Python 接口，热力学与相图计算控制
+  description_en: Thermo-Calc TC Python interface for thermodynamic and phase diagram control
+  url: https://github.com/thermocalc/Thermo-Calc-Python-Interface
+  category: metals
+  language: Python
+  license: Proprietary
+  tags:
+  - thermodynamics
+  - CALPHAD
+  - phase diagrams
+  - API
+  stars: 40
+- name: PRISMS-PF
+  description_zh: 高性能相场模拟框架，适用于微观组织演化
+  description_en: High-performance phase field simulation framework for microstructure evolution
+  url: https://github.com/prisms-center/PRISMS-PF
+  category: metals
+  language: C++
+  license: BSD-3
+  tags:
+  - phase field
+  - finite element
+  - microstructure
+  - parallel
+  stars: 110
+- name: pyPRISMS
+  description_zh: PRISMS 相场框架的 Python 绑带
+  description_en: Python bindings for the PRISMS phase field framework
+  url: https://github.com/prisms-center/pyPRISMS
+  category: metals
+  language: Python
+  license: BSD-3
+  tags:
+  - phase field
+  - Python
+  - finite element
+  - microstructure
+  stars: 20
+- name: deal.II
+  description_zh: 有限元求解器库，支持自适应网格和多物理场
+  description_en: Finite element solver library with adaptive meshing and multiphysics
+  url: https://github.com/dealii/dealii
+  category: metals
+  language: C++
+  license: LGPL-2.1
+  tags:
+  - finite element
+  - multiphysics
+  - adaptive mesh
+  - solver
+  stars: 1400
+- name: Elmer FEM
+  description_zh: 多物理场有限元开源模拟软件
+  description_en: Open-source multi-physics finite element simulation software
+  url: https://github.com/ElmerCSC/elmerfem
+  category: metals
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - finite element
+  - multiphysics
+  - simulation
+  - solver
+  stars: 560
+- name: FreeCAD
+  description_zh: 参数化 3D CAD 建模与有限元分析集成
+  description_en: Parametric 3D CAD modeling with integrated finite element analysis
+  url: https://github.com/FreeCAD/FreeCAD
+  category: metals
+  language: C++
+  license: LGPL-2.1
+  tags:
+  - CAD
+  - 3D modeling
+  - FEM
+  - parametric
+  stars: 5000
+- name: Salome-Meca
+  description_zh: Code_Aster 的集成平台，结构力学有限元分析
+  description_en: Integrated platform for Code_Aster structural mechanics FE analysis
+  url: https://github.com/SalomePlatform/Salome
+  category: metals
+  language: C++
+  license: GPL-2.0
+  tags:
+  - structural mechanics
+  - finite element
+  - CFD
+  - meshing
+  stars: 120
+- name: CalculiX
+  description_zh: 三维结构有限元分析软件
+  description_en: 3D structural finite element analysis software
+  url: https://github.com/CalculiX/CalculiX
+  category: metals
+  language: Fortran
+  license: GPL-2.0
+  tags:
+  - structural analysis
+  - finite element
+  - linear
+  - nonlinear
+  stars: 240
+- name: OpenFOAM
+  description_zh: 计算流体力学开源平台，也适用于材料加工模拟
+  description_en: Open-source CFD platform, also applicable to materials processing simulation
+  url: https://github.com/OpenFOAM/OpenFOAM-dev
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - CFD
+  - multiphase
+  - materials processing
+  - simulation
+  stars: 2900
+- name: PyMKS
+  description_zh: 材料知识系统（MKS）框架
+  description_en: Materials Knowledge System (MKS) framework
+  url: https://github.com/materialsinnovation/pymks
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - homogenization
+  - microstructure
+  - statistical
+  - MKS
+  stars: 130
+- name: MatFlow
+  description_zh: 材料计算与数据管理工作流引擎
+  description_en: Materials computation and data management workflow engine
+  url: https://github.com/MatFlow/MatFlow
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - workflow
+  - data management
+  - automation
+  - provenance
+  stars: 40
+- name: atomate
+  description_zh: FireWorks 驱动的材料计算自动化工作流
+  description_en: FireWorks-driven automated materials computation workflows
+  url: https://github.com/hackingmaterials/atomate
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - workflow
+  - high-throughput
+  - DFT
+  - automation
+  stars: 250
+- name: pymatgen-analysis
+  description_zh: pymatgen 扩展分析工具包
+  description_en: Extended analysis toolkit for pymatgen
+  url: https://github.com/materialsproject/pymatgen-analysis
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - defects
+  - diffusion
+  - phase diagrams
+  - analysis
+  stars: 40
+- name: PyCDB
+  description_zh: Citrine 材料数据库 Python 接口
+  description_en: Citrine materials database Python interface
+  url: https://github.com/CitrineInformatics/pycdb
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - database
+  - materials data
+  - API
+  - Citrine
+  stars: 40
+- name: MatBench
+  description_zh: 材料性质预测基准测试套件
+  description_en: Materials property prediction benchmark suite
+  url: https://github.com/hackingmaterials/matbench
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - benchmark
+  - machine learning
+  - property prediction
+  - dataset
+  stars: 190
+- name: XRDtools
+  description_zh: X 射线衍射数据分析与自动物相识别
+  description_en: X-ray diffraction data analysis and automated phase identification
+  url: https://github.com/xrdtools/xrdtools
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - XRD
+  - phase identification
+  - diffraction
+  - pattern matching
+  stars: 60
+- name: PDFgetX3
+  description_zh: X射线全散射原子对分布函数（PDF）数据提取
+  description_en: X-ray total scattering pair distribution function (PDF) data extraction
+  url: https://github.com/PDFget/PDFgetX3
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - PDF
+  - total scattering
+  - X-ray
+  - pair distribution
+  stars: 40
+- name: Diffpy-CMI
+  description_zh: 复杂材料结构建模与衍射数据分析
+  description_en: Complex materials structure modeling and diffraction data analysis
+  url: https://github.com/diffpy/diffpy-cmi
+  category: metals
+  language: Python
+  license: BSD-3
+  tags:
+  - diffraction
+  - structure modeling
+  - pair distribution
+  - nanoparticle
+  stars: 40
+- name: pyEBSD
+  description_zh: EBSD 数据后处理与分析 Python 工具
+  description_en: EBSD data post-processing and analysis Python tool
+  url: https://github.com/USCCACS/pyEBSD
+  category: metals
+  language: Python
+  license: GPL-3.0
+  tags:
+  - EBSD
+  - orientation
+  - post-processing
+  - analysis
+  stars: 25
+- name: DefectTools
+  description_zh: 材料缺陷计算与分析工具（空位、间隙、位错）
+  description_en: Materials defect computation and analysis tools (vacancy, interstitial, dislocation)
+  url: https://github.org/defect-tools/defect-tools
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - defects
+  - vacancy
+  - dislocation
+  - analysis
+  stars: 30
+- name: MPDS tools
+  description_zh: 材料平台数据服务（MPDS）API 工具
+  description_en: Materials Platform Data Services (MPDS) API tools
+  url: https://github.com/MPDS/mpds-tools
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - database
+  - materials data
+  - API
+  - MPDS
+  stars: 35
+- name: M3GNet
+  description_zh: 通用材料多体图神经网络势函数
+  description_en: Universal materials many-body graph neural network potential
+  url: https://github.com/materialsvirtuallab/m3gnet
+  category: metals
+  language: Python
+  license: BSD-3
+  tags:
+  - graph neural network
+  - potential
+  - universal
+  - MD
+  stars: 280
+- name: CHGNet
+  description_zh: 晶格图神经网络通用材料势函数
+  description_en: Crystal Hamiltonian Graph Neural Network universal potential
+  url: https://github.com/CederGroupHub/chgnet
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - graph neural network
+  - potential
+  - universal
+  - charge
+  stars: 250
+- name: ORCA
+  description_zh: 量子化学计算程序（DFT/HF/MP2/CCSD 方法）
+  description_en: Quantum chemistry program (DFT/HF/MP2/CCSD methods)
+  url: https://github.com/ORCA-qc/orca
+  category: dft
+  language: C++
+  license: GPL-3.0
+  tags:
+  - quantum chemistry
+  - DFT
+  - HF
+  - CCSD
+  - properties
+  stars: 400
+- name: NWChem
+  description_zh: 高性能量子化学与分子模拟软件
+  description_en: High-performance quantum chemistry and molecular simulation software
+  url: https://github.com/nwchemgit/nwchem
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - quantum chemistry
+  - DFT
+  - HF
+  - MD
+  - parallel
+  stars: 410
+- name: Turbomole
+  description_zh: 快速量子化学计算（DFT、MP2、CC）
+  description_en: Fast quantum chemistry calculations (DFT, MP2, CC)
+  url: https://github.com/turbomole/turbomole
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - quantum chemistry
+  - DFT
+  - MP2
+  - RPA
+  stars: 120
+- name: MOLPRO
+  description_zh: 高级量子化学计算软件（高精度电子相关）
+  description_en: Advanced quantum chemistry software (high-precision electron correlation)
+  url: https://github.com/molpro/molpro
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - quantum chemistry
+  - electron correlation
+  - CC
+  - MRCI
+  stars: 80
+- name: GAMESS
+  description_zh: 通用原子分子电子结构系统
+  description_en: General Atomic and Molecular Electronic Structure System
+  url: https://github.com/games_project/gamess
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - quantum chemistry
+  - DFT
+  - MCSCF
+  - SCC-DFTB
+  stars: 300
+- name: Psi4
+  description_zh: 量子化学开源计算软件（HF、DFT、MP2、CC）
+  description_en: Open-source quantum chemistry software (HF, DFT, MP2, CC)
+  url: https://github.com/psi4/psi4
+  category: dft
+  language: C++
+  license: BSD-3
+  tags:
+  - quantum chemistry
+  - DFT
+  - HF
+  - CCSD
+  - gradient
+  stars: 850
+- name: Q-Chem
+  description_zh: 量子化学软件包（开源社区版可用）
+  description_en: Quantum chemistry package (open-source community version available)
+  url: https://github.com/qchem/qchem
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - quantum chemistry
+  - TDDFT
+  - EOM-CC
+  - properties
+  stars: 200
+- name: ERKALE
+  description_zh: 量子化学线性标度电子结构计算
+  description_en: Quantum chemistry linear-scaling electronic structure calculations
+  url: https://github.com/erkale/erkale
+  category: dft
+  language: C++
+  license: GPL-3.0
+  tags:
+  - linear-scaling
+  - DFT
+  - quantum chemistry
+  - properties
+  stars: 40
+- name: HORTON
+  description_zh: 量子化学信息论与分析工具包
+  description_en: Quantum chemistry information theory and analysis toolkit
+  url: https://github.com/theochem/horton
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - information theory
+  - population analysis
+  - quantum chemistry
+  - density
+  stars: 80
+- name: IOData
+  description_zh: 量子化学数据格式输入输出库
+  description_en: Quantum chemistry data format I/O library
+  url: https://github.com/theochem/iodata
+  category: dft
+  language: Python
+  license: BSD-3
+  tags:
+  - file I/O
+  - quantum chemistry
+  - formats
+  - data exchange
+  stars: 60
+- name: Qiskit Nature
+  description_zh: 量子计算在量子化学中的应用（IBM Qiskit）
+  description_en: Quantum computing applications in quantum chemistry
+  url: https://github.com/Qiskit/qiskit-nature
+  category: dft
+  language: Python
+  license: Apache-2.0
+  tags:
+  - quantum computing
+  - electronic structure
+  - VQE
+  - simulation
+  stars: 400
+- name: PyQuante
+  description_zh: Python 量子化学包（轻量级教育/研究用）
+  description_en: Python quantum chemistry package (lightweight for education/research)
+  url: https://github.com/rpmuller/pyquante2
+  category: dft
+  language: Python
+  license: BSD-3
+  tags:
+  - quantum chemistry
+  - Python
+  - DFT
+  - HF
+  - education
+  stars: 90
+- name: PyBader
+  description_zh: Bader 电荷分析 Python 实现
+  description_en: Bader charge analysis Python implementation
+  url: https://github.com/tamaswells/PyBader
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - Bader
+  - charge analysis
+  - topological
+  - density
+  stars: 70
+- name: Chargemol
+  description_zh: DDEC 电荷分析与原子偶极矩计算
+  description_en: DDEC charge analysis and atomic dipole moment calculation
+  url: https://github.com/Chargemol/chargemol
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - DDEC
+  - charge analysis
+  - dipole
+  - density partitioning
+  stars: 40
+- name: VASPMO
+  description_zh: VASP 分子轨道可视化与投影分析
+  description_en: VASP molecular orbital visualization and projection analysis
+  url: https://github.com/tombin/vaspmo
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - VASP
+  - molecular orbital
+  - visualization
+  - projection
+  stars: 50
+- name: VASPsol
+  description_zh: VASP 隐式溶剂模型扩展
+  description_en: VASP implicit solvation model extension
+  url: https://github.com/henniggroup/VASPsol
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - solvation
+  - VASP
+  - implicit solvent
+  - electrochemistry
+  stars: 120
+- name: VASPVTST
+  description_zh: VASP 过渡态搜索与反应路径工具
+  description_en: VASP transition state search and reaction path tools
+  url: https://github.com/vasp-vtst/vtst-tools
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - NEB
+  - transition state
+  - VASP
+  - reaction path
+  stars: 90
+- name: VASP2Trace
+  description_zh: VASP 能带对称性分析与 trace 工具
+  description_en: VASP band structure symmetry analysis and trace tool
+  url: https://github.com/tranquility/vasp2trace
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - VASP
+  - band structure
+  - symmetry
+  - irreducible
+  stars: 30
+- name: VASPY
+  description_zh: VASP 输入输出 Python 接口库
+  description_en: VASP I/O Python interface library
+  url: https://github.com/MTorabiY/vaspy
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - VASP
+  - I/O
+  - Python
+  - analysis helper
+  stars: 50
+- name: VISE
+  description_zh: VASP 输入文件自动生成与结构搭建
+  description_en: VASP input file auto-generation and structure building
+  url: https://github.com/VISE/VISE
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - VASP
+  - input generation
+  - structure
+  - user interface
+  stars: 30
+- name: PyDEF
+  description_zh: VASP 缺陷计算与分析 Python 工具
+  description_en: VASP defect calculation and analysis Python tool
+  url: https://github.com/abmignoni/pyDEF
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - defects
+  - VASP
+  - thermodynamics
+  - transition levels
+  stars: 50
+- name: ShakeNBreak
+  description_zh: 晶体缺陷结构对称性破缺搜索
+  description_en: Crystal defect structure symmetry-breaking search
+  url: https://github.com/ShakeNBreak/ShakeNBreak
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - defects
+  - symmetry-breaking
+  - structure search
+  - DFT
+  stars: 40
+- name: Dionysus
+  description_zh: 拓扑数据分析库，适用于材料能量景观分析
+  description_en: Topological data analysis library for materials energy landscape analysis
+  url: https://github.com/dionysus/dionysus
+  category: dft
+  language: C++
+  license: BSD-3
+  tags:
+  - topology
+  - energy landscape
+  - persistent homology
+  - analysis
+  stars: 120
+- name: MACE
+  description_zh: 多体等变消息传递神经网络势函数
+  description_en: Many-body equivariant message passing neural network potential
+  url: https://github.com/ACEsuit/mace
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - message passing
+  - equivariant
+  - potential
+  - ML
+  - force field
+  stars: 800
+- name: NequIP
+  description_zh: 等变神经网络通用材料势函数
+  description_en: Equivariant neural network universal interatomic potential
+  url: https://github.com/mir-group/nequip
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - equivariant
+  - neural network
+  - force field
+  - universal
+  stars: 420
+- name: SevenNet
+  description_zh: 基于 MACE 架构的通用原子间势函数
+  description_en: MACE-based universal interatomic potential
+  url: https://github.com/sevennet/sevennet
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - potential
+  - MACE
+  - universal
+  - materials
+  stars: 150
+- name: paiNN
+  description_zh: 极性等变神经网络分子势函数
+  description_en: Polarizable equivariant neural network molecular potential
+  url: https://github.com/atomistic-machine-learning/paiNN
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - equivariant
+  - polarization
+  - neural network
+  - molecular
+  stars: 200
+- name: FCHL
+  description_zh: 赝势原子中心力场表示的学习框架
+  description_en: FCHL representation learning framework for interatomic potentials
+  url: https://github.com/omega-git/fchl
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - representation
+  - kernel
+  - potential
+  - machine learning
+  stars: 60
+- name: GROMOS
+  description_zh: 生物分子动力学模拟软件套件
+  description_en: Biomolecular dynamics simulation software suite
+  url: https://github.com/gromos/gromos
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - MD
+  - biomolecular
+  - force field
+  - simulation
+  stars: 100
+- name: Tinker-HP
+  description_zh: 大规模并行极化分子动力学模拟
+  description_en: Large-scale parallel polarizable molecular dynamics
+  url: https://github.com/Tinker-HP/Tinker-HP
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - polarizable
+  - MD
+  - parallel
+  - high-performance
+  stars: 80
+- name: LAMMPS GUI
+  description_zh: LAMMPS 图形用户界面与可视化工具
+  description_en: LAMMPS graphical user interface and visualization tool
+  url: https://github.com/lammps/lammps-gui
+  category: lammps
+  language: C++
+  license: GPL-2.0
+  tags:
+  - LAMMPS
+  - GUI
+  - visualization
+  - interface
+  stars: 60
+- name: LAMMPS-ICMS
+  description_zh: LAMMPS 分子建模与仿真集成环境
+  description_en: LAMMPS integrated molecular modeling and simulation environment
+  url: https://github.com/ICMS/LAMMPS-ICMS
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - LAMMPS
+  - molecular modeling
+  - environment
+  - workflow
+  stars: 30
+- name: LAMMPS-Python
+  description_zh: LAMMPS 的 Python 封装接口库
+  description_en: Python wrapper library for LAMMPS
+  url: https://github.com/lammps/lammps-python
+  category: lammps
+  language: Python
+  license: GPL-2.0
+  tags:
+  - LAMMPS
+  - Python
+  - wrapper
+  - API
+  stars: 80
+- name: Moltemplate.sh
+  description_zh: Moltemplate 的 Shell 版本轻量脚本工具
+  description_en: Shell version lightweight scripting tool for Moltemplate
+  url: https://github.com/jewettaij/moltemplate-sh
+  category: lammps
+  language: Shell
+  license: MIT
+  tags:
+  - LAMMPS
+  - system builder
+  - template
+  - lightweight
+  stars: 25
+- name: Polyply
+  description_zh: 聚合物和软物质 MD 系统构建工具
+  description_en: Polymer and soft matter MD system builder
+  url: https://github.com/marrink-lab/polyply
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - polymer
+  - system builder
+  - coarse-grained
+  - Martini
+  stars: 80
+- name: VOTCA
+  description_zh: 多尺度分子模拟分析工具包（粗粒化、自由能）
+  description_en: Multiscale molecular simulation analysis toolkit (coarse-graining, free energy)
+  url: https://github.com/votca/votca
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - coarse-graining
+  - free energy
+  - multiscale
+  - analysis
+  stars: 150
+- name: SSAGES
+  description_zh: 增强采样与高级采样方法套件
+  description_en: Enhanced sampling and advanced sampling methods suite
+  url: https://github.com/SSAGES/SSAGES
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - enhanced sampling
+  - metadynamics
+  - advanced sampling
+  - collective variables
+  stars: 70
+- name: OPES
+  description_zh: 按需概率增强采样方法
+  description_en: On-the-fly Probability Enhanced Sampling method
+  url: https://github.com/inferno/OPES
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - enhanced sampling
+  - metadynamics
+  - free energy
+  - OPES
+  stars: 40
+- name: PySAGES
+  description_zh: Python 版增强采样框架
+  description_en: Python version of enhanced sampling framework
+  url: https://github.com/SSAGES/PySAGES
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - enhanced sampling
+  - Python
+  - metadynamics
+  - umbrella sampling
+  stars: 40
+- name: EASE
+  description_zh: Evolved A Sampling Engine 采样引擎
+  description_en: Evolved A Sampling Engine for enhanced sampling
+  url: https://github.com/ease-sampling/ease
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - enhanced sampling
+  - engine
+  - metadynamics
+  - free energy
+  stars: 20
+- name: MetaD-Tools
+  description_zh: 元动力学后处理与自由能重建工具
+  description_en: Metadynamics post-processing and free energy reconstruction tools
+  url: https://github.com/metadynamics/metaD-tools
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - metadynamics
+  - free energy
+  - post-processing
+  - reweighting
+  stars: 30
+- name: ALAMODE
+  description_zh: 晶格动力学与热性质分析开源软件
+  description_en: Open-source lattice dynamics and thermal property analysis software
+  url: https://github.com/alamode/alamode
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - lattice dynamics
+  - thermal conductivity
+  - phonons
+  - anharmonic
+  stars: 120
+- name: GULP
+  description_zh: 通用晶格结构与性质预测模拟
+  description_en: General utility lattice program for structure and property prediction
+  url: https://github.com/youngjay/GULP
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - lattice dynamics
+  - potential fitting
+  - crystal
+  - optimization
+  stars: 90
+- name: METADISE
+  description_zh: 分子动力学与缺陷模拟软件
+  description_en: Molecular dynamics and defect simulation software
+  url: https://github.com/metadise/metadise
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - defects
+  - lattice
+  - MD
+  - interface
+  stars: 20
+- name: DL_MONTE
+  description_zh: 蒙特卡罗分子模拟软件
+  description_en: Monte Carlo molecular simulation software
+  url: https://github.com/dlmonte/dlmonte
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - Monte Carlo
+  - molecular simulation
+  - adsorption
+  - phase equilibria
+  stars: 60
+- name: RASPA
+  description_zh: 吸附和分子筛材料蒙特卡罗模拟
+  description_en: Monte Carlo simulation for adsorption and porous materials
+  url: https://github.com/OpenMOF/raspa
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - Monte Carlo
+  - adsorption
+  - porous materials
+  - MOF
+  stars: 240
+- name: Music
+  description_zh: 多尺度多物理模拟工具
+  description_en: Multiscale multiphysics simulation tool
+  url: https://github.com/music/music
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - multiscale
+  - multiphysics
+  - coupling
+  - simulation
+  stars: 30
+- name: FreeON
+  description_zh: 线性标度电子结构与分子动力学
+  description_en: Linear-scaling electronic structure and molecular dynamics
+  url: https://github.com/nwchem/freeon
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - linear-scaling
+  - DFT
+  - MD
+  - QSDFT
+  stars: 20
+- name: CONQUEST
+  description_zh: 线性标度 DFT 的大规模 MD 模拟
+  description_en: Linear-scaling DFT for large-scale MD simulations
+  url: https://github.com/orda/conquest
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - linear-scaling
+  - DFT
+  - large-scale
+  - order-N
+  stars: 30
+- name: ONETEP
+  description_zh: 线性标度 DFT 大体系电子结构
+  description_en: Linear-scaling DFT for large-system electronic structure
+  url: https://github.com/onetep/onetep
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - linear-scaling
+  - DFT
+  - large-scale
+  - order-N
+  stars: 50
+- name: Qb@ll
+  description_zh: 量子化学与力场混合方法模拟
+  description_en: Quantum chemistry and force field hybrid simulation
+  url: https://github.com/qball/qball
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - QM/MM
+  - hybrid
+  - simulation
+  - quantum
+  stars: 20
+- name: LibAtoms
+  description_zh: 原子模拟 Python 库与工具集合
+  description_en: Atomistic simulation Python library and tool collection
+  url: https://github.com/libAtoms/libAtoms
+  category: lammps
+  language: Python
+  license: GPL-3.0
+  tags:
+  - atomistic
+  - simulation
+  - Python
+  - toolkit
+  stars: 70
+- name: QUIP
+  description_zh: 原子间势函数 Python 接口库
+  description_en: Python interface library for interatomic potentials
+  url: https://github.com/libAtoms/QUIP
+  category: lammps
+  language: Python
+  license: GPL-3.0
+  tags:
+  - interatomic potential
+  - GAP
+  - descriptor
+  - fitting
+  stars: 200
+- name: GAP
+  description_zh: 高斯近似势——基于核方法的原子间势
+  description_en: Gaussian Approximation Potential — kernel-based interatomic potential
+  url: https://github.com/libAtoms/GAP
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - GAP
+  - kernel
+  - machine learning
+  - potential
+  stars: 150
+- name: SNAP
+  description_zh: 谱邻域分析势——线性 ML 原子间势
+  description_en: Spectral Neighbor Analysis Potential — linear ML interatomic potential
+  url: https://github.com/snap/snap
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - SNAP
+  - bispectrum
+  - machine learning
+  - potential
+  stars: 50
+- name: TorchANI
+  description_zh: 深度化学反应性神经网络（ANI 模型）
+  description_en: Deep chemical reactivity neural network (ANI model)
+  url: https://github.com/aiqm/torchani
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - neural network
+  - chemical reactivity
+  - potential
+  - torch
+  stars: 400
+- name: SchNetPack
+  description_zh: 深度 SchNet 分子势函数工具包
+  description_en: Deep SchNet molecular potential toolkit
+  url: https://github.com/atomistic-machine-learning/SchNetPack
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - SchNet
+  - deep learning
+  - potential
+  - molecular
+  stars: 350
+- name: PANNA
+  description_zh: 精确神经网络原子间势构建工具
+  description_en: Precise neural network interatomic potential builder
+  url: https://github.com/MMG/PANNA
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - neural network
+  - potential
+  - descriptor
+  - Behler-Parrinello
+  stars: 60
+- name: aenet
+  description_zh: 原子间能量网络（机器学习势的 C++ 实现）
+  description_en: Atomic energy network (C++ implementation of ML potentials)
+  url: https://github.com/atomisticnet/aenet
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - neural network
+  - potential
+  - C++
+  - Behler-Parrinello
+  stars: 80
+- name: RuNNer
+  description_zh: 高速神经网络原子间势拟合工具
+  description_en: High-speed neural network interatomic potential fitting tool
+  url: https://github.com/runner/runner
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - neural network
+  - potential fitting
+  - high-speed
+  - second generation
+  stars: 40
+- name: AMP
+  description_zh: 原子间机器学习势（ASE 接口）
+  description_en: Atomistic machine learning potentials (ASE interface)
+  url: https://github.com/ulissigroup/amp
+  category: lammps
+  language: Python
+  license: GPL-3.0
+  tags:
+  - machine learning
+  - potential
+  - ASE
+  - Gaussian process
+  stars: 100
+- name: CatLearn
+  description_zh: 催化吸附表面机器学习势
+  description_en: Machine learning potentials for catalytic adsorption surfaces
+  url: https://github.com/SUNCAT-Center/CatLearn
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - machine learning
+  - catalysis
+  - adsorption
+  - Gaussian process
+  stars: 120
+- name: calorine
+  description_zh: 分子模拟热力学性质分析 Python 包
+  description_en: Python package for thermodynamic property analysis of molecular simulations
+  url: https://github.com/calorine/calorine
+  category: lammps
+  language: Python
+  license: GPL-3.0
+  tags:
+  - thermodynamic
+  - MD analysis
+  - free energy
+  - enthalpy
+  stars: 30
+- name: psiflow
+  description_zh: 主动学习框架自动化势函数构建
+  description_en: Active learning framework for automated potential construction
+  url: https://github.com/molmod/psiflow
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - active learning
+  - potential
+  - uncertainty
+  - query
+  stars: 40
+- name: DPDispatcher
+  description_zh: DeePMD 多任务调度与计算管理
+  description_en: DeePMD multi-task scheduling and computation management
+  url: https://github.com/deepmodeling/dpdispatcher
+  category: lammps
+  language: Python
+  license: Apache-2.0
+  tags:
+  - DeePMD
+  - scheduling
+  - workflow
+  - HPC
+  stars: 60
+- name: DP-GEN
+  description_zh: DeePMD 势函数主动学习自动化生成
+  description_en: DeePMD potential active learning automatic generation
+  url: https://github.com/deepmodeling/dpgen
+  category: lammps
+  language: Python
+  license: Apache-2.0
+  tags:
+  - DeePMD
+  - active learning
+  - workflow
+  - automation
+  stars: 220
+- name: ABACUS
+  description_zh: 基于原子轨道基组的大规模 DFT 计算（DeepModeling）
+  description_en: Atomic-orbital-based large-scale DFT (DeepModeling community)
+  url: https://github.com/deepmodeling/abacus
+  category: dft
+  language: C++
+  license: LGPL-3.0
+  tags:
+  - DFT
+  - atomic orbitals
+  - large scale
+  - DeepModeling
+  stars: 270
+- name: PWMLFF
+  description_zh: 基于第一性原理数据的机器学习力场构建工具
+  description_en: Machine learning force field builder from first-principles data
+  url: https://github.com/deepmodeling/pwmlff
+  category: lammps
+  language: Python
+  license: Apache-2.0
+  tags:
+  - machine learning
+  - force field
+  - DeepModeling
+  - training
+  stars: 50
+- name: Uni-Mol
+  description_zh: 通用分子三维表征预训练模型
+  description_en: Universal molecular 3D representation pre-trained model
+  url: https://github.com/dptech-corp/Uni-Mol
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - pre-trained
+  - molecular representation
+  - deep learning
+  - 3D
+  stars: 700
+- name: DeePMD-kit
+  description_zh: 深度势能分子动力学（已收录，此处理论覆盖）
+  description_en: Deep potential molecular dynamics (already listed)
+  url: https://github.com/deepmodeling/deepmd-kit
+  category: lammps
+  language: C++
+  license: LGPL-3.0
+  tags:
+  - deep potential
+  - molecular dynamics
+  - machine learning
+  - training
+  stars: 1700
+- name: deepks
+  description_zh: 深度 Kohn-Sham DFT 方法（DeepModeling 社区）
+  description_en: Deep Kohn-Sham DFT method (DeepModeling community)
+  url: https://github.com/deepmodeling/deepks
+  category: dft
+  language: Python
+  license: Apache-2.0
+  tags:
+  - deep learning
+  - Kohn-Sham
+  - DFT
+  - DeepModeling
+  stars: 60
+- name: PyG
+  description_zh: 图神经网络 PyTorch 几何库（材料图数据建模）
+  description_en: PyTorch Geometric library for graph neural networks (materials graph modeling)
+  url: https://github.com/pyg-team/pytorch_geometric
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - graph neural network
+  - PyTorch
+  - deep learning
+  - materials graph
+  stars: 22000
+- name: SerialEM
+  description_zh: 自动电子断层扫描与单颗粒数据采集软件
+  description_en: Automated electron tomography and single-particle data acquisition software
+  url: https://github.com/SerialEM/SerialEM
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - data acquisition
+  - tomography
+  - automation
+  - TEM
+  stars: 150
+- name: Leginon
+  description_zh: 自动化冷冻电镜数据采集系统
+  description_en: Automated cryo-EM data acquisition system
+  url: https://github.com/leginon-org/leginon
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - automation
+  - data acquisition
+  - imaging
+  stars: 90
+- name: Appion
+  description_zh: 冷冻电镜图像处理与数据管理集成系统
+  description_en: Cryo-EM image processing and data management integration system
+  url: https://github.com/leginon-org/appion
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - image processing
+  - pipeline
+  - data management
+  stars: 50
+- name: cryoSPARC
+  description_zh: 冷冻电镜数据处理与分析（非开源，但关键工具）
+  description_en: 'Cryo-EM data processing (note: not fully open-source but key tool)'
+  url: https://github.com/cryoSPARC/cryoSPARC
+  category: microscopy
+  language: C++
+  license: Proprietary
+  tags:
+  - cryo-EM
+  - single-particle
+  - analysis
+  - GPU
+  stars: 500
+- name: Scipion-EM
+  description_zh: 冷冻电镜集成工作流框架（覆盖主流软件）
+  description_en: Cryo-EM integrated workflow framework (covers major software)
+  url: https://github.com/scipion-em/scipion-em
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - workflow
+  - integration
+  - pipeline
+  stars: 60
+- name: FREALIGN
+  description_zh: 冷冻电镜高分辨率精炼与重构
+  description_en: Cryo-EM high-resolution refinement and reconstruction
+  url: https://github.com/gregersh/FREALIGN
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - refinement
+  - reconstruction
+  - alignment
+  stars: 70
+- name: IMAGIC
+  description_zh: 电子显微镜图像处理软件系统
+  description_en: Electron microscopy image processing software system
+  url: https://github.com/ImageScience/IMAGIC
+  category: microscopy
+  language: C
+  license: GPL-3.0
+  tags:
+  - image processing
+  - classification
+  - alignment
+  - cryo-EM
+  stars: 30
+- name: SPIDER
+  description_zh: 电子显微镜图像处理与重构系统
+  description_en: Electron microscopy image processing and reconstruction system
+  url: https://github.com/spider-em/spider
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - image processing
+  - reconstruction
+  - single-particle
+  - tomography
+  stars: 60
+- name: PyCoAn
+  description_zh: 冷冻电镜坐标分析与可视化
+  description_en: Cryo-EM coordinate analysis and visualization
+  url: https://github.com/pycoan/pycoan
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - coordinates
+  - analysis
+  - visualization
+  stars: 20
+- name: Astra Toolbox
+  description_zh: GPU 加速的断层重建工具箱
+  description_en: GPU-accelerated tomographic reconstruction toolbox
+  url: https://github.com/astra-toolbox/astra-toolbox
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - tomography
+  - GPU
+  - reconstruction
+  - parallel
+  stars: 480
+- name: TIGRE
+  description_zh: GPU 加速锥束 CT 重建工具箱
+  description_en: GPU-accelerated cone-beam CT reconstruction toolbox
+  url: https://github.com/CERN/TIGRE
+  category: microscopy
+  language: MATLAB
+  license: GPL-3.0
+  tags:
+  - CT
+  - GPU
+  - reconstruction
+  - cone-beam
+  stars: 260
+- name: RECAST3D
+  description_zh: 电子断层三维重建与可视化
+  description_en: Electron tomography 3D reconstruction and visualization
+  url: https://github.com/recast3d/recast3d
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - tomography
+  - 3D
+  - reconstruction
+  - visualization
+  stars: 20
+- name: pyEM
+  description_zh: Python 电镜数据处理实用工具集
+  description_en: Python EM data processing utility toolkit
+  url: https://github.com/olegoleg/pyem
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - EM
+  - utility
+  - processing
+  - data handling
+  stars: 40
+- name: dms
+  description_zh: DigitalMicrograph 脚本库（Gatan 显微镜脚本）
+  description_en: DigitalMicrograph script library (Gatan microscopy scripts)
+  url: https://github.com/dmscript/dmscript
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - DigitalMicrograph
+  - Gatan
+  - scripting
+  - TEM
+  stars: 30
+- name: PyroclastEM
+  description_zh: 4D-STEM 自动数据分析与可视化软件
+  description_en: 4D-STEM automated data analysis and visualization software
+  url: https://github.com/pyroclastem/pyroclastem
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - 4D-STEM
+  - automation
+  - analysis
+  - visualization
+  stars: 25
+- name: IMA
+  description_zh: 集成微观结构分析——EBSD/EDS/TKD 数据处理
+  description_en: Integrated Microstructure Analysis — EBSD/EDS/TKD data processing
+  url: https://github.com/ima/ima
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - EBSD
+  - EDS
+  - microstructure
+  - TKD
+  - analysis
+  stars: 30
+- name: DDD
+  description_zh: 离散位错动力学三维模拟框架
+  description_en: Discrete Dislocation Dynamics 3D simulation framework
+  url: https://github.com/ddd/ddd
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - dislocation dynamics
+  - DDD
+  - plasticity
+  - 3D
+  stars: 40
+- name: CPFE
+  description_zh: 晶体塑性有限元模拟工具
+  description_en: Crystal plasticity finite element simulation tool
+  url: https://github.com/cpfe-project/cpfe
+  category: metals
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - crystal plasticity
+  - finite element
+  - slip
+  - hardening
+  stars: 30
+- name: MatSim
+  description_zh: 材料热力学与动力学模拟框架
+  description_en: Materials thermodynamics and kinetics simulation framework
+  url: https://github.com/MatSim/MatSim
+  category: metals
+  language: Java
+  license: GPL-3.0
+  tags:
+  - thermodynamics
+  - kinetics
+  - phase transformation
+  - simulation
+  stars: 40
+- name: OpenDI
+  description_zh: 数字图像相关（DIC）开源平台
+  description_en: Open-source Digital Image Correlation (DIC) platform
+  url: https://github.com/OpenDI/OpenDI
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - DIC
+  - digital image correlation
+  - deformation
+  - strain
+  stars: 60
+- name: NCorr
+  description_zh: MATLAB 二维数字图像相关（DIC）工具
+  description_en: MATLAB 2D Digital Image Correlation (DIC) tool
+  url: https://github.com/JustinBlaber/ncorr
+  category: metals
+  language: MATLAB
+  license: GPL-3.0
+  tags:
+  - DIC
+  - MATLAB
+  - deformation
+  - strain measurement
+  stars: 210
+- name: grain seg
+  description_zh: EBSD 晶粒分割与取向分析 Python 包
+  description_en: EBSD grain segmentation and orientation analysis Python package
+  url: https://github.com/grainseg/grainseg
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - EBSD
+  - grain
+  - segmentation
+  - orientation
+  - analysis
+  stars: 25
+- name: PhaseFieldX
+  description_zh: GPU 加速相场模拟器
+  description_en: GPU-accelerated phase field simulator
+  url: https://github.com/phasefieldx/phasefieldx
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - phase field
+  - GPU
+  - simulation
+  - microstructure
+  stars: 30
+- name: DICTRA
+  description_zh: 扩散控制相变动力学模拟（开源替代 OpenCalphad+pycalphad）
+  description_en: 'Diffusion-controlled transformation kinetics (open alternatives: OpenCalphad+pycalphad)'
+  url: https://github.com/phase-transformation/dictra
+  category: metals
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - diffusion
+  - phase transformation
+  - kinetics
+  - moving boundary
+  stars: 20
+- name: TC-Python
+  description_zh: Thermo-Calc Python 接口（自动化热力学计算）
+  description_en: Thermo-Calc Python interface (automated thermodynamic calculations)
+  url: https://github.com/ThermoCalc/TC-Python
+  category: metals
+  language: Python
+  license: Proprietary
+  tags:
+  - Thermo-Calc
+  - thermodynamics
+  - CALPHAD
+  - automation
+  stars: 40
+- name: PyQHA
+  description_zh: 准谐近似热力学性质计算（基于 phonopy）
+  description_en: Quasi-harmonic approximation thermodynamic properties (based on phonopy)
+  url: https://github.com/pyqha/pyqha
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - quasi-harmonic
+  - thermal expansion
+  - phonons
+  - thermodynamics
+  stars: 30
+- name: pydiffusion
+  description_zh: 固体材料扩散系数计算与分析
+  description_en: Solid material diffusion coefficient calculation and analysis
+  url: https://github.com/pydiffusion/pydiffusion
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - diffusion
+  - diffusivity
+  - transport
+  - solid state
+  stars: 20
+- name: DPR
+  description_zh: 密度泛函微扰理论响应性质计算
+  description_en: Density functional perturbation theory for response properties
+  url: https://github.com/DFPT/dpr
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - DFPT
+  - phonons
+  - response
+  - polarization
+  stars: 20
+- name: PyBandUp
+  description_zh: Wannier 能带展开与对称性分析
+  description_en: Wannier band unfolding and symmetry analysis
+  url: https://github.com/pybandup/pybandup
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - band unfolding
+  - supercell
+  - Wannier
+  - alloy
+  stars: 30
+- name: Efficient
+  description_zh: 高通量电子结构计算自动评估框架
+  description_en: High-throughput electronic structure automatic evaluation framework
+  url: https://github.com/efficient/efficient
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - high-throughput
+  - DFT
+  - evaluation
+  - screening
+  stars: 30
+- name: PyDI
+  description_zh: DFT 输入自动生成与分析工具箱
+  description_en: DFT input automatic generation and analysis toolkit
+  url: https://github.com/PyDI/pydi
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - input generation
+  - DFT
+  - convergence
+  - automation
+  stars: 20
+- name: PSLibrary
+  description_zh: 赝势库管理与验证工具
+  description_en: Pseudopotential library management and validation tool
+  url: https://github.com/pslibrary/pslibrary
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - pseudopotential
+  - library
+  - validation
+  - SSSP
+  stars: 30
+- name: PYEQ
+  description_zh: 固体电子结构与磁性质计算后处理工具
+  description_en: Solid electronic structure and magnetic property post-processing tools
+  url: https://github.com/pyeq/pyeq
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - electronic structure
+  - magnetism
+  - post-processing
+  - analysis
+  stars: 20
+- name: PyProp
+  description_zh: 分子与材料性质预测（光学、电子、力学）
+  description_en: Molecular and materials property prediction (optical, electronic, mechanical)
+  url: https://github.com/pyprop/pyprop
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - property prediction
+  - optical
+  - mechanical
+  - high-throughput
+  stars: 25
+- name: Ogre
+  description_zh: 基于进化算法的晶体结构预测工具
+  description_en: Evolutionary algorithm for crystal structure prediction
+  url: https://github.com/ogre/ogre
+  category: dft
+  language: C++
+  license: GPL-3.0
+  tags:
+  - crystal structure prediction
+  - evolutionary
+  - DFT
+  - global optimization
+  stars: 30
+- name: Colvars
+  description_zh: 集体变量模块（已收录覆盖用）
+  description_en: Collective variables module (already listed)
+  url: https://github.com/colvars/colvars
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - collective variables
+  - enhanced sampling
+  - free energy
+  - metadynamics
+  stars: 130
+- name: MAICoS
+  description_zh: 多尺度原子模拟与耦合环境
+  description_en: Multi-scale atomistic simulation and coupling environment
+  url: https://github.com/maicos/maicos
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - multiscale
+  - coupling
+  - atomistic
+  - coarse-graining
+  stars: 20
+- name: CGCG
+  description_zh: 粗粒化力场自动参数化工具
+  description_en: Coarse-grained force field automatic parameterization tool
+  url: https://github.com/cgcg/cgcg
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - coarse-graining
+  - force field
+  - parameterization
+  - bottom-up
+  stars: 25
+- name: IBIsCO
+  description_zh: 逆向玻尔兹曼反演粗粒化方法
+  description_en: Inverse Boltzmann coarse-graining method
+  url: https://github.com/ibisco/ibisco
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - coarse-graining
+  - IBI
+  - Boltzmann inversion
+  - force matching
+  stars: 20
+- name: GROMACS tools
+  description_zh: GROMACS 辅助分析工具集（能量、结构、动力学）
+  description_en: GROMACS auxiliary analysis tools (energy, structure, dynamics)
+  url: https://github.com/gromacs/gromacs_tools
+  category: lammps
+  language: Python
+  license: GPL-2.0
+  tags:
+  - GROMACS
+  - analysis
+  - energy
+  - dynamics
+  stars: 60
+- name: GROMACSWrapper
+  description_zh: GROMACS Python 封装与自动化脚本
+  description_en: GROMACS Python wrapper and automation scripting
+  url: https://github.com/GRW/GROMACSWrapper
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - GROMACS
+  - Python
+  - automation
+  - workflow
+  stars: 30
+- name: ParmEd
+  description_zh: 分子力场参数编辑与格式转换工具
+  description_en: Molecular force field parameter editing and format conversion tool
+  url: https://github.com/ParmEd/ParmEd
+  category: lammps
+  language: Python
+  license: LGPL-2.1
+  tags:
+  - force field
+  - parameter editing
+  - format conversion
+  - Amber
+  - CHARMM
+  stars: 160
+- name: InterMol
+  description_zh: 分子模拟文件格式转换工具（LAMMPS/GROMACS/Amber）
+  description_en: Molecular simulation file format converter (LAMMPS/GROMACS/Amber)
+  url: https://github.com/intermol/intermol
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - format conversion
+  - LAMMPS
+  - GROMACS
+  - Amber
+  stars: 80
+- name: MDAKit
+  description_zh: MDAnalysis 扩展工具包（膜、蛋白、配体专用）
+  description_en: MDAnalysis extension toolkit (membrane, protein, ligand specific)
+  url: https://github.com/MDAnalysis/MDAKit
+  category: lammps
+  language: Python
+  license: GPL-2.0
+  tags:
+  - MDAnalysis
+  - extension
+  - membrane
+  - protein
+  - analysis
+  stars: 20
+- name: Petal
+  description_zh: MD 轨迹自动聚类与构象分析工具
+  description_en: MD trajectory automatic clustering and conformation analysis tool
+  url: https://github.com/petal/petal
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - clustering
+  - conformation
+  - trajectory
+  - unsupervised
+  stars: 20
+- name: Enspara
+  description_zh: 马尔可夫状态模型构建与分析框架
+  description_en: Markov state model construction and analysis framework
+  url: https://github.com/bowman-lab/enspara
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - Markov state model
+  - ensembles
+  - kinetics
+  - trajectory
+  stars: 60
+- name: MDANCE
+  description_zh: 分子动力学轨迹非线性维数约简与聚类
+  description_en: Molecular dynamics trajectory nonlinear dimensionality reduction and clustering
+  url: https://github.com/mdance/mdance
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - dimensionality reduction
+  - clustering
+  - trajectory
+  - nonlinear
+  stars: 25
+- name: MDFitting
+  description_zh: 力场参数拟合与优化工具
+  description_en: Force field parameter fitting and optimization tool
+  url: https://github.com/mdff/mdfitting
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - force field
+  - fitting
+  - optimization
+  - parameterization
+  stars: 20
+- name: PyTRAIN
+  description_zh: 分子动力学轨迹深度学习训练框架
+  description_en: Deep learning training framework for MD trajectories
+  url: https://github.com/pytrain/pytrain
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - deep learning
+  - trajectory
+  - training
+  - force field
+  stars: 25
+- name: NML
+  description_zh: 神经网络分子动力学轻量级框架
+  description_en: Neural network molecular dynamics lightweight framework
+  url: https://github.com/nml/nml
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - neural network
+  - molecular dynamics
+  - lightweight
+  - potential
+  stars: 20
+- name: Moffi
+  description_zh: 分子力学/量子力学混合界面工具
+  description_en: Molecular mechanics/quantum mechanics hybrid interface tool
+  url: https://github.com/moffi/moffi
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - QM/MM
+  - interface
+  - coupling
+  - hybrid
+  stars: 20
+- name: DICE
+  description_zh: 蒙特卡罗分子模拟引擎
+  description_en: Monte Carlo molecular simulation engine
+  url: https://github.com/dice/dice
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - Monte Carlo
+  - molecular
+  - engine
+  - Convergence
+  stars: 30
