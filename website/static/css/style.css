@@ -1441,6 +1441,19 @@ img { max-width: 100%; height: auto; }
   gap: 1rem;
 }
 
+.tool-search-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.tool-search-row .tool-search-input { flex: 1; }
+.tool-search-row .tool-counter {
+  flex-shrink: 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
 .tool-search-input {
   width: 100%;
   padding: 0.75rem 1rem;
@@ -1593,11 +1606,71 @@ img { max-width: 100%; height: auto; }
   color: var(--text-muted);
 }
 
+/* ─── 工具分页 ────────────────────────────── */
+.tool-counter {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+.tool-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.page-btn, .page-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 0.6rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+.page-btn:hover, .page-num:hover {
+  background: var(--surface-2);
+  border-color: var(--accent-1);
+  color: var(--accent-1);
+}
+.page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+.page-btn:disabled:hover {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+.page-num.active {
+  background: var(--accent-1);
+  border-color: var(--accent-1);
+  color: var(--btn-primary-text);
+  font-weight: 600;
+}
+.page-prev, .page-next {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
 @media (max-width: 600px) {
   .tool-grid { grid-template-columns: 1fr; }
   .tool-card-header { flex-direction: column; gap: 0.4rem; }
   .tools-categories { gap: 0.3rem; }
   .tools-categories .filter-btn { font-size: 0.76rem; padding: 0.3rem 0.6rem; }
+  .tool-search-row { flex-direction: column; align-items: stretch; gap: 0.4rem; }
+  .tool-search-row .tool-counter { text-align: right; }
+  .page-btn, .page-num { min-width: 32px; height: 32px; font-size: 0.8rem; }
 }
 
 @media (max-width: 480px) {

@@ -12,7 +12,10 @@
 
   <!-- 搜索栏 -->
   <div class="tools-controls">
-    <input type="text" id="tool-search" class="tool-search-input" placeholder="{{ t.tools.search_placeholder }}" oninput="filterTools()">
+    <div class="tool-search-row">
+      <input type="text" id="tool-search" class="tool-search-input" placeholder="{{ t.tools.search_placeholder }}" oninput="filterTools()">
+      <div class="tool-counter" id="tool-counter"></div>
+    </div>
     <div class="tools-categories">
       <button class="filter-btn active" data-cat="all" onclick="filterByCategory('all')">{{ t.tools.all_categories }}</button>
       <button class="filter-btn" data-cat="microscopy" onclick="filterByCategory('microscopy')">{{ t.tools.category_microscopy }}</button>
@@ -26,7 +29,8 @@
   <div class="tool-grid" id="tool-grid">
     {% for tool in tools %}
     <div class="tool-card cat-{{ tool.category }}" data-category="{{ tool.category }}"
-         data-name="{{ tool.name | lower }}" data-tags="{{ tool.tags | join(' ') | lower }}">
+         data-name="{{ tool.name | lower }}" data-tags="{{ tool.tags | join(' ') | lower }}"
+         data-index="{{ loop.index0 }}">
       <div class="tool-card-header">
         <h3 class="tool-name">{{ tool.name }}</h3>
         <span class="tool-category-badge cat-{{ tool.category }}">
@@ -65,17 +69,100 @@
     {% endfor %}
   </div>
 
+  <!-- 分页 -->
+  <div class="tool-pagination" id="tool-pagination">
+    <button class="page-btn page-prev" onclick="goToPage(currentPage - 1)" id="page-prev">‹</button>
+    <div class="page-numbers" id="page-numbers"></div>
+    <button class="page-btn page-next" onclick="goToPage(currentPage + 1)" id="page-next">›</button>
+  </div>
+
   <div class="tool-empty" id="tool-empty" style="display:none">
     <p>{{ t.tools.no_tools }}</p>
   </div>
 
   <script>
+  var PER_PAGE = 24;
+  var currentPage = 1;
   var currentCategory = 'all';
   var currentQuery = '';
 
+  function getVisibleCards() {
+    var cards = document.querySelectorAll('.tool-card');
+    var visible = [];
+    cards.forEach(function(card) {
+      var catMatch = currentCategory === 'all' || card.dataset.category === currentCategory;
+      var searchMatch = !currentQuery ||
+        card.dataset.name.indexOf(currentQuery) !== -1 ||
+        card.dataset.tags.indexOf(currentQuery) !== -1;
+      if (catMatch && searchMatch) visible.push(card);
+    });
+    return visible;
+  }
+
+  function renderPage() {
+    var visible = getVisibleCards();
+    var total = visible.length;
+    var totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+    if (currentPage > totalPages) currentPage = totalPages;
+    if (currentPage < 1) currentPage = 1;
+
+    var start = (currentPage - 1) * PER_PAGE;
+    var end = Math.min(start + PER_PAGE, total);
+
+    // 显示/隐藏卡片
+    document.querySelectorAll('.tool-card').forEach(function(card) { card.style.display = 'none'; });
+    for (var i = start; i < end; i++) {
+      visible[i].style.display = '';
+    }
+
+    // 更新计数器
+    var counter = document.getElementById('tool-counter');
+    if (total > 0) {
+      counter.textContent = 'Showing ' + (start + 1) + '–' + end + ' of ' + total;
+    } else {
+      counter.textContent = '';
+    }
+
+    // 更新分页按钮
+    var pagination = document.getElementById('tool-pagination');
+    pagination.style.display = totalPages <= 1 ? 'none' : '';
+
+    document.getElementById('page-prev').disabled = currentPage <= 1;
+
+    var nums = document.getElementById('page-numbers');
+    nums.innerHTML = '';
+    var maxButtons = 5;
+    var half = Math.floor(maxButtons / 2);
+    var pStart = Math.max(1, currentPage - half);
+    var pEnd = Math.min(totalPages, pStart + maxButtons - 1);
+    if (pEnd - pStart + 1 < maxButtons) {
+      pStart = Math.max(1, pEnd - maxButtons + 1);
+    }
+
+    for (var p = pStart; p <= pEnd; p++) {
+      var btn = document.createElement('button');
+      btn.className = 'page-num' + (p === currentPage ? ' active' : '');
+      btn.textContent = p;
+      btn.onclick = function(pp) { return function() { goToPage(pp); }; }(p);
+      nums.appendChild(btn);
+    }
+
+    document.getElementById('page-next').disabled = currentPage >= totalPages;
+
+    // 空状态
+    document.getElementById('tool-empty').style.display = total === 0 ? '' : 'none';
+  }
+
+  function goToPage(p) {
+    currentPage = p;
+    renderPage();
+    window.scrollTo({ top: document.querySelector('.tools-controls').offsetTop - 80, behavior: 'smooth' });
+  }
+
   function filterTools() {
     currentQuery = document.getElementById('tool-search').value.toLowerCase().trim();
-    applyFilters();
+    currentPage = 1;
+    renderPage();
   }
 
   function filterByCategory(cat) {
@@ -83,23 +170,12 @@
     document.querySelectorAll('.tools-categories .filter-btn').forEach(function(b) {
       b.classList.toggle('active', b.dataset.cat === cat);
     });
-    applyFilters();
+    currentPage = 1;
+    renderPage();
   }
 
-  function applyFilters() {
-    var cards = document.querySelectorAll('.tool-card');
-    var visibleCount = 0;
-    cards.forEach(function(card) {
-      var catMatch = currentCategory === 'all' || card.dataset.category === currentCategory;
-      var searchMatch = !currentQuery ||
-        card.dataset.name.indexOf(currentQuery) !== -1 ||
-        card.dataset.tags.indexOf(currentQuery) !== -1;
-      var show = catMatch && searchMatch;
-      card.style.display = show ? '' : 'none';
-      if (show) visibleCount++;
-    });
-    document.getElementById('tool-empty').style.display = visibleCount === 0 ? '' : 'none';
-  }
+  // 初始渲染
+  renderPage();
   </script>
 
   {% else %}
