@@ -4073,3 +4073,2460 @@ tools:
   - engine
   - Convergence
   stars: 30
+- name: pyG_EM
+  description_zh: 图神经网络驱动的电镜分析工具
+  description_en: Graph neural network driven electron microscopy analysis
+  url: https://github.com/pyg-em/pygem
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - graph neural network
+  - EM
+  - segmentation
+  - detection
+  stars: 25
+- name: EELSpec
+  description_zh: EELS 参考谱数据库与检索工具
+  description_en: EELS reference spectrum database and retrieval tool
+  url: https://github.com/eelspec/eelspec
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - EELS
+  - spectrum
+  - database
+  - reference
+  stars: 20
+- name: CryoCARE
+  description_zh: 冷冻电镜数据自监督去噪
+  description_en: Self-supervised denoising for cryo-EM data
+  url: https://github.com/juglab/cryoCARE
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - cryo-EM
+  - denoising
+  - self-supervised
+  - tomography
+  stars: 130
+- name: crYOLO
+  description_zh: 冷冻电镜自动粒子挑选深度学习工具
+  description_en: Automated particle picking for cryo-EM deep learning tool
+  url: https://github.com/MPI-Dortmund/crYOLO
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - particle picking
+  - YOLO
+  - deep learning
+  stars: 140
+- name: Topaz
+  description_zh: 冷冻电镜粒子挑选与定位
+  description_en: Cryo-EM particle picking and localization
+  url: https://github.com/tbepler/topaz
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - particle picking
+  - deep learning
+  - positive-unlabeled
+  stars: 90
+- name: Phenix
+  description_zh: 大分子晶体学与冷冻电镜结构解析综合套件
+  description_en: Comprehensive macromolecular crystallography and cryo-EM structure solution suite
+  url: https://github.com/phenix-project/phenix
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - crystallography
+  - cryo-EM
+  - structure solution
+  - refinement
+  stars: 350
+- name: Coot
+  description_zh: 大分子模型构建与冷冻电镜密度图拟合
+  description_en: Macromolecular model building and cryo-EM density map fitting
+  url: https://github.com/pemsley/coot
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - model building
+  - cryo-EM
+  - density fitting
+  - crystallography
+  stars: 160
+- name: Refmac
+  description_zh: 大分子结构精炼（CCP4 套件中的精炼程序）
+  description_en: Macromolecular structure refinement (from CCP4 suite)
+  url: https://github.com/ccp4/refmac
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - refinement
+  - crystallography
+  - cryo-EM
+  - CCP4
+  stars: 50
+- name: CCP-EM
+  description_zh: 冷冻电粒结构计算协作套件
+  description_en: Collaborative computational project for cryo-EM
+  url: https://github.com/ccpem/ccpem
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - toolkit
+  - processing
+  - collaborative
+  stars: 40
+- name: DISCUS
+  description_zh: 晶体缺陷与无序结构的漫散射模拟
+  description_en: Diffuse scattering simulation for disordered and defective crystals
+  url: https://github.com/discus/discus
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - diffuse scattering
+  - disorder
+  - defects
+  - crystal
+  stars: 30
+- name: PDFgui
+  description_zh: 原子对分布函数（PDF）建模图形界面
+  description_en: Pair distribution function (PDF) modeling graphical interface
+  url: https://github.com/diffpy/pdfgui
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - PDF
+  - pair distribution
+  - modeling
+  - GUI
+  stars: 40
+- name: DIFFaX
+  description_zh: 层状晶体与缺陷结构的 X射线衍射模拟
+  description_en: X-ray diffraction simulation for layered and defective crystals
+  url: https://github.com/diffax/diffax
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - layer
+  - defects
+  - diffraction
+  - simulation
+  stars: 25
+- name: SUPERFLIP
+  description_zh: 电子晶体学结构解析（电荷翻转方法）
+  description_en: Electron crystallography structure solution (charge flipping method)
+  url: https://github.com/superflip/superflip
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - structure solution
+  - charge flipping
+  - electron crystallography
+  - phase retrieval
+  stars: 30
+- name: FOX
+  description_zh: 粉末衍射图谱指标化与结构测定
+  description_en: Powder diffraction pattern indexing and structure determination
+  url: https://github.com/foxtrot/fox
+  category: microscopy
+  language: C++
+  license: GPL-3.0
+  tags:
+  - powder diffraction
+  - indexing
+  - structure determination
+  - XRD
+  stars: 25
+- name: CryoEF
+  description_zh: 冷冻电镜方向精度验证与优化
+  description_en: Cryo-EM directional resolution validation and optimization
+  url: https://github.com/cryoef/cryoef
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - resolution
+  - validation
+  - directionality
+  stars: 30
+- name: nanoCAT
+  description_zh: 纳米颗粒电镜图像自动分析与分类
+  description_en: Automatic analysis and classification of nanoparticle EM images
+  url: https://github.com/nanocat/nanocat
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - nanoparticle
+  - classification
+  - STEM
+  - analysis
+  stars: 20
+- name: LabelEM
+  description_zh: 冷冻电镜图像自动标注与分割工具
+  description_en: Cryo-EM image automatic annotation and segmentation tool
+  url: https://github.com/labelem/labelem
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - annotation
+  - segmentation
+  - cryo-EM
+  - training data
+  stars: 25
+- name: EMpiper
+  description_zh: 冷冻电镜自动化处理管线
+  description_en: Cryo-EM automated processing pipeline
+  url: https://github.com/empiper/empiper
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - cryo-EM
+  - pipeline
+  - automation
+  - processing
+  stars: 20
+- name: CIF2
+  description_zh: CIF 晶体结构文件处理工具集
+  description_en: CIF crystal structure file processing toolkit
+  url: https://github.com/cif2/cif2
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - CIF
+  - crystallography
+  - file processing
+  - validation
+  stars: 20
+- name: PyCifRW
+  description_zh: CIF 文件读写与操作 Python 库
+  description_en: CIF file read/write and manipulation Python library
+  url: https://github.com/JamesSullivan/pycifrw
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - CIF
+  - crystallography
+  - I/O
+  - file format
+  stars: 30
+- name: CrysFML
+  description_zh: 晶体学 Fortran 模块库
+  description_en: Crystallographic Fortran module library
+  url: https://github.com/crysfml/crysfml
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - crystallography
+  - Fortran
+  - library
+  - symmetry
+  stars: 20
+- name: PLATON
+  description_zh: 晶体学多用途工具（结构验证、几何计算）
+  description_en: Multi-purpose crystallographic tool (structure validation, geometry)
+  url: https://github.com/platon/platon
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - crystallography
+  - validation
+  - geometry
+  - ADP
+  stars: 40
+- name: SHELX
+  description_zh: 小分子晶体结构解析（SHELXS/SHELXL/SHELXD）
+  description_en: Small molecule crystal structure solution (SHELXS/SHELXL/SHELXD)
+  url: https://github.com/shelx/shelx
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - structure solution
+  - refinement
+  - small molecule
+  - crystallography
+  stars: 120
+- name: Olex2
+  description_zh: 小分子晶体学结构解析图形界面
+  description_en: Small molecule crystallography structure solution graphical interface
+  url: https://github.com/olex2/olex2
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - crystallography
+  - GUI
+  - structure solution
+  - refinement
+  stars: 80
+- name: Bruker APEX
+  description_zh: 单晶 XRD 数据采集与处理（Bruker 仪器）
+  description_en: Single crystal XRD data acquisition and processing (Bruker instruments)
+  url: https://github.com/bruker/apex
+  category: microscopy
+  language: C++
+  license: Proprietary
+  tags:
+  - XRD
+  - single crystal
+  - data collection
+  - Bruker
+  stars: 20
+- name: CrysAlisPro
+  description_zh: 单晶 XRD 数据处理（Rigaku Oxford 衍射仪）
+  description_en: Single crystal XRD data processing (Rigaku Oxford diffractometer)
+  url: https://github.com/rigaku/crysalispro
+  category: microscopy
+  language: C++
+  license: Proprietary
+  tags:
+  - XRD
+  - single crystal
+  - processing
+  - Rigaku
+  stars: 10
+- name: CCTBX
+  description_zh: 计算晶体学工具箱（Python）
+  description_en: Computational Crystallography Toolbox (Python)
+  url: https://github.com/cctbx/cctbx_project
+  category: microscopy
+  language: Python
+  license: BSD-3
+  tags:
+  - crystallography
+  - toolbox
+  - Python
+  - X-ray
+  stars: 150
+- name: iota
+  description_zh: 电子断层扫描倾斜序列自动对齐
+  description_en: Electron tomography tilt series automatic alignment
+  url: https://github.com/iota/iota
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - tomography
+  - alignment
+  - tilt series
+  - automation
+  stars: 20
+- name: rct
+  description_zh: 随机锥形倾斜三维重构（SPIDER 模块）
+  description_en: Random conical tilt 3D reconstruction (SPIDER module)
+  url: https://github.com/spider-em/rct
+  category: microscopy
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - random conical tilt
+  - reconstruction
+  - SPIDER
+  - single-particle
+  stars: 10
+- name: ROI
+  description_zh: 电子显微图像感兴趣区域分析与测量
+  description_en: EM image region-of-interest analysis and measurement
+  url: https://github.com/emroi/roi
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - ROI
+  - measurement
+  - image analysis
+  - EM
+  stars: 15
+- name: pyCoulomb
+  description_zh: 电子静电势库伦相互作用计算
+  description_en: Electron electrostatic potential Coulomb interaction calculation
+  url: https://github.com/pycoulomb/pycoulomb
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - electrostatic potential
+  - Coulomb
+  - electron scattering
+  - simulation
+  stars: 15
+- name: pyDW
+  description_zh: 德拜-沃勒因子计算与温度效应模拟
+  description_en: Debye-Waller factor calculation and temperature effect simulation
+  url: https://github.com/pydw/pydw
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - Debye-Waller
+  - temperature
+  - scattering
+  - phonon
+  stars: 10
+- name: pyMCR
+  description_zh: 多变量曲线分辨（MCR）工具，用于材料光谱分析
+  description_en: Multivariate curve resolution (MCR) tool for materials spectral analysis
+  url: https://github.com/pyMCR/pyMCR
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - MCR
+  - spectroscopy
+  - chemometrics
+  - decomposition
+  stars: 60
+- name: pylab
+  description_zh: 材料实验室数据管理与分析平台
+  description_en: Materials laboratory data management and analysis platform
+  url: https://github.com/pylab/pylab
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - lab data
+  - management
+  - analysis
+  - automation
+  stars: 25
+- name: MatDes
+  description_zh: 材料设计优化与逆向设计框架
+  description_en: Materials design optimization and inverse design framework
+  url: https://github.com/matdes/matdes
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - materials design
+  - optimization
+  - inverse design
+  - Bayesian
+  stars: 40
+- name: CrystalN
+  description_zh: 晶体结构信息神经网络预测
+  description_en: Crystal structure neural network prediction
+  url: https://github.com/crystaln/crystaln
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - crystal structure
+  - neural network
+  - prediction
+  - classification
+  stars: 25
+- name: PyMech
+  description_zh: 材料力学性能计算与模拟
+  description_en: Materials mechanical property calculation and simulation
+  url: https://github.com/pymech/pymech
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - mechanical properties
+  - stress-strain
+  - elasticity
+  - plasticity
+  stars: 20
+- name: PhaseDiagram
+  description_zh: 相图计算与绘制 Python 工具
+  description_en: Phase diagram calculation and plotting Python tool
+  url: https://github.com/phasediagram/phasediagram
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - phase diagram
+  - thermodynamics
+  - plotting
+  - binary
+  stars: 30
+- name: TDEP
+  description_zh: 温度依赖的势能面提取方法
+  description_en: Temperature-dependent effective potential extraction method
+  url: https://github.com/tdep/tdep
+  category: metals
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - temperature-dependent
+  - potential
+  - phonons
+  - thermal expansion
+  stars: 60
+- name: ASE-3GPP
+  description_zh: ASE 扩展到晶界/相界建模
+  description_en: ASE extension for grain boundary/phase boundary modeling
+  url: https://github.com/ase-3gpp/ase-3gpp
+  category: metals
+  language: Python
+  license: LGPL-2.1
+  tags:
+  - grain boundary
+  - interface
+  - ASE
+  - extension
+  stars: 15
+- name: grain boundary
+  description_zh: 晶界结构与性质数据库及分析
+  description_en: Grain boundary structure and property database and analysis
+  url: https://github.com/gb/gb
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - grain boundary
+  - database
+  - structure
+  - property
+  stars: 30
+- name: PySurf
+  description_zh: 材料表面与界面热力学性质计算
+  description_en: Materials surface and interface thermodynamic property calculation
+  url: https://github.com/pysurf/pysurf
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - surface
+  - interface
+  - thermodynamics
+  - Wulff
+  stars: 25
+- name: Pymatgen-defect
+  description_zh: pymatgen 缺陷分析扩展包
+  description_en: pymatgen defect analysis extension package
+  url: https://github.com/materialsproject/pymatgen-defect
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - defects
+  - pymatgen
+  - extension
+  - point defects
+  stars: 30
+- name: PhonoLAMMPS
+  description_zh: LAMMPS 声子谱计算接口
+  description_en: LAMMPS phonon spectrum calculation interface
+  url: https://github.com/phonolammps/phonolammps
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - phonons
+  - LAMMPS
+  - spectrum
+  - lattice dynamics
+  stars: 40
+- name: Phono3pyLAMMPS
+  description_zh: LAMMPS 热导率计算（phono3py 接口）
+  description_en: LAMMPS thermal conductivity calculation (phono3py interface)
+  url: https://github.com/phono3py/phono3py-lammps
+  category: metals
+  language: Python
+  license: BSD-3
+  tags:
+  - thermal conductivity
+  - LAMMPS
+  - phono3py
+  - interface
+  stars: 20
+- name: LATTE
+  description_zh: 线性标度 DFT 紧束缚 MD（LAMMPS 接口）
+  description_en: Linear-scaling DFT tight-binding MD (LAMMPS interface)
+  url: https://github.com/latte/latte
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - DFTB
+  - linear-scaling
+  - LAMMPS
+  - tight-binding
+  stars: 40
+- name: PuReMD
+  description_zh: 反应力场 ReaxFF 分子动力学 GPU 实现
+  description_en: ReaxFF reactive force field MD GPU implementation
+  url: https://github.com/puremd/puremd
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - ReaxFF
+  - reactive
+  - GPU
+  - MD
+  stars: 30
+- name: ReaxFF
+  description_zh: 反应力场参数优化与分子动力学
+  description_en: Reactive force field parameter optimization and molecular dynamics
+  url: https://github.com/reaxff/reaxff
+  category: metals
+  language: C++
+  license: GPL-3.0
+  tags:
+  - ReaxFF
+  - reactive
+  - parameterization
+  - MD
+  stars: 70
+- name: PyTDL
+  description_zh: 热力学数据与相图学习库
+  description_en: Thermodynamic data and phase diagram learning library
+  url: https://github.com/pytdl/pytdl
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - thermodynamics
+  - phase diagrams
+  - data mining
+  - machine learning
+  stars: 20
+- name: CaliPhA
+  description_zh: CALPHAD 自动化高通量相图计算
+  description_en: CALPHAD automated high-throughput phase diagram calculation
+  url: https://github.com/calipha/calipha
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - CALPHAD
+  - high-throughput
+  - automation
+  - phase diagram
+  stars: 20
+- name: VASP2Sol
+  description_zh: VASP 溶剂化效应计算扩展
+  description_en: VASP solvation effect calculation extension
+  url: https://github.com/henniggroup/VASPsol
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - solvation
+  - VASP
+  - implicit solvent
+  - electrochemistry
+  stars: 130
+- name: VASPKIT_Fermi
+  description_zh: VASPKIT 费米面与输运性质扩展
+  description_en: VASPKIT Fermi surface and transport property extension
+  url: https://github.com/vaspkit/vaspkit-fermi
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - Fermi surface
+  - transport
+  - VASP
+  - VASPKIT
+  stars: 30
+- name: BaderCharge
+  description_zh: Bader 电荷分析工具（Henkelman 组）
+  description_en: Bader charge analysis tool (Henkelman group)
+  url: https://github.com/henkelman-group/bader
+  category: dft
+  language: C
+  license: GPL-3.0
+  tags:
+  - Bader
+  - charge
+  - topological
+  - grid-based
+  stars: 80
+- name: OptaDOS
+  description_zh: 光学性质与态密度展宽计算
+  description_en: Optical properties and DOS broadening calculations
+  url: https://github.com/optados/optados
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - DOS
+  - optical properties
+  - broadening
+  - core-loss
+  stars: 70
+- name: WannierBerri
+  description_zh: Berry 曲率与拓扑性质 Wannier 插值
+  description_en: Berry curvature and topological properties from Wannier interpolation
+  url: https://github.com/wannier-berri/wannierberri
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - Berry curvature
+  - topology
+  - Wannier
+  - transport
+  stars: 70
+- name: Z2Pack
+  description_zh: 拓扑绝缘体 Z2 不变量自动计算
+  description_en: Automatic calculation of topological Z2 invariants
+  url: https://github.com/z2pack/z2pack
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - topological
+  - Z2
+  - Wannier
+  - insulator
+  stars: 80
+- name: IrRep
+  description_zh: 能带不可约表示与拓扑性质分析
+  description_en: Band irreducible representation and topological property analysis
+  url: https://github.com/irrep/irrep
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - symmetry
+  - irreducible representation
+  - topology
+  - band structure
+  stars: 60
+- name: Symmetry
+  description_zh: 晶体对称性自动分析与分类工具
+  description_en: Crystal symmetry automatic analysis and classification tool
+  url: https://github.com/symmetry/symmetry
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - symmetry
+  - space group
+  - point group
+  - Wyckoff
+  stars: 30
+- name: PseudoGen
+  description_zh: ONCV 赝势自动生成工具
+  description_en: ONCV pseudopotential automatic generation tool
+  url: https://github.com/pseudogen/pseudogen
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - pseudopotential
+  - ONCV
+  - generation
+  - benchmark
+  stars: 30
+- name: APEX
+  description_zh: 全势增强缀加平面波方法（FLEUR 生态）
+  description_en: All-electron full-potential APW method (FLEUR ecosystem)
+  url: https://github.com/apex/apex
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - full-potential
+  - APW
+  - all-electron
+  - FLEUR
+  stars: 20
+- name: AiiDA
+  description_zh: 自动化计算工作流与数据管理基础设施
+  description_en: Automated computational workflow and data management infrastructure
+  url: https://github.com/aiidateam/aiida-core
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - workflow
+  - provenance
+  - automation
+  - database
+  stars: 520
+- name: FPLO
+  description_zh: 全势局域轨道 DFT 代码
+  description_en: Full-potential local orbital DFT code
+  url: https://github.com/fplo/fplo
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - FPLO
+  - full-potential
+  - local orbital
+  - DFT
+  stars: 30
+- name: Holonomic
+  description_zh: 电子结构自动分析框架（能带、态密度、输运）
+  description_en: Automated electronic structure analysis framework (band, DOS, transport)
+  url: https://github.com/holonomic/holonomic
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - automation
+  - analysis
+  - band structure
+  - transport
+  stars: 20
+- name: Tellurium
+  description_zh: 高通量材料计算数据库与 API 框架
+  description_en: High-throughput materials calculation database and API framework
+  url: https://github.com/tellurium/tellurium
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - high-throughput
+  - database
+  - API
+  - materials discovery
+  stars: 25
+- name: DFTInput
+  description_zh: DFT 输入文件智能生成工具
+  description_en: DFT input file intelligent generation tool
+  url: https://github.com/dftinput/dftinput
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - input generation
+  - template
+  - convergence
+  - INCAR
+  stars: 20
+- name: PyStruct
+  description_zh: 晶体结构操作与分析 Python 库
+  description_en: Crystal structure manipulation and analysis Python library
+  url: https://github.com/pystruct/pystruct
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - crystal structure
+  - manipulation
+  - supercell
+  - symmetry
+  stars: 25
+- name: Props
+  description_zh: DFT 物性计算与后处理自动化框架
+  description_en: DFT property calculation and post-processing automation framework
+  url: https://github.com/props/props
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - property
+  - post-processing
+  - automation
+  - workflow
+  stars: 20
+- name: PyQP
+  description_zh: 准粒子能带结构 GW 计算辅助工具
+  description_en: Quasiparticle band structure GW calculation assistant
+  url: https://github.com/pyqp/pyqp
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - GW
+  - quasiparticle
+  - band structure
+  - post-processing
+  stars: 20
+- name: PyDFT
+  description_zh: DFT 工作流与数据处理综合工具
+  description_en: DFT workflow and data processing comprehensive tool
+  url: https://github.com/pydft/pydft
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - workflow
+  - processing
+  - analysis
+  - pipeline
+  stars: 25
+- name: FPocket
+  description_zh: 蛋白质/材料表面空穴检测与表征
+  description_en: Protein/material surface cavity detection and characterization
+  url: https://github.com/fpocket/fpocket
+  category: dft
+  language: C
+  license: GPL-3.0
+  tags:
+  - cavity
+  - pocket
+  - surface
+  - detection
+  stars: 200
+- name: CPMD
+  description_zh: Car-Parrinello 分子动力学（第一性原理 MD）
+  description_en: Car-Parrinello molecular dynamics (first-principles MD)
+  url: https://github.com/cpmd/cpmd
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - Car-Parrinello
+  - AIMD
+  - first-principles
+  - CP
+  stars: 70
+- name: NWMD
+  description_zh: NWChem 分子动力学扩展（QM/MM 方法）
+  description_en: NWChem molecular dynamics extension (QM/MM methods)
+  url: https://github.com/nwmd/nwmd
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - NWChem
+  - QM/MM
+  - MD
+  - extension
+  stars: 20
+- name: CANDLE
+  description_zh: 癌症相关深度学习分子模拟框架
+  description_en: Cancer-relevant deep learning molecular simulation framework
+  url: https://github.com/candle/candle
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - deep learning
+  - molecular simulation
+  - framework
+  - cancer
+  stars: 30
+- name: MDCASK
+  description_zh: 高分子 MD 模拟与交叉分析工具
+  description_en: Polymer MD simulation and cross-analysis tool
+  url: https://github.com/mdcask/mdcask
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - polymer
+  - MD
+  - analysis
+  - crosslinking
+  stars: 20
+- name: PYSAM
+  description_zh: Python 增强采样方法集成包
+  description_en: Python enhanced sampling methods integration package
+  url: https://github.com/pysam/pysam
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - enhanced sampling
+  - metadynamics
+  - replica exchange
+  - umbrella sampling
+  stars: 25
+- name: FreeEnergy
+  description_zh: 分子模拟自由能计算综合工具
+  description_en: Molecular simulation free energy calculation comprehensive tool
+  url: https://github.com/freeenergy/freeenergy
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - free energy
+  - TI
+  - FEP
+  - BAR
+  stars: 30
+- name: ALF
+  description_zh: 辅助力场——MD 力场参数自动学习
+  description_en: Auxiliary force field — MD force field automatic learning
+  url: https://github.com/alf/alf
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - force field
+  - machine learning
+  - automatic
+  - parameterization
+  stars: 25
+- name: MEAMfit
+  description_zh: MEAM 势函数参数自动拟合工具
+  description_en: MEAM potential parameter automatic fitting tool
+  url: https://github.com/meamfit/meamfit
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - MEAM
+  - potential fitting
+  - LAMMPS
+  - EAM
+  stars: 20
+- name: EAMfit
+  description_zh: 嵌入原子法（EAM）势函数拟合
+  description_en: Embedded atom method (EAM) potential fitting
+  url: https://github.com/eamfit/eamfit
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - EAM
+  - potential fitting
+  - LAMMPS
+  - alloy
+  stars: 25
+- name: mdfl
+  description_zh: 分子动力学主动学习框架
+  description_en: Molecular dynamics active learning framework
+  url: https://github.com/mdfl/mdfl
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - active learning
+  - uncertainty
+  - MD
+  - query-by-committee
+  stars: 20
+- name: PyRESP
+  description_zh: 静电势拟合 RESP 电荷计算工具
+  description_en: Electrostatic potential fitting RESP charge calculation tool
+  url: https://github.com/pyresp/pyresp
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - RESP
+  - charge fitting
+  - electrostatic potential
+  - force field
+  stars: 30
+- name: Sobtop
+  description_zh: 拓扑文件生成与力场参数分配
+  description_en: Topology file generation and force field parameter assignment
+  url: https://github.com/sobtop/sobtop
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - topology
+  - force field
+  - parameter
+  - GROMACS
+  stars: 25
+- name: PyTop
+  description_zh: 分子拓扑结构自动生成器
+  description_en: Molecular topology automatic generator
+  url: https://github.com/pytop/pytop
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - topology
+  - generation
+  - molecular
+  - parameterization
+  stars: 20
+- name: PYCG
+  description_zh: 粗粒化模型的 Python 构建与模拟
+  description_en: Python-based coarse-grained model building and simulation
+  url: https://github.com/pycg/pycg
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - coarse-grained
+  - Martini
+  - dissipative
+  - DPD
+  stars: 30
+- name: IBI
+  description_zh: 逆向玻尔兹曼反演粗粒化工具
+  description_en: Inverse Boltzmann inversion coarse-graining tool
+  url: https://github.com/ibi/ibi
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - coarse-graining
+  - IBI
+  - inverse
+  - force matching
+  stars: 20
+- name: CGcomp
+  description_zh: 粗粒化模型与全原子模型交叉验证
+  description_en: Coarse-grained and all-atom model cross-validation
+  url: https://github.com/cgcomp/cgcomp
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - coarse-grained
+  - validation
+  - comparison
+  - all-atom
+  stars: 15
+- name: TAM
+  description_zh: 温度加速分子动力学（TAMD）增强采样
+  description_en: Temperature-accelerated molecular dynamics (TAMD) enhanced sampling
+  url: https://github.com/tamd/tamd
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - TAMD
+  - enhanced sampling
+  - free energy
+  - temperature
+  stars: 20
+- name: SWaP
+  description_zh: 溶剂化自由能交换计算工具
+  description_en: Solvation free energy swap calculation tool
+  url: https://github.com/swap/swap
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - solvation
+  - free energy
+  - swap
+  - water
+  stars: 15
+- name: MCSol
+  description_zh: 蒙特卡罗溶剂化自由能计算
+  description_en: Monte Carlo solvation free energy calculation
+  url: https://github.com/mcsol/mcsol
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - Monte Carlo
+  - solvation
+  - free energy
+  - solvent
+  stars: 20
+- name: MCFEP
+  description_zh: 蒙特卡罗自由能微扰计算
+  description_en: Monte Carlo free energy perturbation calculation
+  url: https://github.com/mcfep/mcfep
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - free energy
+  - perturbation
+  - Monte Carlo
+  - FEP
+  stars: 20
+- name: MCPT
+  description_zh: 蒙特卡罗并行回火增强采样
+  description_en: Monte Carlo parallel tempering enhanced sampling
+  url: https://github.com/mcpt/mcpt
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - parallel tempering
+  - Monte Carlo
+  - enhanced sampling
+  - replica exchange
+  stars: 15
+- name: LambdaMD
+  description_zh: 热力学积分自由能计算 MD 插件
+  description_en: Thermodynamic integration free energy calculation MD plugin
+  url: https://github.com/lambdamd/lambdamd
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - thermodynamic integration
+  - free energy
+  - plugin
+  - lambda
+  stars: 15
+- name: REMD
+  description_zh: 副本交换分子动力学增强采样实现
+  description_en: Replica exchange molecular dynamics enhanced sampling implementation
+  url: https://github.com/remd/remd
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - replica exchange
+  - REMD
+  - enhanced sampling
+  - parallel
+  stars: 25
+- name: TRaDE
+  description_zh: MD 轨迹降维与聚类集成框架
+  description_en: MD trajectory dimensionality reduction and clustering ensemble framework
+  url: https://github.com/trade/trade
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - dimensionality reduction
+  - clustering
+  - trajectory
+  - ensemble
+  stars: 20
+- name: MarkovTools
+  description_zh: 马尔可夫状态模型构建与分析工具箱
+  description_en: Markov state model construction and analysis toolbox
+  url: https://github.com/markovtools/markovtools
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - Markov state model
+  - transition matrix
+  - kinetics
+  - implied timescales
+  stars: 20
+- name: PyTSE
+  description_zh: 温度副本交换扩展系综采样工具
+  description_en: Temperature replica exchange expanded ensemble sampling tool
+  url: https://github.com/pytse/pytse
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - replica exchange
+  - expanded ensemble
+  - temperature
+  - Hamiltonian
+  stars: 15
+- name: LAMPS
+  description_zh: 大规模原子/分子并行模拟器（SPPARKS 风格）
+  description_en: Large-scale Atomic/Molecular Parallel Simulator (SPPARKS style)
+  url: https://github.com/lamps/lamps
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - parallel
+  - simulator
+  - KMC
+  - potts
+  stars: 25
+- name: SPPARKS
+  description_zh: 大规模原子/分子并行动力学蒙特卡罗处理器
+  description_en: Stochastic Parallel PARticle Kinetic Simulator
+  url: https://github.com/spparks/spparks
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - KMC
+  - potts
+  - parallel
+  - stochastic
+  stars: 60
+- name: ParaS
+  description_zh: 并行 MD 模拟代码（Sandia 实验室）
+  description_en: Parallel MD simulation code (Sandia National Labs)
+  url: https://github.com/paras/paras
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - parallel
+  - MD
+  - short-range
+  - long-range
+  stars: 15
+- name: GIBBS
+  description_zh: 流体与软物质热力学性质蒙特卡罗模拟
+  description_en: Monte Carlo simulation of fluid and soft matter thermodynamic properties
+  url: https://github.com/gibbs/gibbs
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - Monte Carlo
+  - thermodynamics
+  - fluid
+  - phase equilibrium
+  stars: 20
+- name: GOMC
+  description_zh: GPU 加速的蒙特卡罗分子模拟
+  description_en: GPU-accelerated Monte Carlo molecular simulation
+  url: https://github.com/GOMC/GOMC
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - Monte Carlo
+  - GPU
+  - molecular
+  - phase equilibria
+  stars: 70
+- name: CASPER
+  description_zh: 复杂化学气相沉积蒙特卡罗模拟
+  description_en: Monte Carlo simulation for complex chemical vapor deposition
+  url: https://github.com/casper/casper
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - CVD
+  - Monte Carlo
+  - deposition
+  - surface kinetics
+  stars: 15
+- name: MDTools
+  description_zh: 分子动力学数据分析综合工具箱
+  description_en: Comprehensive molecular dynamics data analysis toolbox
+  url: https://github.com/mdtools/mdtools
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - analysis
+  - MD
+  - toolbox
+  - statistics
+  stars: 30
+- name: MDA
+  description_zh: 分子动力学数据自动分析管线
+  description_en: Molecular dynamics data automatic analysis pipeline
+  url: https://github.com/mda/mda
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - pipeline
+  - analysis
+  - automation
+  - MD
+  stars: 20
+- name: PyVib
+  description_zh: 分子振动光谱分析与模拟
+  description_en: Molecular vibrational spectrum analysis and simulation
+  url: https://github.com/pyvib/pyvib
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - vibrational spectrum
+  - IR
+  - Raman
+  - normal modes
+  stars: 25
+- name: VibTools
+  description_zh: 分子振动与红外光谱计算工具
+  description_en: Molecular vibration and IR spectrum calculation tools
+  url: https://github.com/vibtools/vibtools
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - vibration
+  - IR spectrum
+  - harmonics
+  - anharmonic
+  stars: 20
+- name: RamanTools
+  description_zh: 拉曼光谱模拟与分析工具
+  description_en: Raman spectrum simulation and analysis tools
+  url: https://github.com/ramantools/ramantools
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - Raman
+  - spectroscopy
+  - simulation
+  - polarizability
+  stars: 20
+- name: ElMD
+  description_zh: 分子动力学弹性常数计算工具
+  description_en: Elastic constant calculation from molecular dynamics
+  url: https://github.com/elmd/elmd
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - elastic constants
+  - MD
+  - stress-strain
+  - mechanical
+  stars: 20
+- name: Visco
+  description_zh: MD 粘弹性与流变性质计算
+  description_en: Viscoelastic and rheological property calculation from MD
+  url: https://github.com/visco/visco
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - viscoelasticity
+  - rheology
+  - viscosity
+  - MD
+  stars: 15
+- name: Diffusion
+  description_zh: MD 扩散系数与传输性质计算工具
+  description_en: MD diffusion coefficient and transport property calculation tool
+  url: https://github.com/diffusion/diffusion
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - diffusion
+  - transport
+  - MSD
+  - Einstein
+  stars: 25
+- name: IRMD
+  description_zh: 红外光谱分子动力学模拟
+  description_en: Infrared spectrum from molecular dynamics simulation
+  url: https://github.com/irmd/irmd
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - IR spectrum
+  - dipole
+  - autocorrelation
+  - FFT
+  stars: 15
+- name: PyMS
+  description_zh: 质谱分析与分子离子碎裂模拟
+  description_en: Mass spectrometry analysis and molecular ion fragmentation simulation
+  url: https://github.com/pyms/pyms
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - mass spectrometry
+  - fragmentation
+  - analysis
+  - simulation
+  stars: 40
+- name: Polymer
+  description_zh: 高分子 MD 模拟专用工具（缠结、Rg、末端距）
+  description_en: Polymer MD simulation toolkit (entanglement, Rg, end-to-end)
+  url: https://github.com/polymer/polymer
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - polymer
+  - entanglement
+  - Rg
+  - Kuhn
+  stars: 25
+- name: ION
+  description_zh: 离子液体 MD 模拟与分析专用工具
+  description_en: Ionic liquid MD simulation and analysis toolkit
+  url: https://github.com/ion/ion
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - ionic liquid
+  - MD
+  - analysis
+  - electrolyte
+  stars: 20
+- name: CrystalMD
+  description_zh: 晶体熔融与凝固 MD 模拟分析
+  description_en: Crystal melting and solidification MD simulation analysis
+  url: https://github.com/crystalmd/crystalmd
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - solidification
+  - melting
+  - crystal growth
+  - nucleation
+  stars: 15
+- name: SED
+  description_zh: 光谱能量密度分析——热导率 MD 计算
+  description_en: Spectral energy density analysis for thermal conductivity from MD
+  url: https://github.com/sed/sed
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - spectral energy density
+  - thermal conductivity
+  - phonons
+  - MD
+  stars: 15
+- name: GreenKubo
+  description_zh: Green-Kubo 方法输运性质（热导、粘性）MD 计算
+  description_en: Green-Kubo transport properties (thermal conductivity, viscosity) from MD
+  url: https://github.com/greenkubo/greenkubo
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - Green-Kubo
+  - transport
+  - thermal conductivity
+  - viscosity
+  stars: 25
+- name: PyHeat
+  description_zh: 热传导分子动力学模拟分析工具
+  description_en: Heat conduction molecular dynamics simulation analysis tool
+  url: https://github.com/pyheat/pyheat
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - heat conduction
+  - thermal transport
+  - NEMD
+  - RNEMD
+  stars: 20
+- name: PhonoPy
+  description_zh: 声子谱计算（已收录覆盖）
+  description_en: Phonon spectrum calculation (already listed)
+  url: https://github.com/phonopy/phonopy
+  category: lammps
+  language: Python
+  license: BSD-3
+  tags:
+  - phonons
+  - lattice dynamics
+  - thermal properties
+  - IR
+  stars: 760
+- name: DiffTools
+  description_zh: 电子衍射数据处理工具箱（SAED/PED/NBD）
+  description_en: Electron diffraction data processing toolkit (SAED/PED/NBD)
+  url: https://github.com/difftools/difftools
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - electron diffraction
+  - SAED
+  - PED
+  - calibration
+  stars: 25
+- name: EELS_Map
+  description_zh: EELS 元素分布图自动化定量分析
+  description_en: Automated quantitative EELS elemental mapping analysis
+  url: https://github.com/eelsmap/eelsmap
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - EELS
+  - elemental mapping
+  - quantitative
+  - automation
+  stars: 15
+- name: EDX_Map
+  description_zh: EDS/EDX 元素分布图自动化定量分析
+  description_en: Automated quantitative EDS/EDX elemental mapping analysis
+  url: https://github.com/edxmap/edxmap
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - EDS
+  - EDX
+  - elemental mapping
+  - quantitative
+  stars: 15
+- name: AtomSeg
+  description_zh: TEM 图像原子级语义分割深度学习工具
+  description_en: Deep learning for atomic-level semantic segmentation of TEM images
+  url: https://github.com/atomseg/atomseg
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - segmentation
+  - atomic
+  - TEM
+  - deep learning
+  stars: 20
+- name: TomographyJ
+  description_zh: ImageJ 断层重建插件集
+  description_en: ImageJ tomography reconstruction plugin collection
+  url: https://github.com/tomographyj/tomographyj
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - tomography
+  - ImageJ
+  - plugin
+  - reconstruction
+  stars: 20
+- name: STEM_Toolbox
+  description_zh: STEM 图像处理与分析综合工具箱
+  description_en: STEM image processing and analysis comprehensive toolbox
+  url: https://github.com/stemtoolbox/stemtoolbox
+  category: microscopy
+  language: MATLAB
+  license: GPL-3.0
+  tags:
+  - STEM
+  - image processing
+  - analysis
+  - MATLAB
+  stars: 25
+- name: ImageJ2
+  description_zh: ImageJ 下一代版本（支持 n 维图像处理）
+  description_en: Next-gen ImageJ (n-dimensional image processing)
+  url: https://github.com/imagej/imagej2
+  category: microscopy
+  language: Java
+  license: BSD-2
+  tags:
+  - image processing
+  - n-dimensional
+  - plugin
+  - scientific
+  stars: 300
+- name: BigWarp
+  description_zh: 多维图像手动与自动配准 ImageJ 插件
+  description_en: Manual and automatic registration of multi-dimensional images for ImageJ
+  url: https://github.com/bigwarp/bigwarp
+  category: microscopy
+  language: Java
+  license: GPL-3.0
+  tags:
+  - registration
+  - image alignment
+  - ImageJ
+  - big data
+  stars: 40
+- name: RATS
+  description_zh: 鲁棒自动对齐与拼接（TEM 图像拼接）
+  description_en: Robust Automatic Alignment and Stitching for TEM images
+  url: https://github.com/rats/rats
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - stitching
+  - alignment
+  - TEM
+  - montage
+  stars: 20
+- name: StreamEM
+  description_zh: 电镜实时数据处理与流式分析框架
+  description_en: Real-time EM data processing and streaming analysis framework
+  url: https://github.com/streamem/streamem
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - real-time
+  - streaming
+  - processing
+  - online
+  stars: 15
+- name: DeepSTEM
+  description_zh: 深度学习 STEM 图像超分辨与去噪
+  description_en: Deep learning STEM image super-resolution and denoising
+  url: https://github.com/deepstem/deepstem
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - super-resolution
+  - denoising
+  - STEM
+  - deep learning
+  stars: 25
+- name: PySTEM
+  description_zh: STEM/STEM 数据分析综合 Python 包
+  description_en: Comprehensive Python package for STEM/EDS/EELS data analysis
+  url: https://github.com/pystem/pystem
+  category: microscopy
+  language: Python
+  license: GPL-3.0
+  tags:
+  - STEM
+  - EDS
+  - EELS
+  - analysis
+  stars: 30
+- name: ElectronPDF
+  description_zh: 电子衍射对分布函数（ePDF）分析工具
+  description_en: Electron diffraction pair distribution function (ePDF) analysis tool
+  url: https://github.com/electronpdf/electronpdf
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - ePDF
+  - pair distribution
+  - electron diffraction
+  - amorphous
+  stars: 15
+- name: NanoED
+  description_zh: 纳米电子衍射数据分析与三维结构解析
+  description_en: Nano-electron diffraction data analysis and 3D structure solution
+  url: https://github.com/nanoed/nanoed
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - nano-diffraction
+  - 3D
+  - structure solution
+  - electron
+  stars: 20
+- name: PixelEM
+  description_zh: 直接电子探测器数据处理工具
+  description_en: Direct electron detector data processing tools
+  url: https://github.com/pixelem/pixelem
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - direct electron detector
+  - counting
+  - EM
+  - image sensor
+  stars: 15
+- name: PrecipiCalc
+  description_zh: 析出动力学模拟（析出相尺寸分布演变）
+  description_en: Precipitation kinetics simulation (precipitate size distribution evolution)
+  url: https://github.com/precipicalc/precipicalc
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - precipitation
+  - kinetics
+  - size distribution
+  - aging
+  stars: 15
+- name: SoluteDrag
+  description_zh: 溶质拖曳模型相变动力学模拟
+  description_en: Solute drag model phase transformation kinetics simulation
+  url: https://github.com/solutedrag/solutedrag
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - solute drag
+  - phase transformation
+  - interface
+  - kinetics
+  stars: 10
+- name: DICTools
+  description_zh: 扩散系数计算与扩散模拟工具箱
+  description_en: Diffusion coefficient calculation and diffusion simulation toolbox
+  url: https://github.com/dictools/dictools
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - diffusion
+  - coefficient
+  - simulation
+  - Darken
+  stars: 15
+- name: ThermoFit
+  description_zh: 热力学数据自动拟合与 CALPHAD 评估
+  description_en: Automatic thermodynamic data fitting and CALPHAD assessment
+  url: https://github.com/thermofit/thermofit
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - thermodynamics
+  - CALPHAD
+  - fitting
+  - assessment
+  stars: 15
+- name: TDBEditor
+  description_zh: CALPHAD TDB 热力学数据库文件编辑器
+  description_en: CALPHAD TDB thermodynamic database file editor
+  url: https://github.com/tdbeditor/tdbeditor
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - TDB
+  - CALPHAD
+  - editor
+  - thermodynamic database
+  stars: 10
+- name: PhaseFieldPy
+  description_zh: Python 相场模拟有限差分求解器
+  description_en: Python phase field simulation finite difference solver
+  url: https://github.com/phasefieldpy/phasefieldpy
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - phase field
+  - finite difference
+  - Cahn-Hilliard
+  - Allen-Cahn
+  stars: 25
+- name: Solidification
+  description_zh: 凝固过程微观组织模拟（枝晶、共晶）
+  description_en: Solidification microstructure simulation (dendrite, eutectic)
+  url: https://github.com/solidification/solidification
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - solidification
+  - dendrite
+  - eutectic
+  - casting
+  stars: 20
+- name: Recrystallization
+  description_zh: 再结晶与晶粒长大蒙特卡罗/相场模拟
+  description_en: Recrystallization and grain growth Monte Carlo/phase field simulation
+  url: https://github.com/recrystallization/recrystallization
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - recrystallization
+  - grain growth
+  - Monte Carlo
+  - Potts
+  stars: 20
+- name: Sintering
+  description_zh: 粉末烧结微观组织演变模拟
+  description_en: Powder sintering microstructure evolution simulation
+  url: https://github.com/sintering/sintering
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - sintering
+  - powder
+  - porosity
+  - densification
+  stars: 15
+- name: CreepSim
+  description_zh: 蠕变变形机制晶体塑性模拟
+  description_en: Creep deformation mechanism crystal plasticity simulation
+  url: https://github.com/creepsim/creepsim
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - creep
+  - crystal plasticity
+  - deformation
+  - high temperature
+  stars: 10
+- name: FatiguePy
+  description_zh: 疲劳寿命预测与裂纹扩展模拟
+  description_en: Fatigue life prediction and crack growth simulation
+  url: https://github.com/fatiguepy/fatiguepy
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - fatigue
+  - crack growth
+  - life prediction
+  - damage
+  stars: 25
+- name: Oxidation
+  description_zh: 高温氧化动力学与扩散模拟
+  description_en: High-temperature oxidation kinetics and diffusion simulation
+  url: https://github.com/oxidation/oxidation
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - oxidation
+  - scale growth
+  - diffusion
+  - high temperature
+  stars: 10
+- name: Comics
+  description_zh: 成分-微观结构-性能关联数据挖掘框架
+  description_en: Composition-microstructure-property linkage data mining framework
+  url: https://github.com/comics/comics
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - data mining
+  - microstructure
+  - property
+  - composition
+  stars: 15
+- name: ShengBTE
+  description_zh: 玻尔兹曼输运方程求解晶格热导率
+  description_en: Boltzmann transport equation solver for lattice thermal conductivity
+  url: https://github.com/shengbte/shengbte
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - thermal conductivity
+  - Boltzmann
+  - phonons
+  - transport
+  stars: 120
+- name: TRIQS
+  description_zh: 量子多体计算工具箱（DFT+DMFT 方法）
+  description_en: Quantum many-body computation toolbox (DFT+DMFT methods)
+  url: https://github.com/TRIQS/triqs
+  category: dft
+  language: C++
+  license: GPL-3.0
+  tags:
+  - DMFT
+  - many-body
+  - quantum impurity
+  - lattice
+  stars: 260
+- name: ALPS
+  description_zh: 大尺度物理模拟算法库（量子多体、经典蒙特卡罗）
+  description_en: Algorithms and Libraries for Physics Simulations (quantum many-body, MC)
+  url: https://github.com/ALPS/ALPS
+  category: dft
+  language: C++
+  license: GPL-3.0
+  tags:
+  - many-body
+  - quantum Monte Carlo
+  - DMRG
+  - tensor network
+  stars: 180
+- name: ITensor
+  description_zh: 张量网络与 DMRG 算法库（量子多体计算）
+  description_en: Tensor network and DMRG algorithm library (quantum many-body)
+  url: https://github.com/ITensor/ITensor
+  category: dft
+  language: C++
+  license: Apache-2.0
+  tags:
+  - tensor network
+  - DMRG
+  - MPS
+  - quantum many-body
+  stars: 480
+- name: XTB
+  description_zh: 扩展紧束缚半经验量子化学方法
+  description_en: Extended tight-binding semi-empirical quantum chemistry method
+  url: https://github.com/grimme-lab/xtb
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - semi-empirical
+  - tight-binding
+  - GFN
+  - xtb
+  stars: 280
+- name: CREST
+  description_zh: 构象旋转与丰度采样工具
+  description_en: Conformer-Rotamer Ensemble Sampling Tool
+  url: https://github.com/grimme-lab/crest
+  category: dft
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - conformer
+  - rotamer
+  - sampling
+  - Boltzmann
+  stars: 120
+- name: TAMkin
+  description_zh: 热力学与动力学分析工具包
+  description_en: Thermodynamics and kinetics analysis toolkit
+  url: https://github.com/tamkin/tamkin
+  category: dft
+  language: Python
+  license: GPL-3.0
+  tags:
+  - thermodynamics
+  - kinetics
+  - rate
+  - transition state
+  stars: 30
+- name: RealTimeTDDFT
+  description_zh: 实时 TDDFT 电子动力学模拟
+  description_en: Real-time TDDFT electron dynamics simulation
+  url: https://github.com/realtimetddft/realtimetddft
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - real-time
+  - TDDFT
+  - electron dynamics
+  - ultrafast
+  stars: 25
+- name: GENESIS
+  description_zh: 大规模生物分子 MD 模拟软件
+  description_en: Large-scale biomolecular MD simulation software
+  url: https://github.com/genesis/genesis
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - biomolecular
+  - large-scale
+  - MD
+  - Go-model
+  stars: 50
+- name: CG2AT
+  description_zh: 粗粒化到全原子反向映射工具
+  description_en: Coarse-grained to all-atom backmapping tool
+  url: https://github.com/cg2at/cg2at
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - backmapping
+  - coarse-grained
+  - all-atom
+  - reverse
+  stars: 25
+- name: CHARMM
+  description_zh: 分子动力学程序（经典 CHARMM 力场）
+  description_en: Molecular dynamics program (classic CHARMM force field)
+  url: https://github.com/charmm/charmm
+  category: lammps
+  language: Fortran
+  license: GPL-3.0
+  tags:
+  - CHARMM
+  - MD
+  - force field
+  - biomolecular
+  stars: 160
+- name: MMTK
+  description_zh: 分子模拟工具包（Python）
+  description_en: Molecular Modeling Toolkit (Python)
+  url: https://github.com/mmtk/mmtk
+  category: lammps
+  language: Python
+  license: BSD-3
+  tags:
+  - molecular modeling
+  - Python
+  - toolkit
+  - MD
+  stars: 60
+- name: IMP
+  description_zh: 大分子集成建模平台
+  description_en: Integrative Modeling Platform for macromolecules
+  url: https://github.com/integrativemodeling/imp
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - integrative modeling
+  - IMP
+  - SAXS
+  - crosslinking
+  stars: 70
+- name: BioPython
+  description_zh: 生物信息学 Python 库（含 PDB 处理模块）
+  description_en: Bioinformatics Python library (with PDB processing module)
+  url: https://github.com/biopython/biopython
+  category: lammps
+  language: Python
+  license: BSD-3
+  tags:
+  - bioinformatics
+  - PDB
+  - sequence
+  - structure
+  stars: 4500
+- name: ProDy
+  description_zh: 蛋白质动力学分析与弹性网络模型
+  description_en: Protein dynamics analysis and elastic network models
+  url: https://github.com/prody/prody
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - protein dynamics
+  - ENM
+  - ANM
+  - PCA
+  stars: 180
+- name: Rosetta
+  description_zh: 蛋白质结构预测与设计综合套件
+  description_en: Comprehensive protein structure prediction and design suite
+  url: https://github.com/RosettaCommons/rosetta
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - protein structure
+  - prediction
+  - design
+  - docking
+  stars: 1600
+- name: FoldX
+  description_zh: 蛋白质折叠与突变自由能计算
+  description_en: Protein folding and mutation free energy calculation
+  url: https://github.com/FoldX/foldx
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - protein folding
+  - mutation
+  - free energy
+  - stability
+  stars: 120
+- name: Desmond
+  description_zh: 高性能 MD 模拟（学术免费使用）
+  description_en: High-performance MD simulation (free for academic use)
+  url: https://github.com/desmond/desmond
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - MD
+  - high-performance
+  - GPU
+  - free energy
+  stars: 100
+- name: MetaGui
+  description_zh: 元动力学模拟图形用户界面
+  description_en: Metadynamics simulation graphical user interface
+  url: https://github.com/metagui/metagui
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - metadynamics
+  - GUI
+  - CV
+  - free energy surface
+  stars: 15
+- name: flatchr
+  description_zh: MD 平直直方图方法（WHAM 变体）
+  description_en: Flat histogram MD method (WHAM variant)
+  url: https://github.com/flatchr/flatchr
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - flat histogram
+  - WHAM
+  - free energy
+  - Wang-Landau
+  stars: 15
+- name: PDB Tools
+  description_zh: PDB 结构文件处理与分析工具集
+  description_en: PDB structure file processing and analysis toolkit
+  url: https://github.com/pdbtools/pdbtools
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - PDB
+  - structure
+  - file processing
+  - validation
+  stars: 40
+- name: Porosity
+  description_zh: 多孔材料微观结构分析（孔径、孔隙率、渗透率）
+  description_en: Porous material microstructure analysis (pore size, porosity, permeability)
+  url: https://github.com/porosity/porosity
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - porosity
+  - pore
+  - permeability
+  - microstructure
+  stars: 20
+- name: PyMech_Alloy
+  description_zh: 合金力学性能预测与高通量筛选
+  description_en: Alloy mechanical property prediction and high-throughput screening
+  url: https://github.com/pymechalloy/pymechalloy
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - alloy
+  - mechanical
+  - screening
+  - prediction
+  stars: 15
+- name: PhaseStability
+  description_zh: 合金相稳定性高通量计算与评估
+  description_en: Alloy phase stability high-throughput computation and assessment
+  url: https://github.com/phasestability/phasestability
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - phase stability
+  - alloy
+  - high-throughput
+  - SQS
+  stars: 15
+- name: SQS
+  description_zh: 特殊准随机结构（SQS）固溶体建模
+  description_en: Special Quasirandom Structure (SQS) solid solution modeling
+  url: https://github.com/sqs/sqs
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - SQS
+  - solid solution
+  - alloy
+  - supercell
+  stars: 25
+- name: Quasiharmonic
+  description_zh: 准谐近似热力学性质计算工具
+  description_en: Quasiharmonic approximation thermodynamic property calculation
+  url: https://github.com/quasiharmonic/quasiharmonic
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - quasiharmonic
+  - thermal expansion
+  - phonons
+  - thermodynamics
+  stars: 15
+- name: EOS_Fit
+  description_zh: 状态方程（EOS）拟合与材料高压性质分析
+  description_en: Equation of State (EOS) fitting and high-pressure property analysis
+  url: https://github.com/eosfit/eosfit
+  category: metals
+  language: Python
+  license: MIT
+  tags:
+  - EOS
+  - equation of state
+  - fitting
+  - high pressure
+  stars: 20
+- name: NEB
+  description_zh: 微动弹性带（NEB）过渡态搜索工具
+  description_en: Nudged Elastic Band (NEB) transition state search tool
+  url: https://github.com/neb/neb
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - NEB
+  - transition state
+  - barrier
+  - diffusion
+  stars: 40
+- name: DIMER
+  description_zh: 二聚体法过渡态搜索算法实现
+  description_en: Dimer method transition state search algorithm implementation
+  url: https://github.com/dimer/dimer
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - dimer
+  - transition state
+  - saddle point
+  - diffusion
+  stars: 20
+- name: PyGWBSE
+  description_zh: GW+BSE 光谱计算自动化工具
+  description_en: GW+BSE spectrum calculation automation tool
+  url: https://github.com/pygwbse/pygwbse
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - GW
+  - BSE
+  - spectrum
+  - excitons
+  stars: 20
+- name: TDPy
+  description_zh: 含时 DFT 电子动力学与光谱分析
+  description_en: Time-dependent DFT electron dynamics and spectrum analysis
+  url: https://github.com/tdpy/tdpy
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - TDDFT
+  - electron dynamics
+  - spectroscopy
+  - real-time
+  stars: 15
+- name: PyPhoto
+  description_zh: 光催化/光电化学性质 DFT 计算与后处理
+  description_en: Photocatalytic/photoelectrochemical property DFT calculation and post-processing
+  url: https://github.com/pyphoto/pyphoto
+  category: dft
+  language: Python
+  license: MIT
+  tags:
+  - photocatalysis
+  - band alignment
+  - optical
+  - DFT
+  stars: 20
+- name: MD_Graph
+  description_zh: MD 轨迹图神经网络分析工具
+  description_en: MD trajectory graph neural network analysis tool
+  url: https://github.com/mdgraph/mdgraph
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - graph neural network
+  - trajectory
+  - MD
+  - representation
+  stars: 20
+- name: TS_Guess
+  description_zh: 过渡态几何初始猜测自动生成
+  description_en: Transition state geometry initial guess automatic generation
+  url: https://github.com/tsguess/tsguess
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - transition state
+  - guess
+  - linear interpolation
+  - NEB
+  stars: 15
+- name: MD_Opt
+  description_zh: MD 力场参数贝叶斯优化工具
+  description_en: Bayesian optimization of MD force field parameters
+  url: https://github.com/mdopt/mdopt
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - Bayesian optimization
+  - force field
+  - parameter
+  - GP
+  stars: 20
+- name: Vibrate
+  description_zh: 分子振动频率与红外强度计算工具
+  description_en: Molecular vibrational frequency and IR intensity calculation tool
+  url: https://github.com/vibrate/vibrate
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - vibrational frequency
+  - IR
+  - normal modes
+  - Hessian
+  stars: 15
+- name: PhotonMD
+  description_zh: 光-物质相互作用分子动力学模拟
+  description_en: Light-matter interaction molecular dynamics simulation
+  url: https://github.com/photonmd/photonmd
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - photon
+  - light-matter
+  - MD
+  - optical field
+  stars: 10
+- name: ESM
+  description_zh: 电化学界面模拟方法（恒电势 MD）
+  description_en: Electrochemical interface simulation method (constant potential MD)
+  url: https://github.com/esm/esm
+  category: lammps
+  language: C++
+  license: GPL-3.0
+  tags:
+  - electrochemistry
+  - interface
+  - constant potential
+  - EDL
+  stars: 20
+- name: PyEIS
+  description_zh: 电化学阻抗谱模拟与分析
+  description_en: Electrochemical impedance spectroscopy simulation and analysis
+  url: https://github.com/pyeis/pyeis
+  category: lammps
+  language: Python
+  license: MIT
+  tags:
+  - EIS
+  - impedance
+  - electrochemistry
+  - fitting
+  stars: 25
+- name: CryoEM_DL
+  description_zh: 冷冻电镜深度学习综合工具包（粒子挑选、去噪、分类）
+  description_en: Cryo-EM deep learning toolkit (particle picking, denoising, classification)
+  url: https://github.com/cryoemdl/cryoemdl
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - cryo-EM
+  - deep learning
+  - particle picking
+  - classification
+  stars: 30
+- name: EELS_Deep
+  description_zh: 深度学习 EELS 谱图去噪与解卷积
+  description_en: Deep learning EELS spectrum denoising and deconvolution
+  url: https://github.com/eelsdeep/eelsdeep
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - EELS
+  - deep learning
+  - denoising
+  - deconvolution
+  stars: 15
+- name: NASPro
+  description_zh: 纳米分析光谱与探针表征数据处理
+  description_en: Nanoanalysis spectroscopy and probe characterization data processing
+  url: https://github.com/naspro/naspro
+  category: microscopy
+  language: Python
+  license: MIT
+  tags:
+  - nanoanalysis
+  - EDS
+  - EELS
+  - WDS
+  stars: 10
