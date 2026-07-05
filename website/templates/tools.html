@@ -25,7 +25,7 @@
   <!-- 工具卡片网格 -->
   <div class="tool-grid" id="tool-grid">
     {% for tool in tools %}
-    <div class="tool-card" data-category="{{ tool.category }}"
+    <div class="tool-card cat-{{ tool.category }}" data-category="{{ tool.category }}"
          data-name="{{ tool.name | lower }}" data-tags="{{ tool.tags | join(' ') | lower }}">
       <div class="tool-card-header">
         <h3 class="tool-name">{{ tool.name }}</h3>

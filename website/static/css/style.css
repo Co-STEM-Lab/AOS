@@ -1481,11 +1481,32 @@ img { max-width: 100%; height: auto; }
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.25rem;
+  padding-left: 1.35rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
+  position: relative;
   transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
 }
+/* 左边框彩色分类指示器 */
+.tool-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 3px;
+}
+.tool-card:hover::before {
+  top: 4px;
+  bottom: 4px;
+}
+.cat-microscopy::before { background: #F5D78E; }
+.cat-metals::before     { background: #4ADE80; }
+.cat-dft::before        { background: #60A5FA; }
+.cat-lammps::before     { background: #FB923C; }
+
 .tool-card:hover {
   border-color: var(--card-border-hover);
   transform: translateY(-2px);
