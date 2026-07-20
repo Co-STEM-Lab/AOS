@@ -19,10 +19,35 @@
             font-size: 12pt;
             line-height: 1.8;
             color: #222;
-            background: #fff;
-            max-width: 100%;
+            background: #e8e8e8;
             margin: 0;
-            padding: 0;
+            padding: 30px 60px;
+        }
+
+        .a4-page {
+            max-width: 210mm;
+            margin: 0 auto;
+            background: #fff;
+            padding: 2.5cm 3cm;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+            min-height: 297mm;
+        }
+
+        .back-link-bar {
+            max-width: 210mm;
+            margin: 0 auto 6px auto;
+            padding: 4px 0;
+        }
+        .back-link-bar a {
+            color: #2b6cb0;
+            text-decoration: none;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .back-link-bar a:hover {
+            text-decoration: underline;
         }
 
         .article-header {
@@ -70,10 +95,8 @@
             display: block;
             margin: 0 auto;
             page-break-inside: avoid;
-            page-break-before: auto;
         }
 
-        /* Force page break before large groups of images */
         #content_views .img-center {
             page-break-inside: avoid;
         }
@@ -84,7 +107,6 @@
             font-weight: bold;
             color: #000;
         }
-
         #content_views h1 { font-size: 18pt; }
         #content_views h2 { font-size: 16pt; }
         #content_views h3 { font-size: 14pt; }
@@ -95,13 +117,11 @@
             margin: 15px 0;
             page-break-inside: avoid;
         }
-
         #content_views table td, #content_views table th {
             border: 1px solid #999;
             padding: 6px 10px;
             font-size: 11pt;
         }
-
         #content_views table th {
             background: #f0f0f0;
             font-weight: bold;
@@ -141,38 +161,39 @@
             color: #999;
             text-align: center;
         }
-
         .source-link a {
             color: #2b6cb0;
             text-decoration: none;
         }
 
-        /* Print-specific */
+        /* Print-specific: remove background, shadow, padding */
         @media print {
             body {
-                font-size: 11pt;
-                line-height: 1.6;
+                background: #fff;
+                padding: 0;
             }
-            .article-title {
-                font-size: 20pt;
+            .a4-page {
+                max-width: 100%;
+                box-shadow: none;
+                padding: 0;
+                margin: 0;
+                min-height: auto;
+            }
+            .back-link-bar {
+                display: none;
             }
             #content_views img {
                 max-width: 100% !important;
                 max-height: 26cm;
             }
-            .source-link {
-                page-break-after: avoid;
-            }
-        }
-    </style>
+        }yle>
 </head>
 <body>
-<div style="max-width: 900px; margin: 0 auto; padding: 12px 20px 0;">
-  <a href="../index.html" style="color: #2b6cb0; text-decoration: none; font-size: 14px; display: inline-flex; align-items: center; gap: 4px;">
-    ← 返回笔记列表
-  </a>
+<div class="back-link-bar">
+  <a href="../index.html">← 返回笔记列表</a>
 </div>
 
+    <div class="a4-page">
     <div class="article-header">
         <div class="article-title">技术解读专栏：透射电子显微镜（TEM）会聚束电子衍射（CBED）—图文版</div>
         <div class="article-meta">
@@ -276,5 +297,6 @@
     <div class="source-link">
         原文来源：<a href="https://blog.csdn.net/qiushireader/article/details/150517557">CSDN博客（qiushireader）</a>
     </div>
+</div>
 </body>
 </html>
