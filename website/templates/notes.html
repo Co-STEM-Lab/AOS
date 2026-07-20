@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}{{ t.notes.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <h1>{{ t.notes.title }}</h1>
+  <p class="page-desc">{{ t.notes.desc }}</p>
+</section>
+
+<section class="section">
+  {% if notes %}
+  <div class="project-grid">
+    {% for note in notes %}
+    <a href="{{ root }}{{ prefix }}notes/{{ note.id }}/" class="project-card">
+      <div class="project-card-header">
+        <h3>{{ note.title }}</h3>
+        {% if note.date %}
+        <span class="status-badge status-published">{{ note.date }}</span>
+        {% endif %}
+      </div>
+      {% if note.description %}
+      <p>{{ note.description | truncate(200) }}</p>
+      {% endif %}
+      <div class="project-card-meta">
+        {% if note.tags %}
+        <span>🏷️ {{ note.tags | join(", ") }}</span>
+        {% endif %}
+        {% if note.source_label %}
+        <span>📖 {{ note.source_label }}</span>
+        {% endif %}
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="empty-state">{{ t.notes.empty }}</p>
+  {% endif %}
+</section>
+{% endblock %}

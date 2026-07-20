@@ -26,6 +26,7 @@ TEMPLATES_DIR = WEBSITE_DIR / "templates"
 STATIC_DIR = WEBSITE_DIR / "static"
 PUBLIC_DIR = WEBSITE_DIR / "public"
 PAPERS_DIR = ROOT / "papers"
+NOTES_DIR = ROOT / "notes"
 CONFIG_PATH = WEBSITE_DIR / "config.yml"
 TOOLS_PATH = WEBSITE_DIR / "tools.yml"
 
@@ -42,6 +43,7 @@ T = {
             "index": "首页",
             "publications": "论文",
             "projects": "项目",
+            "notes": "笔记",
             "tools": "工具",
         },
         "index": {
@@ -110,6 +112,12 @@ T = {
             "category": "分类",
             "view_on_github": "GitHub →",
         },
+        "notes": {
+            "title": "笔记",
+            "desc": "电子显微学方法笔记与参考资料",
+            "empty": "暂无笔记",
+            "back": "← 返回笔记列表",
+        },
         "skills": {
             "title": "能力",
             "desc": "学术技能树，每条技能关联证据。",
@@ -167,6 +175,7 @@ T = {
             "index": "Home",
             "publications": "Publications",
             "projects": "Projects",
+            "notes": "Notes",
             "tools": "Tools",
         },
         "index": {
@@ -228,6 +237,12 @@ T = {
             "domain": "Domain",
             "problem": "Problem",
             "back": "← Back to Projects",
+        },
+        "notes": {
+            "title": "Notes",
+            "desc": "Electron microscopy methodology notes & references",
+            "empty": "No notes yet",
+            "back": "← Back to Notes",
         },
         "tools": {
             "title": "Open Tools",
@@ -433,6 +448,46 @@ def load_projects() -> dict:
     return projects
 
 
+def load_notes() -> list[dict]:
+    """从 notes/ 目录加载笔记。每个笔记是一个子目录，包含 index.md 和可选的 content.html。"""
+    notes = []
+    if not NOTES_DIR.is_dir():
+        return notes
+    for note_dir in sorted(NOTES_DIR.iterdir()):
+        if not note_dir.is_dir() or note_dir.name.startswith("_"):
+            continue
+        idx = note_dir / "index.md"
+        if not idx.exists():
+            continue
+        fm = parse_front_matter(str(idx))
+        if not fm:
+            continue
+        body = parse_body(str(idx))
+
+        # 检测是否有 content.html 作为全文内容
+        has_content = (note_dir / "content.html").exists()
+        # 检测是否有图片目录
+        has_images = (note_dir / "TEM_CBED_images").is_dir()
+
+        # 获取描述（优先使用 front-matter 中的 description）
+        description = fm.get("description", "") or body[:200] if body else ""
+
+        notes.append({
+            "id": fm.get("id", note_dir.name),
+            "dir_name": note_dir.name,
+            "title": fm.get("title", note_dir.name),
+            "date": fm.get("date", ""),
+            "tags": fm.get("tags", []),
+            "category": fm.get("category", ""),
+            "source_url": fm.get("source_url", ""),
+            "source_label": fm.get("source_label", ""),
+            "description": description,
+            "has_content": has_content,
+            "has_images": has_images,
+        })
+    return notes
+
+
 def _project_status_name(status: str, lang: str) -> str:
     """项目状态 → 可读名称。"""
     names = {
@@ -533,7 +588,46 @@ def build_site(lang: str, config: dict, skill_tree: dict,
     _write_page("tools.html", tools_ctx, env, PUBLIC_DIR / prefix / "tools" / "index.html")
     pages_created += 1
 
+    # ── 笔记列表页 ──
+    mkdir(prefix + "notes")
+    notes_data = load_notes()
+    notes_ctx = {**ctx, "page_id": "notes", "notes": notes_data}
+    _write_page("notes.html", notes_ctx, env, PUBLIC_DIR / prefix / "notes" / "index.html")
+    pages_created += 1
+
+    # 单个笔记详情页
+    for note in notes_data:
+        mkdir(prefix + f"notes/{note['id']}")
+        note_ctx = {**ctx, "page_id": "note", "note": note}
+        _write_page("note-single.html", note_ctx, env,
+                    PUBLIC_DIR / prefix / "notes" / note["id"] / "index.html")
+        pages_created += 1
+
+        # 复制笔记的 content.html 和图片到网站输出
+        _copy_note_assets(note, prefix)
+
     return pages_created
+
+
+def _copy_note_assets(note: dict, prefix: str):
+    """复制笔记的 content.html 和 TEM_CBED_images/ 目录到网站输出。"""
+    note_src = NOTES_DIR / note["dir_name"]
+    note_dst = PUBLIC_DIR / prefix / "notes" / note["id"]
+    note_dst.mkdir(parents=True, exist_ok=True)
+
+    # 复制 content.html（如果存在）
+    content_src = note_src / "content.html"
+    if content_src.exists():
+        shutil.copy2(str(content_src), str(note_dst / "content.html"))
+        print(f"     📄 笔记内容: {note['dir_name']}/content.html")
+
+    # 复制 TEM_CBED_images/ 目录（如果存在）
+    img_src = note_src / "TEM_CBED_images"
+    if img_src.is_dir():
+        img_dst = note_dst / "TEM_CBED_images"
+        shutil.copytree(str(img_src), str(img_dst), dirs_exist_ok=True)
+        n_files = len(list(img_dst.rglob("*")))
+        print(f"     🖼️  图片: {note['id']}/TEM_CBED_images/ ({n_files} 个文件)")
 
 
 def _copy_project_assets(proj: dict, prefix: str):
@@ -597,6 +691,9 @@ def main():
     pubs_data = load_publications()
     print(f"  📄 论文: {len(pubs_data)}")
     print(f"  📁 进行中项目: {len(projects.get('active', []))}")
+
+    notes_data = load_notes()
+    print(f"  📓 笔记: {len(notes_data)}")
 
     # 3. 清理输出目录
     if PUBLIC_DIR.exists():
@@ -721,12 +818,14 @@ def _do_rebuild():
             total += n
 
         pubs_data = load_publications()
+        notes_data = load_notes()
         (PUBLIC_DIR / ".nojekyll").write_text("")
         (PUBLIC_DIR / "build-info.json").write_text(
             json.dumps({"built_at": date.today().isoformat(),
                        "langs": languages, "pages": total,
                        "publications": len(pubs_data),
-                       "projects": sum(len(v) for v in projects.values())},
+                       "projects": sum(len(v) for v in projects.values()),
+                       "notes": len(notes_data)},
                       indent=2, ensure_ascii=False))
         print(f"  ✅ 重建完成 — {total} 页 ({date.today().isoformat()})")
     except Exception as e:

@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+{% block title %}{{ note.title }} · {{ config.site["title_" + lang] }}{% endblock %}
+
+{% block head %}
+<style>
+  .note-iframe {
+    width: 100%;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 8px;
+    background: #fff;
+  }
+  .note-meta-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: var(--text-secondary, #718096);
+  }
+  .note-meta-grid a {
+    color: var(--accent-color, #c53030);
+    text-decoration: none;
+  }
+  .note-meta-grid a:hover {
+    text-decoration: underline;
+  }
+  .note-description {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--text-secondary, #4a5568);
+    margin: 16px 0 24px;
+    padding: 16px 20px;
+    background: var(--bg-secondary, #f7fafc);
+    border-radius: 8px;
+    border-left: 4px solid var(--accent-color, #c53030);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="section page-header">
+  <a href="{{ root }}{{ prefix }}notes/" class="back-link">{{ t.notes.back }}</a>
+  <h1>{{ note.title }}</h1>
+  <div class="note-meta-grid">
+    {% if note.date %}
+    <span>📅 {{ note.date }}</span>
+    {% endif %}
+    {% if note.tags %}
+    <span>🏷️ {{ note.tags | join(", ") }}</span>
+    {% endif %}
+    {% if note.source_url %}
+    <span>📖 <a href="{{ note.source_url }}" target="_blank" rel="noopener">{{ note.source_label or note.source_url }}</a></span>
+    {% endif %}
+  </div>
+</section>
+
+{% if note.description %}
+<section class="section">
+  <div class="note-description">{{ note.description }}</div>
+</section>
+{% endif %}
+
+<section class="section">
+  <div class="report-embed">
+    <div class="report-embed-header">
+      <span class="report-embed-label">📄 全文内容</span>
+      <a href="{{ root }}{{ prefix }}notes/{{ note.id }}/content.html" target="_blank" class="report-embed-link">新窗口打开 ↗</a>
+    </div>
+    <iframe src="{{ root }}{{ prefix }}notes/{{ note.id }}/content.html" class="note-iframe" loading="lazy" height="800" style="height: 90vh;"></iframe>
+  </div>
+</section>
+{% endblock %}
