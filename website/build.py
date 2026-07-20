@@ -595,16 +595,11 @@ def build_site(lang: str, config: dict, skill_tree: dict,
     _write_page("notes.html", notes_ctx, env, PUBLIC_DIR / prefix / "notes" / "index.html")
     pages_created += 1
 
-    # 单个笔记详情页
+    # 复制每篇笔记的 content.html 和图片到网站输出（直接作为落地页，无套壳）
     for note in notes_data:
-        mkdir(prefix + f"notes/{note['id']}")
-        note_ctx = {**ctx, "page_id": "note", "note": note}
-        _write_page("note-single.html", note_ctx, env,
-                    PUBLIC_DIR / prefix / "notes" / note["id"] / "index.html")
-        pages_created += 1
-
-        # 复制笔记的 content.html 和图片到网站输出
         _copy_note_assets(note, prefix)
+        if note.get("has_content"):
+            pages_created += 1  # content.html counts as a page
 
     return pages_created
 

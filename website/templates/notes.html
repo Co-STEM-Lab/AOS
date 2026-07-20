@@ -11,7 +11,7 @@
   {% if notes %}
   <div class="project-grid">
     {% for note in notes %}
-    <a href="{{ root }}{{ prefix }}notes/{{ note.id }}/" class="project-card">
+    <a href="{{ root }}{{ prefix }}notes/{{ note.id }}/content.html" class="project-card">
       <div class="project-card-header">
         <h3>{{ note.title }}</h3>
         {% if note.date %}
