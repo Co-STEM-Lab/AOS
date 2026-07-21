@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/svg+xml" href="/AOS/static/images/favicon.svg">
+    <title>电子背散射衍射（EBSD）技术全面指南</title>
+    <style>
+        @page { size: A4; margin: 2cm 2.5cm; }
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'SimSun', '宋体', 'Microsoft YaHei', '微软雅黑', serif;
+            font-size: 12pt; line-height: 1.8; color: #222;
+            background: #e8e8e8; margin: 0; padding: 30px 0;
+        }
+        .a4-page {
+            max-width: 210mm; margin: 0 auto; background: #fff;
+            padding: 2cm 2.5cm; box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+        .article-header {
+            text-align: center; margin-bottom: 30px;
+            padding-bottom: 15px; border-bottom: 2px solid #333;
+        }
+        .article-title { font-size: 22pt; font-weight: bold; color: #000; line-height: 1.4; margin-bottom: 10px; }
+        .article-meta { font-size: 10.5pt; color: #666; }
+        .article-meta span { margin: 0 15px; }
+        #content_views { text-align: justify; }
+        #content_views p { margin: 8px 0; text-indent: 2em; }
+        #content_views .img-center { text-align: center; margin: 20px 0; text-indent: 0; }
+        #content_views img { max-width: 100%; height: auto; display: block; margin: 0 auto; page-break-inside: avoid; }
+        #content_views .img-center { page-break-inside: avoid; }
+        #content_views h2 { margin: 30px 0 15px; font-size: 18pt; font-weight: bold; color: #000; border-bottom: 1px solid #ccc; padding-bottom: 5px; }
+        #content_views h3 { margin: 24px 0 12px; font-size: 15pt; font-weight: bold; color: #1a1a1a; }
+        #content_views h4 { margin: 18px 0 10px; font-size: 13pt; font-weight: bold; color: #333; }
+        #content_views h5 { margin: 14px 0 8px; font-size: 12pt; font-weight: bold; color: #444; }
+        #content_views table { border-collapse: collapse; width: 100%; margin: 15px 0; page-break-inside: avoid; }
+        #content_views table td, #content_views table th { border: 1px solid #999; padding: 6px 10px; font-size: 11pt; }
+        #content_views table th { background: #f0f0f0; font-weight: bold; }
+        #content_views blockquote { border-left: 4px solid #2b6cb0; background: #f7f9fc; margin: 15px 0; padding: 10px 20px; color: #444; font-size: 11pt; }
+        #content_views ul, #content_views ol { margin: 8px 0; padding-left: 2em; }
+        #content_views li { margin: 4px 0; }
+        .source-link { margin-top: 40px; padding-top: 15px; border-top: 1px solid #ccc; font-size: 10pt; color: #999; text-align: center; }
+        .source-link a { color: #2b6cb0; text-decoration: none; }
+        @media print {
+            body { background: #fff; padding: 0; font-size: 11pt; line-height: 1.6; }
+            .a4-page { max-width: 100%; box-shadow: none; padding: 0; margin: 0; }
+            .article-title { font-size: 20pt; }
+            #content_views img { max-width: 100% !important; max-height: 26cm; }
+        }
+    </style>
+</head>
+<body>
+<div style="max-width:210mm;margin:0 auto 6px;padding:2px 0;"><a href="../index.html" style="color:#2b6cb0;text-decoration:none;font-size:14px;">← 返回笔记列表</a></div>
+<div class="a4-page">
+<div class="article-header">
+    <div class="article-title">电子背散射衍射（EBSD）技术全面指南</div>
+    <div class="article-meta">
+        <span>来源：Oxford Instruments ebsd.com · Bruker</span>
+        <span>整理日期：2026-07-21</span>
+    </div>
+</div>
+<div id="content_views">
+
+<h2>1 引言：什么是 EBSD？</h2>
+
+<p>电子背散射衍射（Electron Backscatter Diffraction，EBSD）是一种基于扫描电子显微镜（SEM）的技术，能够对材料的微观结构进行分析、可视化和定量表征。EBSD 有时也被称为 EBSP（Electron Backscatter Pattern）或 BKD（Backscatter Kikuchi Diffraction）。</p>
+
+<p>EBSD 通过在 SEM 中将电子束聚焦到样品表面，利用高能电子与样品原子相互作用产生的背散射电子形成衍射花样（即电子背散射衍射花样，EBSP），从而获得样品局部的晶体学信息。EBSD 是一种高度自动化的技术，现代商用系统每秒能够分析数千个衍射花样，使得以高空间分辨率扫描样品表面并收集完整的微观结构表征数据成为可能。</p>
+
+<p>EBSD 能够提供关于样品晶体学性质的详细信息，通常与能量色散 X 射线能谱（EDS）集成使用，以同时获得样品的成分信息。集成的 EBSD 和 EDS 测量可以提供以下微观结构表征信息：</p>
+
+<ul>
+    <li>相鉴定和相分布</li>
+    <li>晶粒尺寸数据</li>
+    <li>晶界表征</li>
+    <li>织构（晶体学择优取向程度）</li>
+    <li>局部应变变化</li>
+</ul>
+
+<p>所有这些信息都可以从单一的 EBSD 数据集中获得，空间分辨率可达纳米级，分析区域可覆盖数平方毫米。EBSD 在材料性能-加工-结构关系的研究中处于核心地位，是理解材料微观结构-性能关系的关键工具。</p>
+
+<p class="img-center"><img alt="EBSD characterization" src="EBSD_images/ebsd-characterization-performance-properties-processing-structure.png" /></p>
+
+<h2>2 EBSD 的基本原理</h2>
+
+<h3>2.1 EBSD 测量过程</h3>
+
+<p>EBSD 的测量过程可以分解为以下步骤：</p>
+
+<ol>
+    <li><strong>电子束入射：</strong>聚焦的电子束被引导到样品表面。高能电子与样品中的原子相互作用，产生各种电子散射现象。</li>
+    <li><strong>背散射电子产生：</strong>部分电子因样品表面以下几纳米内的相互作用而被背散射。为了增加散射产额，样品通常倾斜约 70&deg;。</li>
+    <li><strong>衍射花样形成：</strong>背散射电子的能量和方向与样品中原子的局域排列（即晶体学取向和相）相关。一小部分背散射电子在置于倾斜样品前方的荧光屏或半导体传感器上形成衍射花样（EBSP）。</li>
+    <li><strong>图案采集：</strong>EBSD 探测器内部的相机捕获衍射花样并将其传输到计算机进行分析。相机与电子束移动同步，每秒可捕获数千个图案。</li>
+    <li><strong>取向分析：</strong>收集到的 EBSP 经过分析以确定网格上每个测量点的晶体学取向。这些信息用于创建详细的样品晶体学取向图。</li>
+</ol>
+
+<p class="img-center"><img alt="Typical EBSD Map" src="EBSD_images/Typical_EBSD_Map_rezise.png" /></p>
+
+<h3>2.2 微观结构</h3>
+
+<p>微观结构是在微观尺度上研究的材料内部结构。它决定材料的性质和行为，包括晶粒群体的识别和表征、材料中不同相或化合物的研究、元素空间分布的表征以及晶粒间和晶粒内界面性质的分析。</p>
+
+<p>表征微观结构对于完整理解材料及其性能至关重要。材料加工决定了微观结构的形成，而微观结构又影响材料的性能。EBSD 在 SEM 中提供了强有力的微观结构表征手段，可分析晶粒尺寸、相分布、取向关系、晶界特征等关键参数。</p>
+
+<h3>2.3 为什么选择 EBSD？</h3>
+
+<p>EBSD 的主要优势包括：高空间分辨率（纳米级）、大分析面积（可覆盖数平方毫米）、高度自动化（每秒数千个图案）、丰富的微观结构信息（取向、相、晶界、应变等），以及可与 EDS 集成实现成分-晶体学联合分析的能力。</p>
+
+<h2>3 EBSD 衍射花样的形成</h2>
+
+<h3>3.1 菊池花样的形成机制</h3>
+
+<p>当 SEM 中的电子束入射到倾斜的晶体样品上时，入射电子在样品内部发生非弹性散射，在各个方向产生漫散射电子。这些电子随后受到样品中晶格平面的布拉格衍射，形成菊池花样（Kikuchi pattern）。</p>
+
+<p>对于每一组满足布拉格条件的晶面，衍射电子在空间中以两个锥面的形式分布（分别对应满足布拉格条件的正反方向），这些锥面与探测器荧光屏相交，形成一对平行的菊池带（Kikuchi band）。每对菊池带的中心线对应于晶面在屏幕上的投影，带宽与布拉格角相关。</p>
+
+<p class="img-center"><img alt="Kikuchi band formation" src="EBSD_images/Kikuchi_band_formation.png" /></p>
+
+<p class="img-center"><img alt="Quartz EBSP" src="EBSD_images/Quartz_EBSP_.png" /></p>
+
+<h3>3.2 菊池花样的几何特征</h3>
+
+<p>EBSD 衍射花样（EBSP）由一系列菊池带组成，每条菊池带对应一组特定的晶面 {hkl}。菊池花样的几何特征包含以下信息：带的<strong>位置</strong>（取决于晶面相对于探测器的取向）、<strong>宽度</strong>（与晶面间距 d 相关）、<strong>交叉点</strong>（对应晶带轴 zone axis）和<strong>强度</strong>（与结构因子相关）。</p>
+
+<h3>3.3 带强度与结构因子</h3>
+
+<p>菊池带的强度近似由运动学结构因子公式给出。实验衍射花样可以与模拟花样进行比较，以确保在标定衍射花样时只使用产生可见菊池带的晶面。多束动力学模拟现已常规用于模拟 EBSD 花样（例如用于模式匹配或字典索引方法），但运动学模型仍被用于生成大多数常规 EBSD 分析中使用的反射面强度。</p>
+
+<p class="img-center"><img alt="Si EBSP with marked bands" src="EBSD_images/Si_EBSP_with_marked_bands.png" /></p>
+
+<h2>4 晶体学基础</h2>
+
+<h3>4.1 晶体点阵与晶胞</h3>
+
+<p>晶体是原子在三维空间中呈现周期性排列的固体。晶体学点阵（crystal lattice）是一个数学抽象，描述了空间点阵的周期性排列。晶胞（unit cell）是点阵中最小的重复单元。</p>
+
+<p class="img-center"><img alt="Crystal Lattice" src="EBSD_images/A_Crystal_Lattice.png" /></p>
+<p class="img-center"><img alt="Unit Cell" src="EBSD_images/A_Unit_cell.png" /></p>
+
+<h3>4.2 布拉维点阵与晶体系统</h3>
+
+<p>根据晶胞的对称性，晶体可分为七大晶系（立方、四方、正交、六方、三方、单斜、三斜），结合四种布拉维点阵类型，共有 14 种布拉维点阵。</p>
+
+<p class="img-center"><img alt="Motif" src="EBSD_images/A_Motif.png" /></p>
+
+<h3>4.3 晶体对称性与点群</h3>
+
+<p>32 个晶体学点群描述了晶体宏观对称性，而 230 个空间群则描述了晶体内部原子的完整排列对称性。</p>
+
+<h3>4.4 晶面与晶向</h3>
+
+<p>晶面用米勒指数 (hkl) 表示，晶向用 [uvw] 表示。在 EBSD 分析中，菊池带对应的晶面指数直接关联到晶面间距和结构因子。</p>
+
+<p class="img-center"><img alt="Crystal Planes" src="EBSD_images/Crystal_Planes_1.png" /></p>
+
+<h2>5 EBSD 系统组成与探测器</h2>
+
+<h3>5.1 EBSD 系统的主要组件</h3>
+
+<p>一个典型的 EBSD 系统由 EBSD 探测器（包括荧光屏或直接电子探测传感器及相机）、数据采集软件、数据分析软件、SEM 系统和高精度样品台等关键组件构成。</p>
+
+<p class="img-center"><img alt="EBSD data acquisition software" src="EBSD_images/EBSD_data_acquisition_software.png" /></p>
+
+<h3>5.2 EBSD 探测器的类型</h3>
+
+<h4>5.2.1 闪烁体基探测器（间接探测）</h4>
+
+<p>闪烁体基探测器使用荧光屏将背散射电子转换为可见光。荧光屏上产生的光图案随后由 CCD 或 CMOS 相机检测。CCD 探测器具有高灵敏度和低噪声的特点，但读出速度较慢。CMOS 探测器提供更高的读出速度（可实现每秒数千个图案的采集速度），同时保持良好的灵敏度和分辨率。</p>
+
+<p class="img-center"><img alt="CCD and CMOS" src="EBSD_images/CCD-Detector-EBSPs.png" /></p>
+
+<h4>5.2.2 直接电子探测器（DED）</h4>
+
+<p>直接电子探测器使用半导体材料作为活性表面直接捕获背散射电子信号。直接电子探测相比闪烁体基探测具有更高的灵敏度，这些增益使得超高速度 EBSD 和低 kV EBSD 映射成为可能。</p>
+
+<p class="img-center"><img alt="eFlash detector" src="EBSD_images/eflash-standard-fs-detail-white-s-rgb.png" /></p>
+<p class="img-center"><img alt="eWARP DED" src="EBSD_images/ewarp-detail-image-blue-new.png" /></p>
+
+<h2>6 EBSD 衍射花样的标引</h2>
+
+<h3>6.1 Hough 变换</h3>
+
+<p>自动 EBSD 标引的第一步是使用图像分析算法检测 EBSP 中的线性特征（菊池带）。自 Krieger Lassen 等人的早期工作以来，Hough 变换一直是首选方法。Hough 变换将图像空间中的直线检测问题转换为 Hough 空间中的峰值检测问题，通过检测峰值即可确定菊池带的位置。</p>
+
+<p class="img-center"><img alt="Hough Transform" src="EBSD_images/Hough_Transform.png" /></p>
+<p class="img-center"><img alt="Hough Peaks" src="EBSD_images/Identified_Hough_Peaks_1.png" /></p>
+
+<h3>6.2 自动标引方法</h3>
+
+<p><strong>全带组标引（Full Band Set Indexing）：</strong>考察所有检测到的菊池带，比较其面间角与反射面查找表。该方法只需要较少的检测带（5-8 条即可良好工作），但在花样重叠时（如晶界处）可能失败。</p>
+
+<p><strong>三/四带组标引（Triplet/Quadruplet Indexing）：</strong>将检测到的菊池带分解为 3 或 4 条带的子集，每组子集独立标引后通过投票方案确定最可能的解。这种方法更鲁棒，特别是在花样质量较差或有重叠贡献时。</p>
+
+<p><strong>字典标引（Dictionary Indexing）：</strong>将实验 EBSD 花样与预先计算的动力学模拟花样数据库直接比较，特别适用于弱花样或复杂花样。</p>
+
+<p><strong>球形标引（Spherical Indexing）：</strong>将 EBSP 投影到球面上与模拟花样匹配，可利用整个花样的信息提高标引可靠性。</p>
+
+<p class="img-center"><img alt="Spherical indexing" src="EBSD_images/Spherical_diffraction_patterns.png" /></p>
+
+<h2>7 EBSD 高级技术</h2>
+
+<h3>7.1 高精度 EBSD（HP-EBSD）</h3>
+
+<p>高精度 EBSD 通过精确测量菊池带的位置变化来提高取向测量的精度。传统 EBSD 的角分辨率约为 0.5&deg;-1&deg;，而 HP-EBSD 通过交叉相关分析可将角分辨率提高到 0.01&deg; 甚至更高。HP-EBSD 能够测量取向梯度、弹性应变张量和残余应力分布。</p>
+
+<p class="img-center"><img alt="Accuracy vs Precision" src="EBSD_images/Accuracy_v_Precision_.png" /></p>
+<p class="img-center"><img alt="Al strain" src="EBSD_images/Al_Remapped_Elastic_Strains_resize_1.png" /></p>
+
+<h3>7.2 透射菊池衍射（TKD）</h3>
+
+<p>透射菊池衍射（Transmission Kikuchi Diffraction，TKD），也称为 t-EBSD，使用电子透明的薄样品，探测器置于样品下方。由于电子束透过薄样品而非从表面反射，TKD 的空间分辨率可以提高到 < 10 nm，适合分析纳米晶体材料和薄膜。</p>
+
+<p class="img-center"><img alt="Au TKD" src="EBSD_images/Au-TKD.png" /></p>
+<p class="img-center"><img alt="On-axis TKD" src="EBSD_images/on-axis-tkd-map-au-thin-film-coating.png" /></p>
+
+<h3>7.3 3D EBSD</h3>
+
+<p>3D EBSD 通过使用 FIB 连续切片技术将 EBSD 扩展到三维。每铣去一层后进行一次 EBSD 映射，将二维切片数据堆叠重建为三维微观结构，提供真正的三维晶粒形态、晶界网络和取向分布。</p>
+
+<p class="img-center"><img alt="3D EBSD Geometry" src="EBSD_images/3D_EBSD_Geometry.png" /></p>
+<p class="img-center"><img alt="3D EBSD Reconstruction" src="EBSD_images/3D_EBSD_Reconstruction.png" /></p>
+
+<h3>7.4 原位 EBSD（In-situ EBSD）</h3>
+
+<p>原位 EBSD 在 SEM 中对样品施加外部刺激（如加热、力学加载）的同时进行 EBSD 测量，以实时观察微观结构演变。常见的应用包括原位加热（相变、晶粒生长）和原位力学（取向旋转、滑移系统激活）。</p>
+
+<h3>7.5 电子通道衬度成像（ECCI）</h3>
+
+<p>电子通道衬度成像利用电子通道效应在 SEM 中成像晶体缺陷，能够以高分辨率观察位错、层错、孪晶界和应变场。</p>
+
+<p class="img-center"><img alt="ECCI" src="EBSD_images/DSS_ECCI_resize.png" /></p>
+
+<h3>7.6 EBSD 与 EDS 集成</h3>
+
+<p>EBSD 与 EDS 的组合是最常见的多模态 SEM 分析方法。EBSD 提供晶体学信息，EDS 提供元素组成信息，两者结合能够区分具有相似晶体结构但成分不同的相，提高相鉴定的可靠性。</p>
+
+<p class="img-center"><img alt="Chemistry assisted indexing" src="EBSD_images/Chemistry_assisted_indexing_1.png" /></p>
+<p class="img-center"><img alt="Brass phase map" src="EBSD_images/Brass_phase_map.jpg" /></p>
+
+<h2>8 EBSD 数据的显示与分析</h2>
+
+<h3>8.1 取向图（Orientation Maps / IPF Maps）</h3>
+
+<p>取向图是 EBSD 最常用的数据表示方式。每个测量点的晶体取向用反极图（IPF）着色方案呈现，其中红、绿、蓝三种基色分别代表晶体学方向在样品坐标轴上的投影强度。</p>
+
+<p class="img-center"><img alt="IPF map" src="EBSD_images/ebsd-ipfy-weld-banner.jpeg" /></p>
+
+<h3>8.2 相图（Phase Maps）</h3>
+
+<p>相图用不同颜色标识不同晶体相在样品中的空间分布。</p>
+
+<p class="img-center"><img alt="Phase map" src="EBSD_images/ebsd-phase-map-oceanic-rock-geology.png" /></p>
+
+<h3>8.3 极图与反极图</h3>
+
+<p>极图（Pole Figure）是展示织构最常用的方式，通过将晶体学方向投影到立体投影球面上，将 3D 取向数据在 2D 平面上呈现。反极图（Inverse Pole Figure，IPF）将样品方向投影到晶体学参考系中。</p>
+
+<h3>8.4 取向分布函数（ODF）</h3>
+
+<p>ODF 是织构的三维数学表示，描述了每个晶体取向在样品中的体积分数，通常用 Euler 空间中的等密度截面图表示。</p>
+
+<h3>8.5 晶粒尺寸分析</h3>
+
+<p>使用 EBSD 测量晶粒尺寸需要定义临界取向差角，所有大于该角度的边界段被视为晶界。国际标准（如 ASTM E2627）提供了正确测量方法指南。EBSD 已成为测量晶粒尺寸最具吸引力的替代方法。</p>
+
+<h3>8.6 晶界表征</h3>
+
+<p>EBSD 可以详细表征晶界的性质，包括小角度/大角度晶界、特殊晶界如重合位置点阵（CSL）晶界等。</p>
+
+<p class="img-center"><img alt="CSL boundary map" src="EBSD_images/CSL_Boundary_Map.jpg" /></p>
+
+<h3>8.7 应变与变形分析</h3>
+
+<p>EBSD 通过多种参数评估局部应变：内核平均取向差（KAM）反映局部位错密度；几何必要位错（GND）密度从取向梯度计算；晶粒取向扩展度（GOS）评估晶粒内部变形均匀性。</p>
+
+<p class="img-center"><img alt="KAM map" src="EBSD_images/Cracked_Steel_KAM_Map_.png" /></p>
+<p class="img-center"><img alt="GND map" src="EBSD_images/Al_total_GND_Map_resize.png" /></p>
+
+<h2>9 EBSD 的应用领域</h2>
+
+<h3>9.1 金属、合金、复合材料和陶瓷</h3>
+
+<p>EBSD 在金属材料研究中应用最为广泛，用于分析晶粒尺寸和形态、择优取向/织构、相鉴定和分布、再结晶和晶粒生长、变形和位错结构、晶界特征分布等。</p>
+
+<p class="img-center"><img alt="Cracked steel" src="EBSD_images/Cracked_steel.png" /></p>
+<p class="img-center"><img alt="Cracked superalloy" src="EBSD_images/Cracked_Superalloy_resize.png" /></p>
+
+<h3>9.2 地质学与矿物学</h3>
+
+<p>在地质学中，EBSD 用于岩石中矿物的晶体学鉴定、变形历史研究、相转变机制分析等。</p>
+
+<h3>9.3 半导体与微电子</h3>
+
+<p>EBSD 在半导体制程和失效分析中用于晶粒尺寸和取向分布分析、多晶型相鉴定、焊点可靠性评估等。</p>
+
+<h3>9.4 增材制造</h3>
+
+<p>EBSD 用于表征 3D 打印材料的微观结构特征，研究工艺参数-微观结构关系，评估后处理对组织的影响。</p>
+
+<h3>9.5 能源材料</h3>
+
+<p>EBSD 用于太阳能电池材料、电池电极材料、核材料等的微观结构表征。</p>
+
+<h3>9.6 生物材料</h3>
+
+<p>EBSD 可用于生物矿化研究（骨、牙、贝壳）和植入物材料的晶体学表征。</p>
+
+<p class="img-center"><img alt="Ostrich egg EBSD" src="EBSD_images/ostrich-egg-ebsd.png" /></p>
+
+<h2>10 EBSD 的样品制备</h2>
+
+<h3>10.1 样品制备的重要性</h3>
+
+<p>EBSD 是一种表面敏感技术，衍射信息来自样品表面以下约 10-50 nm 的区域。样品表面必须无变形层、无污染、平坦且导电。不当的样品制备会导致花样质量差、标引率低甚至无法获得可用的衍射花样。</p>
+
+<h3>10.2 切割与研磨</h3>
+
+<p>应使用低变形切割方法（如精密切割机、电火花切割）。研磨使用逐级变细的砂纸去除切割损伤层，从粗砂纸逐步过渡到细砂纸。</p>
+
+<p class="img-center"><img alt="Cutting" src="EBSD_images/Abrasive_Cutting_Machine.jpg" /></p>
+<p class="img-center"><img alt="Grinding" src="EBSD_images/Cast_iron_fine_grinding.jpg" /></p>
+
+<h3>10.3 抛光</h3>
+
+<p>机械抛光使用金刚石或氧化硅悬浮液配合抛光布进行。最终抛光步骤通常使用胶体二氧化硅（OPS）悬浮液以获得无变形层的表面。</p>
+
+<h3>10.4 电解抛光与离子束技术</h3>
+
+<p>电解抛光通过电化学溶解去除表面变形层。离子束抛光（如氩离子抛光）适用于对机械抛光敏感的材料，如软金属、复合材料和地质材料。FIB 可用于制备特定位置的 EBSD 样品或 3D EBSD 连续切片。</p>
+
+<p class="img-center"><img alt="Ion milled" src="EBSD_images/BSE_image_of_magnesium_sample.png" /></p>
+
+<h3>10.5 样品镶嵌与防止荷电</h3>
+
+<p>小尺寸样品通常需要镶嵌处理。非导电样品需要镀碳膜或金属膜以防止荷电效应。</p>
+
+<p class="img-center"><img alt="Cold mounting" src="EBSD_images/Cold_Mounting_Process.jpg" /></p>
+
+<h2>11 EBSD 实验技巧与参数优化</h2>
+
+<h3>11.1 EBSD 几何构型</h3>
+
+<p>标准 EBSD 几何构型要求样品倾斜约 70&deg;，探测器以约 90&deg; 角面向样品表面。倾斜角度影响信号强度和空间分辨率之间的平衡。</p>
+
+<p class="img-center"><img alt="EBSD geometry" src="EBSD_images/70tilt-si.png" /></p>
+
+<h3>11.2 SEM 条件优化</h3>
+
+<p>加速电压、束流电流和工作距离是影响 EBSD 花样质量的关键 SEM 参数。高电压（20-30 kV）产生更强的信号和更清晰的菊池带，但空间分辨率较低。低电压提高表面灵敏度但信号减弱。</p>
+
+<p class="img-center"><img alt="10kV EBSP" src="EBSD_images/10kV_EBSP.png" /></p>
+<p class="img-center"><img alt="30kV EBSP" src="EBSD_images/30kV_EBSP.png" /></p>
+
+<h3>11.3 花样采集参数</h3>
+
+<p>曝光时间、像素合并（binning）和背景校正是影响 EBSD 数据质量的关键采集参数。背景校正可以显著提高菊池带的对比度。</p>
+
+<p class="img-center"><img alt="Background correction" src="EBSD_images/Background_corrected_EBSP.png" /></p>
+
+<h2>12 总结与展望</h2>
+
+<p>EBSD 作为一种成熟的 SEM 晶体学分析技术，已经在材料科学的各个领域得到广泛应用。随着探测器技术（如直接电子探测器 DED）、计算能力和分析方法的不断进步，EBSD 的能力持续扩展：速度和通量不断提升、空间分辨率通过 TKD 推进到纳米尺度、多维分析（3D EBSD、原位 EBSD、EBSD-EDS 联用）提供了更全面的微观结构表征能力、模式匹配和机器学习等新技术提高了标引的准确性和可靠性。</p>
+
+<p>EBSD 技术仍在快速发展中，未来将在新材料研发、失效分析、工艺优化等领域发挥越来越重要的作用。</p>
+
+</div>
+
+<div class="source-link">
+    <p>本文内容综合整理自以下来源：</p>
+    <p><a href="https://www.ebsd.com/">Oxford Instruments &middot; ebsd.com &mdash; Electron Backscatter Diffraction Educational Site</a></p>
+    <p><a href="https://www.bruker.com/en/landingpages/bna/technology/what-is-ebsd.html">Bruker &middot; What is EBSD? An Introduction to Electron Backscatter Diffraction</a></p>
+    <p>所有图片版权归各自来源方所有，仅供学习参考。</p>
+</div>
+
+</div>
+</body>
+</html>
