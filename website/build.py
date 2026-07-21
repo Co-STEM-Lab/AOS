@@ -466,8 +466,8 @@ def load_notes() -> list[dict]:
 
         # 检测是否有 content.html 作为全文内容
         has_content = (note_dir / "content.html").exists()
-        # 检测是否有图片目录
-        has_images = (note_dir / "TEM_CBED_images").is_dir()
+        # 检测是否有图片目录（支持 TEM_CBED_images 或 TEM_images）
+        has_images = (note_dir / "TEM_CBED_images").is_dir() or (note_dir / "TEM_images").is_dir()
 
         # 获取描述（优先使用 front-matter 中的 description）
         description = fm.get("description", "") or body[:200] if body else ""
@@ -616,13 +616,14 @@ def _copy_note_assets(note: dict, prefix: str):
         shutil.copy2(str(content_src), str(note_dst / "content.html"))
         print(f"     📄 笔记内容: {note['dir_name']}/content.html")
 
-    # 复制 TEM_CBED_images/ 目录（如果存在）
-    img_src = note_src / "TEM_CBED_images"
-    if img_src.is_dir():
-        img_dst = note_dst / "TEM_CBED_images"
-        shutil.copytree(str(img_src), str(img_dst), dirs_exist_ok=True)
-        n_files = len(list(img_dst.rglob("*")))
-        print(f"     🖼️  图片: {note['id']}/TEM_CBED_images/ ({n_files} 个文件)")
+    # 复制图片目录（支持 TEM_CBED_images/ 或 TEM_images/）
+    for img_dir_name in ("TEM_CBED_images", "TEM_images"):
+        img_src = note_src / img_dir_name
+        if img_src.is_dir():
+            img_dst = note_dst / img_dir_name
+            shutil.copytree(str(img_src), str(img_dst), dirs_exist_ok=True)
+            n_files = len(list(img_dst.rglob("*")))
+            print(f"     🖼️  图片: {note['id']}/{img_dir_name}/ ({n_files} 个文件)")
 
 
 def _copy_project_assets(proj: dict, prefix: str):
