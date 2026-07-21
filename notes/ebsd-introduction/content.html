@@ -363,6 +363,415 @@
 
 <p>EBSD 技术仍在快速发展中，未来将在新材料研发、失效分析、工艺优化等领域发挥越来越重要的作用。</p>
 
+<!-- ============================================================ -->
+<h2>13 EBSD 算法原理详解</h2>
+<!-- ============================================================ -->
+
+<h3>13.1 Hough 变换的数学原理</h3>
+
+<p>Hough 变换是 EBSD 自动标引的核心算法，由 Krieger Lassen 等人在 1992 年引入。其基本思想是将图像空间中的直线检测问题转换为参数空间中的峰值检测问题，从而实现对菊池带位置的自动识别。</p>
+
+<h4>13.1.1 标准 Hough 变换</h4>
+
+<p>在图像空间中，一条直线可以用法线式方程表示：</p>
+
+<p style="text-align:center;text-indent:0;font-style:italic;">&rho; = x cos&theta; + y sin&theta;</p>
+
+<p>其中 &rho; 是直线到原点的距离，&theta; 是直线法线与 x 轴的夹角。对于图像中的每个像素 (x, y)，我们在 Hough 空间（&rho;-&theta; 空间）中遍历所有可能的 &theta; 值，计算对应的 &rho;，并在 (&rho;, &theta;) 位置累加投票。因此，图像空间中的一条直线在 Hough 空间中对应一个峰值点。</p>
+
+<p>在 EBSD 中，菊池带在图像中表现为一对平行的亮暗边界。常用的处理方法是先将 EBSP 进行卷积或边缘增强处理（如使用 Sobel 算子或 Butterfly mask），使菊池带的边界变得清晰，然后对处理后的图像进行 Hough 变换。Hough 空间中的峰值位置对应菊池带的位置参数 (&rho;, &theta;)。</p>
+
+<h4>13.1.2 改进的 Hough 变换方法</h4>
+
+<p>标准 Hough 变换计算量较大，对于 N&times;N 像素的图像和 M 个 &theta; 采样点，时间复杂度为 O(N&sup2;M)。为加速处理，现代 EBSD 系统采用以下改进：</p>
+
+<ul>
+    <li><strong>快速 Hough 变换：</strong>使用查表法和整数运算减少浮点计算</li>
+    <li><strong>金字塔 Hough 变换：</strong>先在低分辨率图像上检测大致位置，再在高分辨率图像上精确定位</li>
+    <li><strong>定向 Hough 变换：</strong>利用菊池带的方向先验知识限制搜索范围</li>
+    <li><strong>Butterfly mask 卷积：</strong>使用专门设计的卷积核增强菊池带信号并抑制噪声</li>
+</ul>
+
+<h3>13.2 菊池带检测算法</h3>
+
+<h4>13.2.1 Butterfly mask 方法</h4>
+
+<p>Butterfly mask 是一种专门用于检测菊池带的卷积核，其形状如蝴蝶翅膀。通过将 Butterfly mask 与 EBSP 进行卷积，可以同时增强菊池带的边缘并抑制背景噪声。Butterfly mask 的参数（大小、角度步长、带宽）需要根据实验条件优化。</p>
+
+<h4>13.2.2 峰值检测与带参数提取</h4>
+
+<p>Hough 变换后，需要从 Hough 空间中提取峰值：</p>
+
+<ol>
+    <li><strong>背景扣除：</strong>使用大尺寸中值滤波或高斯滤波估计 Hough 空间的背景，从原始 Hough 空间中减去以突出峰值</li>
+    <li><strong>峰值识别：</strong>寻找局部最大值点，通常使用阈值和最小峰值距离约束</li>
+    <li><strong>亚像素定位：</strong>对峰值区域进行高斯或抛物面拟合，实现亚像素精度的峰值定位</li>
+    <li><strong>带强度计算：</strong>从峰值高度或积分面积估计菊池带的相对强度</li>
+    <li><strong>带序号分配：</strong>将检测到的带按强度排序，与理论反射面列表进行匹配</li>
+</ol>
+
+<h3>13.3 取向确定算法</h3>
+
+<h4>13.3.1 晶体取向的数学表示</h4>
+
+<p>晶体取向的数学表示方法包括：</p>
+
+<ul>
+    <li><strong>欧拉角（Euler Angles）：</strong>最常用的表示方法，使用三个角度 (&phi;<sub>1</sub>, &Phi;, &phi;<sub>2</sub>) 描述晶体坐标系与样品坐标系之间的变换（Bunge 约定）。</li>
+    <li><strong>取向矩阵（Orientation Matrix）：</strong>一个 3&times;3 的旋转矩阵 g，将晶体坐标向量旋转到样品坐标向量。</li>
+    <li><strong>轴角对（Axis-Angle Pair）：</strong>用一个旋转轴和旋转角度表示取向。</li>
+    <li><strong>四元数（Quaternion）：</strong>使用四个参数 (q<sub>0</sub>, q<sub>1</sub>, q<sub>2</sub>, q<sub>3</sub>) 表示取向，便于连续插值和统计计算。</li>
+    <li><strong>罗德里格斯向量（Rodrigues Vector）：</strong>将轴角对压缩为三维向量，在晶界分析中常用。</li>
+</ul>
+
+<h4>13.3.2 带匹配与取向求解</h4>
+
+<p>从检测到的菊池带到晶体取向的求解过程：</p>
+
+<ol>
+    <li>使用 Hough 变换从 EBSP 中提取菊池带的位置参数 (&rho;<sub>i</sub>, &theta;<sub>i</sub>)</li>
+    <li>根据探测器几何参数（样品距离、探测器位置、倾斜角度等），将菊池带位置转换为菊池带在空间中的平面法线方向向量 n<sub>i</sub></li>
+    <li>计算每对菊池带之间的夹角 &alpha;<sub>ij</sub> = arccos(n<sub>i</sub> &middot; n<sub>j</sub>)</li>
+    <li>从晶体学数据库中读取候选相的结构信息，计算理论晶面族间夹角</li>
+    <li>将实测夹角集合与理论夹角集合进行匹配，找到最佳的晶面指数分配方案</li>
+    <li>从匹配结果计算晶体取向矩阵 g</li>
+    <li>将取向矩阵转换为欧拉角或其他表示形式</li>
+</ol>
+
+<h3>13.3.3 三带组/四带组投票算法</h3>
+
+<p>Triplet/Quadruplet 方法将检测到的菊池带分解为 C(n,3) 或 C(n,4) 个子集（n 为检测到的总带数）。每个子集独立计算候选取向解，然后通过投票机制选择最优解：</p>
+
+<ul>
+    <li><strong>Triplet 方法：</strong>每 3 条带形成一个标引单位。3 条带的夹角唯一确定一个取向解（除镜像对称歧义外）。适用带数较少的情况 (n &le; 7)。</li>
+    <li><strong>Quadruplet 方法：</strong>每 4 条带形成一个标引单位。4 条带提供冗余信息，可以自动排除带指数分配的歧义。当 n &ge; 8 时，四带组数量超过三带组，标引更鲁棒。</li>
+    <li><strong>投票策略：</strong>每个子集得到一个候选取向，所有候选取向在取向空间中进行聚类，得票最高且内部一致性最好的聚类中心作为最终解。</li>
+</ul>
+
+<h3>13.4 字典标引算法</h3>
+
+<p>字典标引（Dictionary Indexing）由 Marc De Graef 课题组提出，不依赖于检测菊池带，而是将实验 EBSD 花样直接与预先计算的动力学模拟花样数据库进行相似度匹配：</p>
+
+<ol>
+    <li><strong>字典构建：</strong>在取向空间中按一定步长（如 1&deg;-5&deg;）均匀采样，对每个取向使用多束动力学模拟生成模拟 EBSD 花样，形成字典。</li>
+    <li><strong>相似度计算：</strong>实验花样与每个字典条目计算归一化互相关（NCC）或点积相似度：<br>
+    <span style="font-style:italic;">S = (P<sub>exp</sub> &middot; P<sub>sim</sub>) / (||P<sub>exp</sub>|| &middot; ||P<sub>sim</sub>||)</span></li>
+    <li><strong>最优匹配：</strong>相似度最高的字典条目对应的取向即为该测量点的取向。</li>
+    <li><strong>精细搜索：</strong>在最优匹配附近进行局部细化搜索，使用更小的取向步长提高精度。</li>
+</ol>
+
+<p>字典标引的优势在于能够处理弱花样、重叠花样和低对称性材料，但计算成本极高。优化方法包括：使用主成分分析（PCA）压缩字典维度、使用球形谐波基函数加速匹配、基于 GPU 的并行计算等。</p>
+
+<h3>13.5 球形标引算法</h3>
+
+<p>球形标引（Spherical Indexing）是近年来发展的一种新方法，将 EBSD 花样投影到单位球面上：</p>
+
+<ul>
+    <li>将平面 EBSP 通过逆投影变换映射到单位球面，得到球面花样 S(θ, φ)</li>
+    <li>使用球形谐波展开对球面花样进行频率域表示：<br>
+    <span style="font-style:italic;">S(θ, φ) = &sum;<sub>l=0</sub><sup>&infin;</sup> &sum;<sub>m=-l</sub><sup>l</sup> a<sub>lm</sub> Y<sub>l</sub><sup>m</sup>(θ, φ)</span></li>
+    <li>在球面谐波空间中进行取向匹配，利用球面卷积定理加速计算</li>
+    <li>球面方法的优势：可以利用整个花样的全局信息，对局部噪声不敏感，标引可靠性更高</li>
+</ul>
+
+<h3>13.6 HP-EBSD 交叉相关算法</h3>
+
+<p>高精度 EBSD（HP-EBSD）的核心是图像互相关分析，用于测量参考花样与实验花样之间的微小位移：</p>
+
+<ol>
+    <li><strong>区域选择：</strong>将 EBSP 划分为多个小区域（ROI，通常 16&times;16 到 64&times;64 像素），每个区域对应菊池花样的一个局部区域。</li>
+    <li><strong>互相关计算：</strong>对每个 ROI，计算参考花样与实验花样的归一化互相关：<br>
+    <span style="font-style:italic;">C(u,v) = F<sup>-1</sup>{ F(I<sub>ref</sub>) &middot; F(I<sub>exp</sub>)* / |F(I<sub>ref</sub>) &middot; F(I<sub>exp</sub>)| }</span><br>
+    其中 F 表示傅里叶变换，* 表示复共轭。</li>
+    <li><strong>峰值定位：</strong>互相关函数 C(u,v) 中的峰值位置 (u<sub>0</sub>, v<sub>0</sub>) 反映了该区域的位移矢量。通过亚像素插值（高斯拟合、抛物面拟合或重心法）实现高精度位移测量。</li>
+    <li><strong>应变计算：</strong>所有 ROI 的位移场通过最小二乘拟合得到变形梯度张量 F，进而计算弹性应变张量 &epsilon; 和旋转张量 &omega;。</li>
+    <li><strong>几何必要位错密度：</strong>从取向梯度张量 &kappa; 计算 GND 密度张量 &alpha; = -&kappa;，再按位错类型分解为刃型、螺型和混合位错密度。</li>
+</ol>
+
+<h3>13.7 模式匹配与 MapSweeper 算法</h3>
+
+<p>模式匹配（Pattern Matching）是提高 EBSD 角度分辨率的新方法：</p>
+
+<ul>
+    <li><strong>主模式数据库：</strong>对每个扫描点，使用字典标引初步确定取向，然后从动力学模拟数据库中提取最匹配的主模式（Master Pattern）。</li>
+    <li><strong>精细配准：</strong>将实验花样与主模式的不同局部区域进行互相关匹配，实现 0.01&deg; 量级的角分辨率。</li>
+    <li><strong>MapSweeper：</strong>一种后处理算法，利用相邻测量点之间取向的连续性约束，通过滑动窗口内的全局优化提高标引一致性。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>14 EBSD 数据处理方法</h2>
+<!-- ============================================================ -->
+
+<h3>14.1 衍射花样预处理</h3>
+
+<h4>14.1.1 背景校正</h4>
+
+<p>背景校正是 EBSD 花样处理的第一步，目的是去除由荧光屏不均匀性、探测器阴影、电子束强度分布不均匀等因素引起的背景信号。常用方法包括：</p>
+
+<ul>
+    <li><strong>平均背景扣除：</strong>采集多张无花样背景图像（如用非晶样品或在电子束离焦条件下），然后从原始花样中减去背景。</li>
+    <li><strong>多项式背景拟合：</strong>对每个花样的强度分布进行低阶多项式拟合，扣除慢变背景成分。</li>
+    <li><strong>高通行滤波：</strong>使用高斯低通滤波估计背景，从原始图像中减去后保留高频细节。</li>
+</ul>
+
+<h4>14.1.2 噪声抑制</h4>
+
+<p>EBSD 花样中的噪声来源包括探测器读出噪声、电子束散粒噪声、样品发射噪声等。常用的去噪方法：</p>
+
+<ul>
+    <li><strong>高斯滤波：</strong>简单有效，但会模糊菊池带边缘，适合低噪声水平。</li>
+    <li><strong>中值滤波：</strong>保留边缘的同时去除脉冲噪声，对椒盐噪声特别有效。</li>
+    <li><strong>非局部均值（NLM）去噪：</strong>利用花样的自相似性，对相似区域进行加权平均。</li>
+    <li><strong>PCA 去噪：</strong>对花样数据集进行主成分分析，保留前 k 个主成分重建去噪花样。k 的选择基于特征值分布或交叉验证。</li>
+    <li><strong>字典学习去噪：</strong>从数据中学习过完备字典，用稀疏表示进行去噪。</li>
+    <li><strong>深度学习去噪：</strong>使用 U-Net 或 Denoising CNN 等网络结构，需要大量训练数据。</li>
+</ul>
+
+<h3>14.2 数据处理与清理</h3>
+
+<h4>14.2.1 数据清理方法</h4>
+
+<p>EBSD 数据中不可避免地存在标引错误的点（wild spikes），需要通过后处理进行清理：</p>
+
+<ul>
+    <li><strong>Wild spike 去除：</strong>检查每个测量点与其邻居的取向差，如果与所有邻居的平均取向差超过预设阈值（如 5&deg;），则标记为 wild spike。</li>
+    <li><strong>邻域取向平均：</strong>对标记为 wild spike 的点，用周围成功标引点的平均取向或众数取向替代。</li>
+    <li><strong>外推填充（Extrapolation）：</strong>对未标引点，使用其周围成功标引点的取向进行填充，通常从邻域边界向内逐层推进。</li>
+    <li><strong>晶粒膨胀（Grain Dilation）：</strong>先识别晶粒，然后将晶粒内部的未标引点填充为该晶粒的平均取向，特别适合晶界附近偶然标引失败的情况。</li>
+</ul>
+
+<h4>14.2.2 取向平滑</h4>
+
+<p>取向平滑是在保留大角度晶界的前提下减少取向噪声的方法：</p>
+
+<ul>
+    <li><strong>中值取向滤波：</strong>用邻域取向的中值替代中心点取向，类似图像处理中的中值滤波，适用于去除孤立噪声。</li>
+    <li><strong>均值取向滤波：</strong>计算邻域取向的平均值，需要处理四元数的平均问题（使用非线性最小二乘或球面插值）。</li>
+    <li><strong>各向异性扩散滤波：</strong>在取向梯度大的区域（晶界）降低平滑强度，在取向梯度小的区域（晶粒内部）增强平滑。</li>
+</ul>
+
+<h3>14.3 晶粒重建算法</h3>
+
+<p>晶粒重建是从 EBSD 取向图中识别单个晶粒的过程：</p>
+
+<ol>
+    <li><strong>晶界检测：</strong>计算相邻像素间的取向差，若取向差大于预设阈值（通常 5&deg;-15&deg;，常用 10&deg;），则标记为晶界。</li>
+    <li><strong>晶粒标记：</strong>使用洪水填充（flood-fill）或连通组件标记（connected component labeling）算法，将晶界包围的区域标记为独立晶粒。</li>
+    <li><strong>最小晶粒过滤：</strong>去除像素数小于最小晶粒阈值的小区域，通常与 EBSD 空间分辨率相关。</li>
+    <li><strong>特殊晶界识别：</strong>孪晶界（如 &Sigma;3 CSL 界）具有特定的取向差关系，可根据取向差角度和轴进行识别并选择性忽略（如果晶粒尺寸分析需要排除孪晶界）。</li>
+    <li><strong>晶粒参数计算：</strong>对每个晶粒计算等效圆直径、面积、周长、长宽比、平均取向、晶粒取向扩展度（GOS）等参数。</li>
+</ol>
+
+<h3>14.4 取向差与晶界表征</h3>
+
+<p>取向差（Misorientation）是两个晶体取向之间的旋转差，计算方法：</p>
+
+<ol>
+    <li>计算取向差矩阵 &Delta;g = g<sub>1</sub><sup>-1</sup> &middot; g<sub>2</sub></li>
+    <li>转换为轴角对表示：旋转轴 [hkl] 和旋转角 &omega;</li>
+    <li>考虑晶体对称性：对 &Delta;g 施加所有对称操作 O<sub>i</sub>，取最小旋转角作为取向差角度（即 disorientation）</li>
+    <li>根据取向差角度分类晶界类型：小角度 2&deg;-15&deg;、大角度 &gt;15&deg;</li>
+</ol>
+
+<p>重合位置点阵（CSL）模型描述了两个相邻晶粒之间点阵的重合程度，用 &Sigma; 值表示（&Sigma; = 重合点阵单胞体积 / 原始点阵单胞体积）。常见的 CSL 界面包括 &Sigma;3（孪晶界）、&Sigma;5、&Sigma;7、&Sigma;9 等。Brandon 准则给出了判定 CSL 界的取向差容差：&Delta;&omega; &le; 15&deg; / &radic;&Sigma;。</p>
+
+<h3>14.5 织构分析算法</h3>
+
+<h4>14.5.1 极图计算</h4>
+
+<p>极图（Pole Figure）将每个测量点的特定晶面法线方向投影到立体投影球面上。计算步骤：</p>
+
+<ol>
+    <li>对每个测量点的取向 g，计算指定晶面 {hkl} 的法线方向在样品坐标系下的方向向量：v = g &middot; v<sub>crystal</sub></li>
+    <li>将 v 通过球面投影或等面积投影映射到二维极图平面</li>
+    <li>对所有测量点进行统计，生成密度分布极图</li>
+    <li>使用高斯卷积或核密度估计对极图进行平滑</li>
+    <li>标注极密度最大值位置，与标准极图对比进行织构组分鉴定</li>
+</ol>
+
+<h4>14.5.2 取向分布函数（ODF）计算</h4>
+
+<p>ODF 描述了晶体取向在 Euler 空间（&phi;<sub>1</sub>, &Phi;, &phi;<sub>2</sub>）中的概率密度分布。计算方法：</p>
+
+<ul>
+    <li><strong>级数展开法：</strong>将 ODF 展开为广义球面谐波函数的级数，使用极图数据确定展开系数。计算效率高，但可能引入级数截断误差。</li>
+    <li><strong>离散直接法：</strong>将 Euler 空间离散化为体素，统计落入每个体素的测量点数。直观但受限于统计计数。</li>
+    <li><strong>最大熵法：</strong>在熵最大化的约束下寻找与实验数据一致的最优 ODF 解。</li>
+</ul>
+
+<h3>14.6 应变与变形分析算法</h3>
+
+<h4>14.6.1 内核平均取向差（KAM）</h4>
+
+<p>KAM 计算每个像素与其最近邻像素之间的平均取向差（通常只计算 1-3 阶邻域）。KAM 值反映局部位错密度水平，但不能直接转换为绝对位错密度。KAM 计算中的关键参数包括邻域阶数和取向差阈值（排除跨晶界的大取向差）。</p>
+
+<h4>14.6.2 几何必要位错（GND）密度计算</h4>
+
+<p>GND 密度从取向梯度张量推导，计算流程：</p>
+
+<ol>
+    <li>对取向图进行去噪处理，降低取向噪声对梯度计算的干扰</li>
+    <li>使用有限差分计算取向梯度张量 &kappa;<sub>ij</sub> = &part;&phi;<sub>i</sub> / &part;x<sub>j</sub></li>
+    <li>将取向梯度张量与 Nye 位错张量关联：&alpha; = -&kappa;（在小变形近似下）</li>
+    <li>将 Nye 张量按位错滑移系统分解，使用 L<sub>1</sub> 或 L<sub>2</sub> 范数优化求解各滑移系统上的位错密度</li>
+    <li>GND 密度为各滑移系统位错密度绝对值之和</li>
+</ol>
+
+<h4>14.6.3 弹性应变张量测量（HP-EBSD）</h4>
+
+<p>HP-EBSD 从菊池带位置的微小变化测量弹性应变：</p>
+
+<ol>
+    <li>在参考区域（通常选取无应变区域）和应变区域分别采集 EBSD 花样</li>
+    <li>使用互相关分析测量多个 ROI 的位移矢量 (u, v)</li>
+    <li>构建应变-位移关系超定方程组，最小二乘求解变形梯度 F</li>
+    <li>从 F 分解弹性应变 &epsilon; 和旋转 &omega;：&epsilon; = (F<sup>T</sup> + F)/2 - I，&omega; = (F - F<sup>T</sup>)/2</li>
+    <li>根据胡克定律，结合材料弹性常数，从弹性应变计算应力张量</li>
+</ol>
+
+<h3>14.7 相鉴定算法</h3>
+
+<p>相鉴定（Phase Identification）是 EBSD 数据分析中的关键步骤，涉及以下算法：</p>
+
+<ul>
+    <li><strong>菊池带匹配法：</strong>将实验检测到的菊池带位置/角度与各候选相的理论反射面列表进行匹配，匹配度最高的相为鉴定结果。适合具有明显晶体结构差异的相。</li>
+    <li><strong>花样相似度法：</strong>将实验花样与各候选相的模拟花样进行逐像素比较，计算归一化互相关或互信息等相似度指标。</li>
+    <li><strong>成分辅助标引（Chemistry-Assisted Indexing）：</strong>结合 EDS 测得的元素组成信息缩小候选相范围，提高相鉴定的准确性。特别适用于具有相似晶体结构但成分不同的相。</li>
+    <li><strong>高级相鉴定：</strong>使用模式匹配（pattern matching）结合动力学模拟，对具有相近晶体结构的相进行区分。例如铁素体/马氏体/奥氏体的精确区分、复杂氧化物矿物的相鉴定等。</li>
+</ul>
+
+<!-- ============================================================ -->
+<h2>15 开源 EBSD 软件生态</h2>
+<!-- ============================================================ -->
+
+<p>EBSD 领域已经形成了丰富的开源软件生态，覆盖了从花样模拟、标引、数据处理到可视化的完整工作流。以下列出 AOS 工具库中收录的主要 EBSD 相关开源工具：</p>
+
+<h3>15.1 花样模拟与标引</h3>
+
+<h4>15.1.1 EMsoft</h4>
+<p><strong>类型：</strong>模拟套件 | <strong>语言：</strong>Fortran | <strong>协议：</strong>GPL-2.0 | <strong>链接：</strong><a href="https://github.com/EMsoft-org/EMsoft">github.com/EMsoft-org/EMsoft</a></p>
+<p>EMsoft 是由 Marc De Graef 课题组开发的开源电子显微学模拟套件，是 EBSD 模拟领域最全面的工具之一。主要功能包括：</p>
+<ul>
+    <li>EBSD 和 TKD 花样的多束动力学模拟（使用 Bloch wave 或 Darwin-Huang 方法）</li>
+    <li>主模式（Master Pattern）计算，用于字典标引和模式匹配</li>
+    <li>电子通道花样（ECP）和电子通道衬度（ECC）模拟</li>
+    <li>球形标引（Spherical Indexing）实现</li>
+    <li>蒙特卡罗电子轨迹模拟（用于估计空间分辨率和信息深度）</li>
+</ul>
+
+<h4>15.1.2 pyEBSDIndex</h4>
+<p><strong>类型：</strong>标引引擎 | <strong>语言：</strong>Python | <strong>协议：</strong>GPL-3.0 | <strong>链接：</strong><a href="https://github.com/USCCACS/pyEBSDIndex">github.com/USCCACS/pyEBSDIndex</a></p>
+<p>pyEBSDIndex 是南加州大学 CACS 课题组开发的快速 EBSD 标引引擎，支持多种标引方法：</p>
+<ul>
+    <li>基于 Hough 变换的传统标引</li>
+    <li>基于球谐函数的快速标引</li>
+    <li>多相标引支持</li>
+    <li>标引质量评估</li>
+    <li>设计为可嵌入其他 Python 工作流</li>
+</ul>
+
+<h4>15.1.3 kikuchipy</h4>
+<p><strong>类型：</strong>数据处理 | <strong>语言：</strong>Python | <strong>协议：</strong>GPL-3.0 | <strong>链接：</strong><a href="https://github.com/kikuchipy/kikuchipy">github.com/kikuchipy/kikuchipy</a></p>
+<p>kikuchipy 是专门用于 EBSD 花样处理的 Python 库，与 HyperSpy 生态系统深度集成：</p>
+<ul>
+    <li>EBSD 花样的加载、可视化和预处理</li>
+    <li>花样去噪（PCA、NMF、字典学习等方法）</li>
+    <li>Hough 变换和菊池带检测</li>
+    <li>标引结果的加载和评估</li>
+    <li>花样模拟与动力学模拟花样的比较</li>
+    <li>支持 EBSD、TKD 和 ECCI 数据</li>
+    <li>完整的 API 文档和教程</li>
+</ul>
+
+<h3>15.2 数据处理与分析</h3>
+
+<h4>15.2.1 MTEX</h4>
+<p><strong>类型：</strong>织构分析工具箱 | <strong>语言：</strong>MATLAB | <strong>协议：</strong>GPL-3.0 | <strong>链接：</strong><a href="https://github.com/mtex-toolbox/mtex">github.com/mtex-toolbox/mtex</a></p>
+<p>MTEX 是 MATLAB 环境下最全面的织构与取向分析工具箱（380+ Stars），功能涵盖：</p>
+<ul>
+    <li>EBSD 数据的加载、处理和可视化（支持多种商业格式）</li>
+    <li>极图和反极图计算与绘制</li>
+    <li>ODF 计算（级数展开法、离散直接法）</li>
+    <li>晶粒重建与晶界分析</li>
+    <li>取向差和 CSL 晶界分析</li>
+    <li>织构组分分离开关函数计算</li>
+    <li>多相材料分析</li>
+    <li>应变与残余应力分析</li>
+    <li>晶体塑性变形模拟的输入输出接口</li>
+</ul>
+
+<h4>15.2.2 pyEBSD</h4>
+<p><strong>类型：</strong>后处理工具 | <strong>语言：</strong>Python | <strong>协议：</strong>GPL-3.0 | <strong>链接：</strong><a href="https://github.com/USCCACS/pyEBSD">github.com/USCCACS/pyEBSD</a></p>
+<p>pyEBSD 是轻量级的 EBSD 数据后处理 Python 工具，提供：</p>
+<ul>
+    <li>EBSD 数据的基础统计和可视化</li>
+    <li>取向差和旋转计算</li>
+    <li>基础织构分析</li>
+    <li>可嵌入 Python 数据科学生态系统（NumPy、SciPy、Matplotlib）</li>
+</ul>
+
+<h4>15.2.3 IMA（Integrated Microstructure Analysis）</h4>
+<p><strong>类型：</strong>集成分析平台 | <strong>语言：</strong>Python | <strong>协议：</strong>MIT | <strong>链接：</strong><a href="https://github.com/ima/ima">github.com/ima/ima</a></p>
+<p>IMA 是一个集成微观结构分析平台，统一处理 EBSD、EDS 和 TKD 数据：</p>
+<ul>
+    <li>跨模态数据融合（EBSD + EDS 联合分析）</li>
+    <li>微观结构参数量化（晶粒、相、织构）</li>
+    <li>自动化分析流程</li>
+    <li>结果报告生成</li>
+</ul>
+
+<h3>15.3 晶体学通用工具</h3>
+
+<h4>15.3.1 GSAS-II</h4>
+<p><strong>类型：</strong>晶体学分析套件 | <strong>语言：</strong>Python | <strong>协议：</strong>BSD | <strong>链接：</strong><a href="https://github.com/GSAS-II/gsas-II">github.com/GSAS-II/gsas-II</a></p>
+<p>GSAS-II 是全面的晶体学数据分析套件，虽主要面向 X 射线/中子衍射，但其晶体学计算功能（空间群、结构因子、对称性操作等）对 EBSD 分析也有重要参考价值。</p>
+
+<h4>15.3.2 spglib</h4>
+<p><strong>类型：</strong>对称性分析库 | <strong>语言：</strong>C/Python | <strong>协议：</strong>BSD | <strong>链接：</strong><a href="https://github.com/spglib/spglib">github.com/spglib/spglib</a></p>
+<p>spglib 是晶体对称性分析的标准库，提供空间群判定、不对称单元生成、k 点路径生成等功能，是 EBSD 相鉴定和取向分析的基础工具。</p>
+
+<h3>15.4 多晶建模与模拟</h3>
+
+<h4>15.4.1 Neper</h4>
+<p><strong>类型：</strong>多晶生成与网格划分 | <strong>语言：</strong>C | <strong>协议：</strong>GPL-3.0 | <strong>链接：</strong><a href="https://github.com/nep3r/neper">github.com/nep3r/neper</a></p>
+<p>Neper 是多晶生成和有限元网格划分工具，支持从 EBSD 数据驱动建模：</p>
+<ul>
+    <li>基于 EBSD 实验数据统计特征生成虚拟多晶</li>
+    <li>Voronoi/Laguerre 镶嵌算法生成晶粒结构</li>
+    <li>高质量有限元网格划分</li>
+    <li>晶体学取向分配（支持从实验 ODF 采样）</li>
+    <li>输出为 Abaqus、ANSYS、MARC 等 FEM 格式</li>
+</ul>
+
+<h3>15.5 辅助工具</h3>
+
+<h4>15.5.1 Fiji / ImageJ</h4>
+<p><strong>类型：</strong>图像处理平台 | <strong>语言：</strong>Java | <strong>协议：</strong>GPL-3.0 | <strong>链接：</strong><a href="https://github.com/fiji/fiji">github.com/fiji/fiji</a></p>
+<p>Fiji/ImageJ 是科学图像处理的标准平台，拥有丰富的 EBSD 相关插件生态：</p>
+<ul>
+    <li>EBSD 图像预处理（背景校正、滤波、锐化）</li>
+    <li>晶粒尺寸测量和分析</li>
+    <li>3D 数据可视化</li>
+    <li>批处理脚本（通过 ImageJ Macro 或 Python）</li>
+</ul>
+
+<h3>15.6 软件选择指南</h3>
+
+<table>
+<tr><th>任务</th><th>推荐工具</th><th>说明</th></tr>
+<tr><td>花样模拟</td><td>EMsoft</td><td>最全面的动力学模拟套件</td></tr>
+<tr><td>快速标引</td><td>pyEBSDIndex</td><td>支持 Hough 和球谐方法</td></tr>
+<tr><td>花样处理与去噪</td><td>kikuchipy</td><td>Python 生态，与 HyperSpy 集成</td></tr>
+<tr><td>织构与取向分析</td><td>MTEX</td><td>最全面的 MATLAB 工具箱</td></tr>
+<tr><td>数据后处理</td><td>pyEBSD</td><td>轻量级 Python 工具</td></tr>
+<tr><td>多模态分析</td><td>IMA</td><td>EBSD/EDS/TKD 集成</td></tr>
+<tr><td>多晶建模</td><td>Neper</td><td>EBSD 驱动多晶生成与网格划分</td></tr>
+<tr><td>图像处理</td><td>Fiji/ImageJ</td><td>通用平台+EBSD 插件</td></tr>
+<tr><td>晶体学计算</td><td>spglib / GSAS-II</td><td>对称性分析、晶体学计算</td></tr>
+</table>
+
+<p>以上工具覆盖了从 EBSD 花样模拟、标引、数据处理到可视化建模的完整工作流。用户可以根据自己的具体需求选择合适的工具组合。例如，典型的开源工作流可以是：使用 EMsoft 生成模拟花样字典 &rarr; 使用 pyEBSDIndex 进行标引 &rarr; 使用 kikuchipy 进行花样去噪和预处理 &rarr; 使用 MTEX 进行织构和取向分析 &rarr; 使用 Neper 进行多晶建模。</p>
+
 </div>
 
 <div class="source-link">
