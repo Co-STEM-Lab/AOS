@@ -616,8 +616,8 @@ def _copy_note_assets(note: dict, prefix: str):
         shutil.copy2(str(content_src), str(note_dst / "content.html"))
         print(f"     📄 笔记内容: {note['dir_name']}/content.html")
 
-    # 复制图片目录（支持 TEM_CBED_images/、TEM_images/、EBSD_images/ 等）
-    for img_dir_name in ("TEM_CBED_images", "TEM_images", "EBSD_images"):
+    # 复制图片目录（支持 TEM_CBED_images/、TEM_images/、EBSD_images/、sftd_images/ 等）
+    for img_dir_name in ("TEM_CBED_images", "TEM_images", "EBSD_images", "sftd_images"):
         img_src = note_src / img_dir_name
         if img_src.is_dir():
             img_dst = note_dst / img_dir_name
